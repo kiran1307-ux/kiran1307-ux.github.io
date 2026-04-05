@@ -1,236 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RHEL 8 Hardening Guide</title>
-<style>
-body {
-    margin:0;
-    font-family:'Segoe UI',sans-serif;
-    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-    color:#fff;
-}
-.navbar {
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    padding:15px;
-    background: rgba(0,0,0,0.3);
-}
-.nav-btn {
-    text-decoration:none;
-    color:white;
-    padding:8px 15px;
-    border-radius:6px;
-    background: rgba(255,255,255,0.1);
-    transition:0.3s;
-    font-weight:bold;
-}
-.nav-btn:hover {
-    background: rgba(255,255,255,0.3);
-}
-.container {
-    max-width:1000px;
-    margin:auto;
-    padding:40px 20px;
-    text-align:center;
-}
-h1 {
-    margin-bottom:30px;
-    font-size:36px;
-    color:#facc15;
-}
-.card {
-    background: rgba(255,255,255,0.05);
-    border-radius:15px;
-    padding:50px 20px 20px 20px; /* extra top padding for buttons */
-    margin-bottom:20px;
-    cursor:pointer;
-    transition:0.3s;
-    text-align:left;
-    position:relative;
-}
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-}
-.card h3 {
-    margin:0;
-    font-size:20px;
-}
-.card p {
-    margin:5px 0;
-}
-.command {
-    background: rgba(0,0,0,0.2);
-    padding:5px 10px;
-    border-radius:6px;
-    display:inline-block;
-    font-family: monospace;
-    white-space: pre-line;
-}
-.copy-btn {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    background:#facc15;
-    color:#111;
-    border:none;
-    padding:3px 7px;
-    border-radius:5px;
-    cursor:pointer;
-    font-size:12px;
-}
-.toggle-btn {
-    position: absolute;
-    right: 100px; /* to the left of copy button */
-    top: 10px;
-    background:#facc15;
-    color:#111;
-    border:none;
-    padding:5px 10px;
-    border-radius:6px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:0.3s;
-}
-.toggle-btn:hover {
-    background:#eab308;
-}
-.explanation {
-    background: rgba(255,255,255,0.1);
-    padding:10px 15px;
-    border-radius:8px;
-    margin-top:10px;
-    display:none;
-    font-size:14px;
-}
-</style>
-</head>
-<body>
-
-<div class="navbar">
-    <a href="index.html" class="nav-btn">Home</a>
-    <a href="about.html" class="nav-btn">About</a>
-    <a href="author.html" class="nav-btn">Author</a>
-    <a href="exam.html" class="nav-btn">Exam</a>
+<!-- 1. Current UMASK for root -->
+<div class="card">
+    <h3>Current UMASK for root</h3>
+    <p class="command" id="cmd-umask">echo $UMASK</p>
+    <button class="copy-btn" onclick="copyCommand('cmd-umask')">Copy</button>
+    <button class="toggle-btn">Show Explanation</button>
+    <p class="explanation">
+        <strong>Why:</strong> Ensure root files have restrictive permissions.<br>
+        <strong>Solution:</strong> Set UMASK in /etc/bashrc or /etc/profile: <code>umask 077</code>
+    </p>
 </div>
 
-<div class="container">
-    <h1>RHEL 8 Hardening Controls</h1>
-
-    <!-- SSH Hardening -->
-    <div class="card">
-        <h3>SSH Hardening</h3>
-        <p><strong>File:</strong> /etc/ssh/sshd_config</p>
-        <p class="command" id="cmd-ssh">PermitRootLogin no
-Protocol 2
-PermitEmptyPasswords no</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-ssh')">Copy</button>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Secures remote SSH access, disables root login, prevents empty passwords, enforces protocol 2.</p>
-    </div>
-
-    <!-- Journal -->
-    <div class="card">
-        <h3>Journal Logs</h3>
-        <p class="command" id="cmd-journal">journalctl --verify</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-journal')">Copy</button>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Ensures log integrity for auditing and detecting tampering.</p>
-    </div>
-
-    <!-- Ownership -->
-    <div class="card">
-        <h3>File Ownership</h3>
-        <p class="command" id="cmd-ownership">chown root:root /etc/shadow</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-ownership')">Copy</button>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Prevents unauthorized modification of critical files.</p>
-    </div>
-
-    <!-- Permissions -->
-    <div class="card">
-        <h3>File Permissions</h3>
-        <p class="command" id="cmd-permissions">chmod 600 /etc/shadow</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-permissions')">Copy</button>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Restricts access to sensitive files to authorized users only.</p>
-    </div>
-
-    <!-- Authentication -->
-    <div class="card">
-        <h3>Authentication Hardening</h3>
-        <p class="command" id="cmd-auth">authconfig --passalgo=sha512 --update</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-auth')">Copy</button>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Uses SHA-512 for secure password hashing.</p>
-    </div>
-
-    <!-- Storage Dump -->
-    <div class="card">
-        <h3>Storage Dump Prevention</h3>
-        <p class="command" id="cmd-storagedump">echo 1 > /proc/sys/kernel/kptr_restrict</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-storagedump')">Copy</button>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Prevents exposure of kernel pointers to unprivileged users.</p>
-    </div>
-
-    <!-- Password Quality -->
-    <div class="card">
-        <h3>Password Quality</h3>
-        <p class="command" id="cmd-pwquality">/etc/security/pwquality.conf (minlen=12, dcredit=-1, ucredit=-1)</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-pwquality')">Copy</button>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Enforces strong password complexity to prevent brute-force attacks.</p>
-    </div>
-
-    <!-- Kernel Hardening -->
-    <div class="card">
-        <h3>Kernel Hardening</h3>
-        <p class="command" id="cmd-kernel">sysctl -w net.ipv4.ip_forward=0
-sysctl -w net.ipv4.conf.all.accept_redirects=0</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-kernel')">Copy</button>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Disables IP forwarding and ICMP redirects for network security.</p>
-    </div>
-
-    <!-- Modprobe -->
-    <div class="card">
-        <h3>Modprobe Hardening</h3>
-        <p class="command" id="cmd-modprobe">echo "install usb-storage /bin/true" > /etc/modprobe.d/disable-usb.conf</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-modprobe')">Copy</button>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Disables unused kernel modules to reduce attack surface.</p>
-    </div>
-
+<!-- 2. Blacklist 'cramfs' kernel module -->
+<div class="card">
+    <h3>Blacklist 'cramfs'</h3>
+    <p class="command" id="cmd-cramfs">grep cramfs /etc/modprobe.d/*</p>
+    <button class="copy-btn" onclick="copyCommand('cmd-cramfs')">Copy</button>
+    <button class="toggle-btn">Show Explanation</button>
+    <p class="explanation">
+        <strong>Why:</strong> Prevent loading insecure/unneeded kernel modules.<br>
+        <strong>Solution:</strong> Create a blacklist file: <code>echo "install cramfs /bin/true" > /etc/modprobe.d/cramfs.conf</code>
+    </p>
 </div>
 
-<script>
-// Toggle explanation
-const toggleButtons = document.querySelectorAll('.toggle-btn');
-toggleButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const explanation = btn.nextElementSibling;
-        if(explanation.style.display === "block"){
-            explanation.style.display = "none";
-            btn.textContent = "Show Explanation";
-        } else {
-            explanation.style.display = "block";
-            btn.textContent = "Hide Explanation";
-        }
-    });
-});
+<!-- 3. Files/dirs in user home with mode > 0750 -->
+<div class="card">
+    <h3>Files/Dirs in Home &gt; 0750</h3>
+    <p class="command" id="cmd-mode0750">find /home -type f -perm /077</p>
+    <button class="copy-btn" onclick="copyCommand('cmd-mode0750')">Copy</button>
+    <button class="toggle-btn">Show Explanation</button>
+    <p class="explanation">
+        <strong>Why:</strong> Detect overly permissive files.<br>
+        <strong>Solution:</strong> Restrict permissions: <code>chmod 750 /home/username/file</code>
+    </p>
+</div>
 
-// Copy command functionality
-function copyCommand(id){
-    const commandText = document.getElementById(id).innerText;
-    navigator.clipboard.writeText(commandText).then(() => {
-        alert("Command copied to clipboard!");
-    });
-}
-</script>
+<!-- 4. Fallock deny setting -->
+<div class="card">
+    <h3>Fallock Deny Setting</h3>
+    <p class="command" id="cmd-fallock">grep deny /etc/security/faillock.conf</p>
+    <button class="copy-btn" onclick="copyCommand('cmd-fallock')">Copy</button>
+    <button class="toggle-btn">Show Explanation</button>
+    <p class="explanation">
+        <strong>Why:</strong> Lock accounts after failed login attempts.<br>
+        <strong>Solution:</strong> Add or edit: <code>deny = 5</code> in /etc/security/faillock.conf
+    </p>
+</div>
 
-</body>
-</html>
+<!-- 5. GRUB2 password -->
+<div class="card">
+    <h3>GRUB2 Password</h3>
+    <p class="command" id="cmd-grub">grep -i "password_pbkdf2" /boot/grub2/user.cfg</p>
+    <button class="copy-btn" onclick="copyCommand('cmd-grub')">Copy</button>
+    <button class="toggle-btn">Show Explanation</button>
+    <p class="explanation">
+        <strong>Why:</strong> Prevent unauthorized boot modifications.<br>
+        <strong>Solution:</strong> Set password: <code>grub2-setpassword</code> (will use pbkdf2 SHA512)
+    </p>
+</div>
+
+<!-- 6. IP Forward -->
+<div class="card">
+    <h3>IP Forward</h3>
+    <p class="command" id="cmd-ipforward">cat /proc/sys/net/ipv4/ip_forward</p>
+    <button class="copy-btn" onclick="copyCommand('cmd-ipforward')">Copy</button>
+    <button class="toggle-btn">Show Explanation</button>
+    <p class="explanation">
+        <strong>Why:</strong> Ensure system does not forward packets unless needed.<br>
+        <strong>Solution:</strong> Disable: <code>sysctl -w net.ipv4.ip_forward=0</code> and persist in /etc/sysctl.conf
+    </p>
+</div>
+
+<!-- 7. pwquality maxrepeat -->
+<div class="card">
+    <h3>pwquality MaxRepeat</h3>
+    <p class="command" id="cmd-maxrepeat">grep maxrepeat /etc/security/pwquality.conf</p>
+    <button class="copy-btn" onclick="copyCommand('cmd-maxrepeat')">Copy</button>
+    <button class="toggle-btn">Show Explanation</button>
+    <p class="explanation">
+        <strong>Why:</strong> Limits repeated characters in passwords.<br>
+        <strong>Solution:</strong> Set: <code>maxrepeat = 3</code> in /etc/security/pwquality.conf
+    </p>
+</div>
+
+<!-- 8. pwquality minlen -->
+<div class="card">
+    <h3>pwquality MinLen</h3>
+    <p class="command" id="cmd-minlen">grep minlen /etc/security/pwquality.conf</p>
+    <button class="copy-btn" onclick="copyCommand('cmd-minlen')">Copy</button>
+    <button class="toggle-btn">Show Explanation</button>
+    <p class="explanation">
+        <strong>Why:</strong> Enforces minimum password length.<br>
+        <strong>Solution:</strong> Set: <code>minlen = 12</code> in /etc/security/pwquality.conf
+    </p>
+</div>
