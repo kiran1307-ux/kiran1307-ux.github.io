@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Linux & DevOps Video Tutorials</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 body {
     margin: 0;
@@ -12,33 +14,66 @@ body {
     background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
     color: #fff;
 }
-<div class="navbar">
-    <a href="index.html" class="nav-btn">🏠 Home</a>
-</div>
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.nav-btn {
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    transition: 0.3s, transform 0.3s;
+}
+
+.nav-btn:hover {
+    background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.15));
+    transform: translateY(-2px);
+}
+
+/* MAIN */
 .container {
     padding: 40px 20px;
     max-width: 1000px;
     margin: auto;
 }
+
 h1 {
     text-align: center;
     color: #facc15;
 }
+
 .section {
     margin-bottom: 50px;
 }
+
 .section h2 {
     color: #22c55e;
     border-left: 5px solid #facc15;
     padding-left: 10px;
 }
+
 .section p {
     line-height: 1.6;
+    opacity: 0.9;
 }
+
+/* VIDEO */
 .video {
     margin-top: 20px;
     text-align: center;
 }
+
 iframe {
     width: 100%;
     height: 400px;
@@ -51,13 +86,22 @@ iframe {
 
 <body>
 
+<!-- NAVBAR -->
+<div class="navbar">
+    <a href="index.html" class="nav-btn">🏠 Home</a>
+    <a href="beginner.html" class="nav-btn">📘 Beginner</a>
+    <a href="intermediate.html" class="nav-btn">📗 Intermediate</a>
+    <a href="advanced.html" class="nav-btn">📕 Advanced</a>
+</div>
+
+<!-- MAIN CONTENT -->
 <div class="container">
 
 <h1>Linux & DevOps Video Tutorials</h1>
 
 <div class="section">
 <h2>1. Linux Basics</h2>
-<p>Learn Linux commands, navigation, and fundamentals.</p>
+<p>Start your journey with Linux fundamentals, commands, and navigation.</p>
 <div class="video">
 <iframe src="https://www.youtube.com/embed/IVquJh3DXUA" allowfullscreen></iframe>
 </div>
@@ -65,7 +109,7 @@ iframe {
 
 <div class="section">
 <h2>2. Linux System Administration</h2>
-<p>Understand services, processes, and troubleshooting.</p>
+<p>Learn how to manage services, users, processes, and logs.</p>
 <div class="video">
 <iframe src="https://www.youtube.com/embed/wBp0Rb-ZJak" allowfullscreen></iframe>
 </div>
@@ -73,7 +117,7 @@ iframe {
 
 <div class="section">
 <h2>3. Shell Scripting</h2>
-<p>Automate tasks using bash scripting.</p>
+<p>Automate tasks using bash scripting and real-world examples.</p>
 <div class="video">
 <iframe src="https://www.youtube.com/embed/v-F3YLd6oMw" allowfullscreen></iframe>
 </div>
@@ -81,7 +125,7 @@ iframe {
 
 <div class="section">
 <h2>4. Git & GitHub</h2>
-<p>Learn version control and collaboration workflows.</p>
+<p>Learn version control, branching, and collaboration workflows.</p>
 <div class="video">
 <iframe src="https://www.youtube.com/embed/RGOj5yH7evk" allowfullscreen></iframe>
 </div>
@@ -89,7 +133,7 @@ iframe {
 
 <div class="section">
 <h2>5. Docker</h2>
-<p>Understand containers and Docker usage.</p>
+<p>Understand containers and how to deploy applications using Docker.</p>
 <div class="video">
 <iframe src="https://www.youtube.com/embed/fqMOX6JJhGo" allowfullscreen></iframe>
 </div>
@@ -97,7 +141,7 @@ iframe {
 
 <div class="section">
 <h2>6. Kubernetes</h2>
-<p>Deploy and manage containerized applications.</p>
+<p>Deploy, scale, and manage applications using Kubernetes.</p>
 <div class="video">
 <iframe src="https://www.youtube.com/embed/X48VuDVv0do" allowfullscreen></iframe>
 </div>
@@ -105,7 +149,7 @@ iframe {
 
 <div class="section">
 <h2>7. CI/CD Pipelines</h2>
-<p>Automate build, test, and deployment processes.</p>
+<p>Automate build, test, and deployment using CI/CD tools.</p>
 <div class="video">
 <iframe src="https://www.youtube.com/embed/scEDHsr3APg" allowfullscreen></iframe>
 </div>
