@@ -68,17 +68,21 @@ h1{text-align:center;font-size:42px;margin-bottom:20px;color:#facc15;}
 .question{margin-bottom:20px;}
 .question h3{font-size:18px;margin-bottom:10px;}
 .options label{display:block;margin-bottom:5px;cursor:pointer;}
-button.submit-btn{
+.options input.correct + span { color: #22c55e; font-weight:bold; }
+.options input.wrong + span { color: #ef4444; font-weight:bold; }
+button.submit-btn, button.reset-btn{
     padding:10px 20px;
     border:none;
     border-radius:8px;
-    background:#22c55e;
     color:#111;
     font-weight:bold;
     cursor:pointer;
     transition:0.3s;
 }
+button.submit-btn{background:#22c55e;}
 button.submit-btn:hover{background:#16a34a;}
+button.reset-btn{background:#f87171;margin-left:10px;}
+button.reset-btn:hover{background:#dc2626;}
 .result{
     margin-top:20px;
     font-size:20px;
@@ -116,19 +120,20 @@ button.submit-btn:hover{background:#16a34a;}
     <div id="mock" class="exam-section"></div>
 
     <button class="submit-btn" onclick="checkAnswers()">Submit</button>
+    <button class="reset-btn" onclick="resetExam()">Reset</button>
     <div class="result" id="exam-result"></div>
 </div>
 
 <script>
-// --- Questions arrays ---
+// --- 10 questions each ---
 const exams = {
     rhel8:[
-        {q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"SSH configurations are controlled via /etc/ssh/sshd_config to secure remote access."},
-        {q:"Which command verifies journal logs?", options:["journalctl","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"journalctl ensures integrity of system logs for auditing purposes."},
+        {q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"SSH configurations are controlled via /etc/ssh/sshd_config."},
+        {q:"Which command verifies journal logs?", options:["journalctl","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"journalctl ensures integrity of system logs."},
         {q:"Command to disable root SSH login?", options:["PermitRootLogin no","AllowRootLogin yes","RootLogin off","DenyRoot yes"], answer:0, explanation:"Disabling root SSH login prevents direct root access remotely."},
         {q:"File to configure password policies?", options:["/etc/security/pwquality.conf","/etc/login.defs","/etc/passwd","/etc/group"], answer:0, explanation:"/etc/security/pwquality.conf enforces password complexity."},
         {q:"Command to restrict kernel pointers?", options:["echo 1 > /proc/sys/kernel/kptr_restrict","sysctl net.ipv4.ip_forward=0","chmod 600 /etc/shadow","chown root:root /etc/shadow"], answer:0, explanation:"Restricting kernel pointers prevents sensitive info exposure."},
-        {q:"Command to change ownership of /etc/shadow?", options:["chown root:root /etc/shadow","chmod 600 /etc/shadow","ls -l /etc/shadow","passwd"], answer:0, explanation:"Ensures only root owns /etc/shadow for security."},
+        {q:"Command to change ownership of /etc/shadow?", options:["chown root:root /etc/shadow","chmod 600 /etc/shadow","ls -l /etc/shadow","passwd"], answer:0, explanation:"Ensures only root owns /etc/shadow."},
         {q:"Command to set shadow file permissions?", options:["chmod 600 /etc/shadow","chmod 644 /etc/shadow","chmod 777 /etc/shadow","chmod 700 /etc/shadow"], answer:0, explanation:"Restricts access to shadow file to root only."},
         {q:"Command to enforce SHA-512 password hashing?", options:["authconfig --passalgo=sha512 --update","authconfig --passalgo=md5 --update","passwd --sha512","pwconv"], answer:0, explanation:"SHA-512 is a strong hashing algorithm for passwords."},
         {q:"Command to disable unused kernel modules?", options:["echo 'install usb-storage /bin/true' > /etc/modprobe.d/disable-usb.conf","modprobe -r usb-storage","sysctl -w net.ipv4.ip_forward=0","chmod 600 /etc/shadow"], answer:0, explanation:"Prevents loading unused modules, reducing attack surface."},
@@ -150,12 +155,17 @@ const exams = {
         {q:"Which command changes file ownership?", options:["chown","chmod","ls","passwd"], answer:0, explanation:"chown changes owner/group of files."},
         {q:"Which command sets file permissions?", options:["chmod","chown","ls","passwd"], answer:0, explanation:"chmod sets file access permissions."},
         {q:"Command to view running processes?", options:["ps aux","top","htop","jobs"], answer:0, explanation:"ps aux lists all running processes."},
-        {q:"Command to check disk space?", options:["df -h","du -sh /","lsblk","fdisk -l"], answer:0, explanation:"df -h shows used/available disk space."},
-        {q:"Command to check listening ports?", options:["ss -tuln","netstat -an","lsof -i","iptables -L"], answer:0, explanation:"ss shows all listening ports."}
+        {q:"Command to check disk space?", options:["df -h","du -sh /","lsblk","fdisk -l"], answer:0, explanation:"df -h shows used/available space."},
+        {q:"Command to check listening ports?", options:["ss -tuln","netstat -an","lsof -i","iptables -L"], answer:0, explanation:"ss shows all listening ports."},
+        {q:"Command to view logs?", options:["journalctl","cat /var/log/messages","dmesg","tail -f /var/log/messages"], answer:0, explanation:"journalctl views system logs."},
+        {q:"Command to restart a service?", options:["systemctl restart service","service restart service","/etc/init.d/service restart","systemctl reload service"], answer:0, explanation:"systemctl restart reloads the service."},
+        {q:"Command to lock user account?", options:["usermod -L username","passwd -l username","chage -E 0 username","pwconv"], answer:0, explanation:"Locks user account."},
+        {q:"Command to unlock user account?", options:["usermod -U username","passwd -u username","chage -E -1 username","pwconv"], answer:0, explanation:"Unlocks user account."},
+        {q:"Command to check SELinux mode?", options:["sestatus","getenforce","setenforce 1","selinux-config"], answer:0, explanation:"Displays current SELinux mode."}
     ]
 };
 
-// --- Function to render questions ---
+// Render questions
 function renderExam(tab) {
     const container = document.getElementById(tab);
     container.innerHTML = '';
@@ -164,39 +174,64 @@ function renderExam(tab) {
         qDiv.className = 'question';
         qDiv.innerHTML = `<h3>${index + 1}. ${item.q}</h3>
             <div class="options">
-                ${item.options.map((opt, i) => 
-                    `<label><input type="radio" name="${tab}-${index}" value="${i}"> ${opt}</label>`
-                ).join('')}
+                ${item.options.map((opt,i)=>`<label><input type="radio" name="${tab}-${index}" value="${i}"> <span>${opt}</span></label>`).join('')}
             </div>
             <div class="explanation" style="display:none;">${item.explanation}</div>`;
         container.appendChild(qDiv);
     });
 }
 
-// --- Tab switching ---
-document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
         btn.classList.add('active');
-        document.querySelectorAll('.exam-section').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('.exam-section').forEach(sec=>sec.classList.remove('active'));
         document.getElementById(btn.dataset.tab).classList.add('active');
     });
 });
 
-// --- Initial render ---
-['rhel8','rhel9','mock'].forEach(tab => renderExam(tab));
+// Initial render
+['rhel8','rhel9','mock'].forEach(tab=>renderExam(tab));
 
-// --- Check answers ---
+// Check answers
 function checkAnswers() {
-    let totalCorrect = 0;
-    ['rhel8','rhel9','mock'].forEach(tab => {
-        exams[tab].forEach((q, idx) => {
+    let totalCorrect=0;
+    ['rhel8','rhel9','mock'].forEach(tab=>{
+        exams[tab].forEach((q, idx)=>{
             const selected = document.querySelector(`input[name="${tab}-${idx}"]:checked`);
-            if (selected && parseInt(selected.value) === q.answer) totalCorrect++;
-            if (selected) selected.closest('.question').querySelector('.explanation').style.display = 'block';
+            const options = document.querySelectorAll(`input[name="${tab}-${idx}"]`);
+            options.forEach(opt=>{
+                opt.classList.remove('correct','wrong');
+            });
+            if(selected){
+                if(parseInt(selected.value)===q.answer){
+                    selected.classList.add('correct');
+                    totalCorrect++;
+                } else {
+                    selected.classList.add('wrong');
+                    options[q.answer].classList.add('correct');
+                }
+                selected.closest('.question').querySelector('.explanation').style.display='block';
+            }
         });
     });
-    document.getElementById('exam-result').innerText = `You got ${totalCorrect} correct answers!`;
+    document.getElementById('exam-result').innerText=`You got ${totalCorrect} correct answers!`;
+}
+
+// Reset exam
+function resetExam() {
+    ['rhel8','rhel9','mock'].forEach(tab=>{
+        exams[tab].forEach((q, idx)=>{
+            const options = document.querySelectorAll(`input[name="${tab}-${idx}"]`);
+            options.forEach(opt=>{
+                opt.checked=false;
+                opt.classList.remove('correct','wrong');
+            });
+            document.querySelector(`div#${tab} .question:nth-child(${idx+1}) .explanation`).style.display='none';
+        });
+    });
+    document.getElementById('exam-result').innerText='';
 }
 </script>
 
