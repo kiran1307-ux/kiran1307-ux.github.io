@@ -44,7 +44,7 @@ h1 {
 .card {
     background: rgba(255,255,255,0.05);
     border-radius:15px;
-    padding:20px;
+    padding:50px 20px 20px 20px; /* extra top padding for buttons */
     margin-bottom:20px;
     cursor:pointer;
     transition:0.3s;
@@ -68,12 +68,12 @@ h1 {
     border-radius:6px;
     display:inline-block;
     font-family: monospace;
-    position: relative;
+    white-space: pre-line;
 }
 .copy-btn {
     position: absolute;
-    right:10px;
-    top:5px;
+    right: 10px;
+    top: 10px;
     background:#facc15;
     color:#111;
     border:none;
@@ -82,17 +82,10 @@ h1 {
     cursor:pointer;
     font-size:12px;
 }
-.explanation {
-    background: rgba(255,255,255,0.1);
-    padding:10px 15px;
-    border-radius:8px;
-    margin-top:10px;
-    display:none;
-}
 .toggle-btn {
-    position:absolute;
-    right:20px;
-    top:20px;
+    position: absolute;
+    right: 100px; /* to the left of copy button */
+    top: 10px;
     background:#facc15;
     color:#111;
     border:none;
@@ -104,6 +97,14 @@ h1 {
 }
 .toggle-btn:hover {
     background:#eab308;
+}
+.explanation {
+    background: rgba(255,255,255,0.1);
+    padding:10px 15px;
+    border-radius:8px;
+    margin-top:10px;
+    display:none;
+    font-size:14px;
 }
 </style>
 </head>
@@ -123,7 +124,9 @@ h1 {
     <div class="card">
         <h3>SSH Hardening</h3>
         <p><strong>File:</strong> /etc/ssh/sshd_config</p>
-        <p class="command" id="cmd-ssh">PermitRootLogin no<br>Protocol 2<br>PermitEmptyPasswords no</p>
+        <p class="command" id="cmd-ssh">PermitRootLogin no
+Protocol 2
+PermitEmptyPasswords no</p>
         <button class="copy-btn" onclick="copyCommand('cmd-ssh')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
         <p class="explanation"><strong>Why:</strong> Secures remote SSH access, disables root login, prevents empty passwords, enforces protocol 2.</p>
@@ -186,13 +189,14 @@ h1 {
     <!-- Kernel Hardening -->
     <div class="card">
         <h3>Kernel Hardening</h3>
-        <p class="command" id="cmd-kernel">sysctl -w net.ipv4.ip_forward=0<br>sysctl -w net.ipv4.conf.all.accept_redirects=0</p>
+        <p class="command" id="cmd-kernel">sysctl -w net.ipv4.ip_forward=0
+sysctl -w net.ipv4.conf.all.accept_redirects=0</p>
         <button class="copy-btn" onclick="copyCommand('cmd-kernel')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
         <p class="explanation"><strong>Why:</strong> Disables IP forwarding and ICMP redirects for network security.</p>
     </div>
 
-    <!-- Modprobe / Disable Unused Modules -->
+    <!-- Modprobe -->
     <div class="card">
         <h3>Modprobe Hardening</h3>
         <p class="command" id="cmd-modprobe">echo "install usb-storage /bin/true" > /etc/modprobe.d/disable-usb.conf</p>
@@ -221,7 +225,7 @@ toggleButtons.forEach(btn => {
 
 // Copy command functionality
 function copyCommand(id){
-    const commandText = document.getElementById(id).innerText.replace(/\n/g, "\n");
+    const commandText = document.getElementById(id).innerText;
     navigator.clipboard.writeText(commandText).then(() => {
         alert("Command copied to clipboard!");
     });
