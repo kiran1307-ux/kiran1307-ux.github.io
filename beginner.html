@@ -1,265 +1,139 @@
+<div class="header-title">Linux & DevOps Beginner Tutorials</div>
+<div class="header-subtitle">Build strong fundamentals with clear explanations and real-world understanding</div>
+
 <div class="container">
 
-    <!-- 1. What is Linux -->
     <div class="card" data-icon="🖥️">
         <h2>1. What is Linux?</h2>
-
-        <p>Linux is an <b>open-source operating system</b> used in servers, cloud, and DevOps.</p>
-
-<pre>
-User → Shell → Kernel → Hardware
-</pre>
-
-        <ul>
-            <li><b>Kernel:</b> Brain of OS</li>
-            <li><b>Shell:</b> Command interface</li>
-            <li><b>Distros:</b> Ubuntu, CentOS, RHEL</li>
-        </ul>
+        <p>Linux is an open-source operating system used to run servers, cloud infrastructure, and DevOps tools. Unlike Windows, Linux gives full control to users and is highly customizable.</p>
+        <p>It is widely used because it is stable, secure, and free. Most websites, applications, and cloud platforms run on Linux.</p>
+        <p><b>Architecture:</b> User interacts with Shell → Shell communicates with Kernel → Kernel controls Hardware.</p>
     </div>
 
-    <!-- 2. Install Linux -->
     <div class="card" data-icon="💿">
-        <h2>2. How to Install Linux</h2>
-
-<pre>
-Options:
-✔ VirtualBox (Recommended)
-✔ Dual Boot
-✔ Cloud VM (AWS)
-</pre>
-
-        <ul>
-            <li>Download Ubuntu ISO</li>
-            <li>Create VM</li>
-            <li>Start learning safely</li>
-        </ul>
+        <h2>2. Installing Linux</h2>
+        <p>To start learning Linux, you need to install it. Beginners usually use a virtual machine so they don’t affect their main system.</p>
+        <p><b>Options:</b> VirtualBox (best), Dual Boot, or Cloud (AWS).</p>
+        <p>Using VirtualBox, you can run Linux inside Windows safely and practice commands anytime.</p>
     </div>
 
-    <!-- 3. Linux File System -->
     <div class="card" data-icon="🗂️">
-        <h2>3. File System</h2>
-
-<pre>
-/
-├── home
-├── etc
-├── var
-├── bin
-└── usr
-</pre>
-
-        <ul>
-            <li><b>/home:</b> user files</li>
-            <li><b>/etc:</b> configs</li>
-            <li><b>/var:</b> logs</li>
-        </ul>
+        <h2>3. Linux File System</h2>
+        <p>Linux uses a hierarchical file structure that starts from the root directory (/). Everything in Linux is treated as a file.</p>
+        <p><b>Important directories:</b></p>
+        <p>/home → user files | /etc → configuration files | /var → logs | /bin → commands</p>
+        <p>Understanding the file system helps you navigate and manage data efficiently.</p>
     </div>
 
-    <!-- 4. Basic Commands -->
     <div class="card" data-icon="⌨️">
         <h2>4. Basic Commands</h2>
-
-<pre>
-pwd   → current folder
-ls    → list files
-cd    → change folder
-</pre>
-
-<pre>
-mkdir test
-rm file
-cp a b
-mv a b
-</pre>
+        <p>Linux is controlled using commands typed in the terminal.</p>
+        <p><b>Examples:</b> ls (list files), cd (change directory), pwd (current path).</p>
+        <p>You also use commands like mkdir (create folder), rm (delete), cp (copy), and mv (move).</p>
+        <p>Practicing these daily is the first step to mastering Linux.</p>
     </div>
 
-    <!-- 5. File Permissions -->
     <div class="card" data-icon="🔑">
-        <h2>5. Permissions</h2>
-
-<pre>
--rwxr-xr--
-Owner Group Others
-</pre>
-
-<pre>
-chmod 755 file
-</pre>
-
-        <p>Controls who can read, write, execute</p>
+        <h2>5. File Permissions</h2>
+        <p>Linux is a multi-user system, so it controls who can access files using permissions.</p>
+        <p>Each file has read (r), write (w), and execute (x) permissions for owner, group, and others.</p>
+        <p><b>Command:</b> chmod is used to change permissions.</p>
+        <p>This ensures system security and proper access control.</p>
     </div>
 
-    <!-- 6. Users & Groups -->
     <div class="card" data-icon="👥">
         <h2>6. Users & Groups</h2>
-
-<pre>
-adduser user1
-passwd user1
-</pre>
-
-        <ul>
-            <li>Multiple users in system</li>
-            <li>Groups manage access</li>
-        </ul>
+        <p>Linux allows multiple users to work on the same system securely.</p>
+        <p>Users can be grouped together to manage permissions easily.</p>
+        <p><b>Example:</b> Admin users have more control than normal users.</p>
+        <p>This concept is important for managing servers in real environments.</p>
     </div>
 
-    <!-- 7. Package Management -->
     <div class="card" data-icon="📦">
         <h2>7. Package Management</h2>
-
-<pre>
-apt update
-apt install nginx
-</pre>
-
-        <p>Install software easily</p>
+        <p>Linux uses package managers to install, update, and remove software.</p>
+        <p><b>Examples:</b> apt (Ubuntu), yum (CentOS).</p>
+        <p>You don’t download software manually like Windows — everything is installed using commands.</p>
+        <p>This makes software management fast and efficient.</p>
     </div>
 
-    <!-- 8. Processes -->
     <div class="card" data-icon="⚡">
-        <h2>8. Processes</h2>
-
-<pre>
-ps aux
-top
-kill PID
-</pre>
-
-        <p>Manage running programs</p>
+        <h2>8. Process Management</h2>
+        <p>A process is a running program in Linux.</p>
+        <p>You can view processes using commands like ps and top.</p>
+        <p>If a process is not working properly, you can stop it using the kill command.</p>
+        <p>This helps in monitoring system performance.</p>
     </div>
 
-    <!-- 9. Networking -->
     <div class="card" data-icon="🌐">
-        <h2>9. Networking</h2>
-
-<pre>
-ping google.com
-ifconfig
-ssh user@ip
-</pre>
-
-        <ul>
-            <li>IP Address</li>
-            <li>Ports</li>
-        </ul>
+        <h2>9. Networking Basics</h2>
+        <p>Networking allows systems to communicate with each other.</p>
+        <p>Important concepts include IP address, ports, and DNS.</p>
+        <p><b>Commands:</b> ping (check connectivity), ssh (remote login).</p>
+        <p>This is essential for working with servers and cloud systems.</p>
     </div>
 
-    <!-- 10. Shell Scripting -->
     <div class="card" data-icon="📝">
         <h2>10. Shell Scripting</h2>
-
-<pre>
-#!/bin/bash
-echo "Hello DevOps"
-</pre>
-
-<pre>
-if [ $a -gt $b ]
-then echo "A is greater"
-fi
-</pre>
-
-        <p>Automate tasks</p>
+        <p>Shell scripting is used to automate repetitive tasks in Linux.</p>
+        <p>You can write scripts using Bash to perform multiple commands at once.</p>
+        <p>This saves time and reduces manual effort in DevOps workflows.</p>
     </div>
 
-    <!-- 11. SSH -->
     <div class="card" data-icon="🔐">
-        <h2>11. SSH</h2>
-
-<pre>
-ssh user@server-ip
-</pre>
-
-        <p>Secure remote access to servers</p>
+        <h2>11. SSH (Remote Access)</h2>
+        <p>SSH allows you to connect to remote servers securely.</p>
+        <p>It is widely used in DevOps to manage cloud servers.</p>
+        <p>Instead of physically accessing a server, you can control it from anywhere.</p>
     </div>
 
-    <!-- 12. Logs -->
     <div class="card" data-icon="📜">
-        <h2>12. Logs</h2>
-
-<pre>
-/var/log
-tail -f log.txt
-</pre>
-
-        <p>Debug issues using logs</p>
+        <h2>12. Logs & Debugging</h2>
+        <p>Logs store system activity and errors.</p>
+        <p>They are very important for troubleshooting issues.</p>
+        <p>Most logs are stored in /var/log directory.</p>
+        <p>By reading logs, you can identify and fix problems quickly.</p>
     </div>
 
-    <!-- 13. DevOps Intro -->
     <div class="card" data-icon="⚙️">
-        <h2>13. DevOps Introduction</h2>
-
-<pre>
-Dev + Ops = DevOps
-</pre>
-
-<pre>
-Code → Build → Test → Deploy
-</pre>
-
-        <p>Improves speed & automation</p>
+        <h2>13. Introduction to DevOps</h2>
+        <p>DevOps is a culture that combines development and operations.</p>
+        <p>It focuses on automation, faster delivery, and collaboration.</p>
+        <p>The goal is to deliver software quickly and reliably.</p>
     </div>
 
-    <!-- 14. Git Basics -->
     <div class="card" data-icon="🛠️">
         <h2>14. Git Basics</h2>
-
-<pre>
-git init
-git add .
-git commit -m "first"
-</pre>
-
-        <p>Version control system</p>
+        <p>Git is a version control system used to track code changes.</p>
+        <p>It allows teams to collaborate and manage code efficiently.</p>
+        <p>You can save versions, revert changes, and work with multiple developers.</p>
     </div>
 
-    <!-- 15. CI/CD -->
     <div class="card" data-icon="🔄">
-        <h2>15. CI/CD</h2>
-
-<pre>
-Push Code → Build → Test → Deploy
-</pre>
-
-        <p>Automation pipeline</p>
+        <h2>15. CI/CD Basics</h2>
+        <p>CI/CD automates the process of building, testing, and deploying code.</p>
+        <p>This reduces manual work and speeds up development.</p>
+        <p>It is one of the most important concepts in DevOps.</p>
     </div>
 
-    <!-- 16. Docker Intro -->
     <div class="card" data-icon="🐳">
-        <h2>16. Docker</h2>
-
-<pre>
-Container = App + Dependencies
-</pre>
-
-<pre>
-docker run nginx
-</pre>
-
+        <h2>16. Docker Introduction</h2>
+        <p>Docker allows you to run applications in containers.</p>
+        <p>Containers include the app and its dependencies, ensuring it runs the same everywhere.</p>
+        <p>This solves the “it works on my machine” problem.</p>
     </div>
 
-    <!-- 17. Cloud Basics -->
     <div class="card" data-icon="☁️">
         <h2>17. Cloud Basics</h2>
-
-<pre>
-AWS / Azure / GCP
-</pre>
-
-        <p>Run servers on internet</p>
+        <p>Cloud platforms like AWS, Azure, and GCP provide servers over the internet.</p>
+        <p>You don’t need physical hardware — everything runs in the cloud.</p>
+        <p>This is widely used in modern DevOps environments.</p>
     </div>
 
-    <!-- 18. Beginner Roadmap -->
     <div class="card" data-icon="🎯">
-        <h2>18. Roadmap</h2>
-
-<pre>
-Linux → Git → Scripting
-→ Docker → CI/CD → Cloud
-</pre>
-
-        <p>Follow this path to become DevOps Engineer</p>
+        <h2>18. Beginner Roadmap</h2>
+        <p>Start with Linux basics → Learn commands → Practice scripting → Learn Git → Understand Docker → Learn CI/CD → Move to Cloud.</p>
+        <p>Following this step-by-step path will help you become a DevOps engineer.</p>
     </div>
 
 </div>
