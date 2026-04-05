@@ -138,9 +138,7 @@ button.reset-btn:hover{background:#be123c;}
 </div>
 
 <script>
-// ==========================
 // Questions Arrays
-// ==========================
 const exams = {
     rhel8: [
         {q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"Secures SSH access and prevents root login."},
@@ -211,21 +209,7 @@ const exams = {
 };
 
 // ==========================
-// Tab switching
-// ==========================
-const tabs = document.querySelectorAll('.tab-btn');
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        document.querySelectorAll('.exam-section').forEach(sec => sec.classList.remove('active'));
-        document.getElementById(tab.dataset.tab).classList.add('active');
-        document.getElementById('exam-result').innerText = ''; // Clear score when switching
-    });
-});
-
-// ==========================
-// Render questions dynamically
+// Render questions
 // ==========================
 for (let key in exams) {
     const container = document.getElementById(key);
@@ -234,4 +218,16 @@ for (let key in exams) {
         div.className = 'question';
         let opts = '';
         item.options.forEach((opt,j)=>{
-            opts += `<label><input type="radio" name="${key}-${i}" value="${j}"> ${opt
+            opts += `<label><input type="radio" name="${key}-${i}" value="${j}"> ${opt}</label>`;
+        });
+        div.innerHTML = `<h3>${i+1}. ${item.q}</h3><div class="options">${opts}</div><p class="explanation">${item.explanation}</p>`;
+        container.appendChild(div);
+    });
+}
+
+// ==========================
+// Tab switching
+// ==========================
+const tabs = document.querySelectorAll('.tab-btn');
+tabs.forEach(tab => {
+    tab.addEventListener
