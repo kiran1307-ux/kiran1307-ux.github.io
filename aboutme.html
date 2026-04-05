@@ -7,6 +7,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Make cards non-clickable and hide buttons for static cards */
+    .card.static {
+      cursor: default;
+    }
+    .card.static button {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
@@ -25,30 +34,34 @@
 </section>
 
 <div class="container">
-  <a href="#" class="card-link">
-    <div class="card">
-      <i class="fas fa-user-graduate"></i>
-      <h2>Experience</h2>
-      <p>Worked on Linux systems, DevOps pipelines, and security hardening for enterprise environments.</p>
-      <button>Learn More <i class="fas fa-arrow-right"></i></button>
-    </div>
-  </a>
+  <!-- Experience Card -->
+  <div class="card static">
+    <i class="fas fa-user-graduate"></i>
+    <h2>Experience</h2>
+    <p>Worked on Linux systems, DevOps pipelines, and security hardening for enterprise environments.</p>
+  </div>
 
-  <a href="#" class="card-link">
-    <div class="card">
-      <i class="fas fa-code"></i>
-      <h2>Skills</h2>
-      <p>Linux Administration, Ansible, Docker, Red Hat Security, DevOps Automation.</p>
-      <button>Explore Skills <i class="fas fa-arrow-right"></i></button>
-    </div>
-  </a>
+  <!-- Skills Card -->
+  <div class="card static">
+    <i class="fas fa-code"></i>
+    <h2>Skills</h2>
+    <p>Linux Administration, Bash, Ansible, Docker, Red Hat Security, DevOps Automation.</p>
+  </div>
 
-  <a href="#" class="card-link">
+  <!-- Passion Card -->
+  <div class="card static">
+    <i class="fas fa-heart"></i>
+    <h2>Passion</h2>
+    <p>Teaching, sharing knowledge, and making IT learning fun and accessible for everyone.</p>
+  </div>
+
+  <!-- LinkedIn Card (Redirect) -->
+  <a href="https://www.linkedin.com/in/kiran-779626149" target="_blank" class="card-link">
     <div class="card">
-      <i class="fas fa-heart"></i>
-      <h2>Passion</h2>
-      <p>Teaching, sharing knowledge, and making IT learning fun and accessible for everyone.</p>
-      <button>Connect <i class="fas fa-arrow-right"></i></button>
+      <i class="fab fa-linkedin"></i>
+      <h2>Connect on LinkedIn</h2>
+      <p>Visit my LinkedIn profile to connect, see my professional experience, and stay updated with my projects.</p>
+      <button>Visit Profile <i class="fas fa-arrow-right"></i></button>
     </div>
   </a>
 </div>
