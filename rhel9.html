@@ -309,6 +309,116 @@ h1 { margin-bottom:30px; font-size:36px; color:#facc15; }
 <div class="explanation">Enables host firewall for protection.</div>
 </div>
 
+<!-- 26 -->
+<div class="card">
+<h3>Disable USB Storage</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c26">lsmod | grep usb_storage</span><button class="copy-mini" onclick="copyCommand('c26',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f26">echo "install usb-storage /bin/true" > /etc/modprobe.d/disable-usb.conf</span><button class="copy-mini" onclick="copyCommand('f26',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Disables USB storage devices to reduce attack surface.</div>
+</div>
+
+<!-- 27 -->
+<div class="card">
+<h3>Set UMASK for root in bashrc</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c27">grep umask /root/.bashrc</span><button class="copy-mini" onclick="copyCommand('c27',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f27">echo "umask 027" >> /root/.bashrc</span><button class="copy-mini" onclick="copyCommand('f27',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Ensures root files have secure default permissions.</div>
+</div>
+
+<!-- 28 -->
+<div class="card">
+<h3>Deny Setting in /etc/security/faillock.conf</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c28">grep deny /etc/security/faillock.conf</span><button class="copy-mini" onclick="copyCommand('c28',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f28">echo "deny = 5" >> /etc/security/faillock.conf</span><button class="copy-mini" onclick="copyCommand('f28',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Locks accounts after 5 failed login attempts.</div>
+</div>
+
+<!-- 29 -->
+<div class="card">
+<h3>GRUB2 Password Setting</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c29">grep GRUB2_PASSWORD /boot/grub2/user.cfg</span><button class="copy-mini" onclick="copyCommand('c29',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f29">grub2-setpassword</span><button class="copy-mini" onclick="copyCommand('f29',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Prevents unauthorized GRUB boot modifications.</div>
+</div>
+
+<!-- 30 -->
+<div class="card">
+<h3>Max Repeat in /etc/security/pwquality.conf</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c30">grep maxrepeat /etc/security/pwquality.conf</span><button class="copy-mini" onclick="copyCommand('c30',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f30">echo "maxrepeat = 3" >> /etc/security/pwquality.conf</span><button class="copy-mini" onclick="copyCommand('f30',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Prevents repeated characters in passwords for stronger complexity.</div>
+</div>
+
+<!-- 31 -->
+<div class="card">
+<h3>Minimum Password Length</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c31">grep minlen /etc/security/pwquality.conf</span><button class="copy-mini" onclick="copyCommand('c31',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f31">echo "minlen = 12" >> /etc/security/pwquality.conf</span><button class="copy-mini" onclick="copyCommand('f31',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Ensures passwords are at least 12 characters long.</div>
+</div>
+
+<!-- 32 -->
+<div class="card">
+<h3>AIDE Package Installed</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c32">rpm -q aide</span><button class="copy-mini" onclick="copyCommand('c32',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f32">dnf install -y aide</span><button class="copy-mini" onclick="copyCommand('f32',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Advanced Intrusion Detection Environment ensures file integrity checks.</div>
+</div>
+
+<!-- 33 -->
+<div class="card">
+<h3>Login Grace Time</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c33">grep LoginGraceTime /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('c33',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f33">sed -i 's/^#LoginGraceTime.*/LoginGraceTime 60/' /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('f33',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Limits time for SSH login attempts.</div>
+</div>
+
+<!-- 34 -->
+<div class="card">
+<h3>Max Auth Tries</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c34">grep MaxAuthTries /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('c34',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f34">sed -i 's/^#MaxAuthTries.*/MaxAuthTries 4/' /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('f34',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Limits authentication attempts to prevent brute-force attacks.</div>
+</div>
+
+<!-- 35 -->
+<div class="card">
+<h3>Max Sessions</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c35">grep MaxSessions /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('c35',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f35">sed -i 's/^#MaxSessions.*/MaxSessions 10/' /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('f35',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Limits concurrent SSH sessions per user.</div>
+</div>
+
 </div>
 
 <script>
