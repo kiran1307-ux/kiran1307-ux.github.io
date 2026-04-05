@@ -7,6 +7,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Optional: make cards non-clickable but keep styling */
+    .card {
+      cursor: default;
+    }
+    .card button {
+      display: none; /* hide buttons since no redirection is needed */
+    }
+  </style>
 </head>
 <body>
 
@@ -26,40 +35,32 @@
 
 <div class="container">
   <!-- Linux Fundamentals -->
-  <a href="linuxandevops.html" class="card-link">
-    <div class="card">
-      <i class="fab fa-linux"></i>
-      <h2>Linux Fundamentals</h2>
-      <p>Learn Linux commands, shell scripting, file management, users & permissions, and system administration essentials.</p>
-    </div>
-  </a>
+  <div class="card">
+    <i class="fab fa-linux"></i>
+    <h2>Linux Fundamentals</h2>
+    <p>Learn Linux commands, shell scripting, file management, users & permissions, and system administration essentials.</p>
+  </div>
 
   <!-- DevOps Workflows -->
-  <a href="linuxandevops.html" class="card-link">
-    <div class="card">
-      <i class="fas fa-cogs"></i>
-      <h2>DevOps Workflows</h2>
-      <p>Hands-on tutorials for CI/CD pipelines, Docker, Kubernetes, Ansible, and modern DevOps practices for automated deployments.</p>
-    </div>
-  </a>
+  <div class="card">
+    <i class="fas fa-cogs"></i>
+    <h2>DevOps Workflows</h2>
+    <p>Hands-on tutorials for CI/CD pipelines, Docker, Kubernetes, Ansible, and modern DevOps practices for automated deployments.</p>
+  </div>
 
   <!-- RHEL Hardening -->
-  <a href="hardening.html" class="card-link">
-    <div class="card">
-      <i class="fas fa-shield-alt"></i>
-      <h2>RHEL Security Hardening</h2>
-      <p>Understand Red Hat security best practices, compliance, and hardening techniques to secure enterprise systems effectively.</p>
-    </div>
-  </a>
+  <div class="card">
+    <i class="fas fa-shield-alt"></i>
+    <h2>RHEL Security Hardening</h2>
+    <p>Understand Red Hat security best practices, compliance, and hardening techniques to secure enterprise systems effectively.</p>
+  </div>
 
   <!-- Interactive Tutorials -->
-  <a href="#" class="card-link">
-    <div class="card">
-      <i class="fas fa-book-open"></i>
-      <h2>Interactive Tutorials</h2>
-      <p>Engage with step-by-step exercises, practical examples, and quizzes to reinforce learning and gain real-world skills.</p>
-    </div>
-  </a>
+  <div class="card">
+    <i class="fas fa-book-open"></i>
+    <h2>Interactive Tutorials</h2>
+    <p>Engage with step-by-step exercises, practical examples, and quizzes to reinforce learning and gain real-world skills.</p>
+  </div>
 </div>
 
 <footer>
