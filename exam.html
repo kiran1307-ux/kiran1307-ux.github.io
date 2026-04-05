@@ -153,7 +153,8 @@ const exams = {
         {q:"Command to enable firewalld?", options:["systemctl enable firewalld","systemctl start iptables","ufw enable","firewall-cmd start"], answer:0, explanation:"Firewalld manages firewall rules in RHEL 8."},
         {q:"Command to check listening ports?", options:["ss -tuln","netstat -an","lsof -i","iptables -L"], answer:0, explanation:"Lists all listening ports for auditing."},
         {q:"Command to lock inactive user accounts?", options:["usermod -L username","passwd -l username","chage -E 0 username","pwconv"], answer:0, explanation:"Locks accounts to prevent unauthorized access."}
-    ],
+    ]
+    
     rhel9:[
         {q:"Default firewall in RHEL 9?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default in RHEL 9."},
         {q:"Command to verify SELinux status?", options:["sestatus","getenforce","setenforce 1","selinux-config"], answer:0, explanation:"sestatus shows current SELinux mode."},
@@ -194,4 +195,100 @@ const exams = {
         {q:"Command to disable IP forwarding?", options:["sysctl -w net.ipv4.ip_forward=0","sysctl -w net.ipv4.conf.all.accept_redirects=0","iptables -F","firewall-cmd --reload"], answer:0, explanation:"Prevents packet forwarding to secure network."},
         {q:"Command to audit failed logins?", options:["ausearch -m USER_LOGIN","lastb","journalctl -u sshd","cat /var/log/secure"], answer:0, explanation:"Auditing failed logins detects brute-force attacks."},
         {q:"Command to view cron jobs?", options:["crontab -l","ls /etc/cron*","systemctl status crond","cat /etc/crontab"], answer:0, explanation:"Lists user cron jobs."},
+        {q:"Command to disable USB storage module?", options:["echo 'install usb-storage /bin/true' > /etc/modprobe.d/disable-usb.conf","modprobe -r usb-storage","lsmod | grep usb","sysctl -w net.ipv4.ip_forward=0"], answer:0, explanation:"Prevents loading of USB storage module."}
+    ]
+};
+
+// Function to load questions into the exam sections
+function loadQuestions() {
+    for (const [examKey, questions] of Object.entries(exams)) {
+        const section = document.getElementById(examKey);
+        section.innerHTML = '';
+        questions.forEach((q, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            questionDiv.innerHTML = `
+                <h3>${index + 1}. ${q.q}</h3>
+                ${q.options.map((opt, i) => `
+                    <label>
+                        <input type="radio" name="q${examKey}${index}" value="${i}"> ${opt}
+                    </label>
+                `).join('')}
+            `;
+            section.appendChild(questionDiv);
+        });
+    }
+}
+
+// Function to switch tabs
+function switchTab(tabName) {
+    // Hide all sections
+    const sections = document.querySelectorAll('.exam-section');
+    sections.forEach(section => section.classList.remove('active'));
+    
+    // Show selected section
+    document.getElementById(tabName).classList.add('active');
+    
+    // Update tab buttons
+    const buttons = document.querySelectorAll('.tab-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+// Function to check answers
+function checkAnswers() {
+    const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-tab');
+    const questions = exams[activeTab];
+    let score = 0;
+    const total = questions.length;
+    let resultHTML = '';
+    
+    questions.forEach((q, index) => {
+        const selected = document.querySelector(`input[name="q${activeTab}${index}"]:checked`);
+        const questionDiv = document.querySelectorAll('.exam-section.active .question')[index];
+        
+        if (selected && parseInt(selected.value) === q.answer) {
+            score++;
+            questionDiv.style.color = '#22c55e'; // Green for correct
+        } else {
+            questionDiv.style.color = '#ef4444'; // Red for incorrect
+            resultHTML += `<p><strong>Incorrect:</strong> ${q.q}<br><em>Correct answer: ${q.options[q.answer]}</em><br>${q.explanation}</p>`;
+        }
+    });
+    
+    const percentage = Math.round((score / total) * 100);
+    let badge = '';
+    if (percentage >= 90) badge = 'Expert';
+    else if (percentage >= 80) badge = 'Advanced';
+    else if (percentage >= 70) badge = 'Intermediate';
+    else if (percentage >= 60) badge = 'Beginner';
+    else badge = 'Needs Improvement';
+    
+    document.getElementById('exam-result').innerHTML = `
+        <p>You scored ${score} out of ${total} (${percentage}%)</p>
+        <div class="badge">${badge}</div>
+        ${resultHTML}
+    `;
+}
+
+// Add event listeners to tab buttons
+document.addEventListener('DOMContentLoaded', function() {
+    loadQuestions();
+    
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            switchTab(this.getAttribute('data-tab'));
+        });
+    });
+});
+</script>
+</body>
+</html>
+        {q:"Command to disable root SSH login?", options:["PermitRootLogin no","AllowRootLogin yes","RootLogin off","DenyRoot yes"], answer:0, explanation:"Prevents remote root login."},
+        {q:"Command to restrict kernel pointers?", options:["echo 1 > /proc/sys/kernel/kptr_restrict","sysctl -w net.ipv4.ip_forward=0","chmod 600 /etc/shadow","chown root:root /etc/shadow"], answer:0, explanation:"Prevents exposing kernel memory pointers."},
+        {q:"Command to disable IP forwarding?", options:["sysctl -w net.ipv4.ip_forward=0","sysctl -w net.ipv4.conf.all.accept_redirects=0","iptables -F","firewall-cmd --reload"], answer:0, explanation:"Prevents packet forwarding to secure network."},
+        {q:"Command to audit failed logins?", options:["ausearch -m USER_LOGIN","lastb","journalctl -u sshd","cat /var/log/secure"], answer:0, explanation:"Auditing failed logins detects brute-force attacks."},
+        {q:"Command to view cron jobs?", options:["crontab -l","ls /etc/cron*","systemctl status crond","cat /etc/crontab"], answer:0, explanation:"Lists user cron jobs."},
         {q:"Command to disable USB storage module?", options:["echo 'install usb-storage /bin/true' > /etc/modprobe.d/disable-usb.conf","modprobe -r usb-storage","lsmod | grep usb","sysctl -w net.ipv4
+}; 
