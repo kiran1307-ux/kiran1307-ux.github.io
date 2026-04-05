@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux & DevOps Beginner Tutorials</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* BODY */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color: #fff;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color:white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    transition: 0.3s, transform 0.3s;
+    font-weight: bold;
+}
+.nav-btn:hover {
+    background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.15));
+    transform: translateY(-2px);
+}
+
+/* HEADER */
+.header-title {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: #facc15;
+    margin-top: 40px;
+}
+.header-subtitle {
+    text-align: center;
+    font-size: 18px;
+    opacity: 0.85;
+    margin-bottom: 50px;
+}
+
+/* CONTAINER */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* CARDS */
+.card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    width: 90%;
+    padding: 25px 20px;
+    border-radius: 20px;
+    transition: transform 0.4s, box-shadow 0.4s, background 0.4s;
+    position: relative;
+}
+.card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    background: rgba(255,255,255,0.1);
+}
+.card h2 {
+    color: #22c55e;
+    margin-bottom: 15px;
+}
+.card p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* ICONS */
+.card::before {
+    content: attr(data-icon);
+    font-size: 40px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    opacity: 0.2;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 25px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #facc15;
+    background: linear-gradient(90deg,#0f2027,#203a43,#2c5364);
+    border-top: 3px solid #38bdf8;
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <a href="index.html" class="nav-btn">🏠 Home</a>
+    <a href="linuxandevops.html" class="nav-btn">💻 Linux & DevOps</a>
+    <a href="beginner.html" class="nav-btn">🟢 Beginner</a>
+    <a href="intermediate.html" class="nav-btn">🟡 Intermediate</a>
+    <a href="advanced.html" class="nav-btn">🔴 Advanced</a>
+    <a href="interview.html" class="nav-btn">📝 Interview Prep</a>
+</div>
+
+<!-- HEADER -->
+<div class="header-title">Linux & DevOps for Beginners</div>
+<div class="header-subtitle">Step-by-step tutorials covering essential concepts, commands, and practices for Linux and DevOps beginners.</div>
+
+<!-- CONTENT CARDS -->
+<div class="container">
+
+    <div class="card" data-icon="🖥️">
+        <h2>1. Introduction to Linux</h2>
+        <p>Learn what Linux is, its history, distributions (Ubuntu, CentOS, RHEL), and why it is widely used in servers and DevOps workflows. Understand basic concepts such as the Linux kernel, shell, and filesystem hierarchy.</p>
+    </div>
+
+    <div class="card" data-icon="📂">
+        <h2>2. Linux Command Line Basics</h2>
+        <p>Familiarize yourself with terminal commands: navigation (cd, ls, pwd), file operations (cp, mv, rm, touch, mkdir), and viewing files (cat, less, head, tail). Learn about file permissions (chmod, chown) and managing users and groups.</p>
+    </div>
+
+    <div class="card" data-icon="📝">
+        <h2>3. Shell Scripting</h2>
+        <p>Understand the basics of Bash scripting, variables, loops, conditionals, and creating small automation scripts. Learn how to write reusable scripts to automate repetitive tasks in Linux.</p>
+    </div>
+
+    <div class="card" data-icon="🐳">
+        <h2>4. Introduction to DevOps</h2>
+        <p>Learn the principles of DevOps: continuous integration, continuous deployment (CI/CD), version control with Git, and collaboration. Understand how DevOps bridges development and operations teams.</p>
+    </div>
+
+    <div class="card" data-icon="⚙️">
+        <h2>5. Version Control with Git</h2>
+        <p>Learn Git basics: git init, git add, git commit, git status, git log. Understand repositories, branches, merges, and collaborating using GitHub. Practice creating repositories and pushing code online.</p>
+    </div>
+
+    <div class="card" data-icon="🐳">
+        <h2>6. Docker Basics</h2>
+        <p>Understand containerization concepts with Docker. Learn to pull images, create containers, inspect them, and manage container lifecycle. Understand how Docker simplifies deployment and environment consistency.</p>
+    </div>
+
+    <div class="card" data-icon="☸️">
+        <h2>7. Introduction to Kubernetes</h2>
+        <p>Learn Kubernetes fundamentals: pods, deployments, services, and namespaces. Understand how Kubernetes orchestrates containers for scalability and high availability. Explore Minikube for local experimentation.</p>
+    </div>
+
+    <div class="card" data-icon="🔧">
+        <h2>8. Automation with Ansible</h2>
+        <p>Learn configuration management using Ansible. Understand playbooks, roles, and inventory files. Automate repetitive system administration tasks on multiple servers efficiently.</p>
+    </div>
+
+    <div class="card" data-icon="💡">
+        <h2>9. Best Practices</h2>
+        <p>Learn Linux and DevOps best practices: regular updates, secure SSH configuration, organized file structures, backup strategies, and documenting scripts and pipelines for maintainability.</p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+    © 2026 Kiran Negi | Linux & DevOps Beginner Tutorials
+</footer>
+
+</body>
+</html>
