@@ -97,6 +97,68 @@
     </ul>
 </div>
 
+<div class="card" data-icon="📁">
+    <h2>4. File Types in Linux</h2>
+
+    <p>In Linux, everything is treated as a file, including hardware devices, directories, and processes. Understanding file types is essential to navigate and manage the system effectively.</p>
+
+    <!-- File Types Explanation -->
+    <h3>1. Linux File Types</h3>
+    <p>Each file in Linux has a type, represented by a symbol when using commands like <code>ls -l</code>:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Regular file</td><td>-</td><td>Text or binary files (documents, scripts, programs)</td></tr>
+            <tr><td>Directory</td><td>d</td><td>Folder containing files and other directories</td></tr>
+            <tr><td>Link</td><td>l</td><td>Shortcut pointing to another file or directory</td></tr>
+            <tr><td>Character device</td><td>c</td><td>Hardware devices like keyboard or mouse</td></tr>
+            <tr><td>Block device</td><td>b</td><td>Hardware storage devices like hard disks</td></tr>
+            <tr><td>Socket</td><td>s</td><td>Inter-process communication (IPC) endpoints</td></tr>
+            <tr><td>FIFO (Pipe)</td><td>p</td><td>Communication channel between processes</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Visual Diagram -->
+    <h3>2. Visual Diagram – Linux File Types</h3>
+    <pre><code>
+          File System
+          /          \
+     Regular       Special
+      File         Files
+      (-)       ---------------
+               |     |       |
+            Directory  Device  Communication
+             (d)     /dev     (s, p)
+                      |
+                  c (char) b (block)
+    </code></pre>
+
+    <!-- Permissions Note -->
+    <h3>3. Permissions and File Types</h3>
+    <p>Each file type also has permissions that control access for <b>Owner</b>, <b>Group</b>, and <b>Others</b>:</p>
+    <ul>
+        <li><b>r</b> → Read</li>
+        <li><b>w</b> → Write</li>
+        <li><b>x</b> → Execute</li>
+    </ul>
+    <p>Example: <code>-rwxr-xr--</code> means a regular file with read/write/execute for owner, read/execute for group, and read-only for others.</p>
+
+    <!-- Tips -->
+    <h3>4. Tips</h3>
+    <ul>
+        <li>Use <code>ls -l</code> to see file types and permissions.</li>
+        <li>Links (<code>l</code>) can point to directories or files anywhere in the system.</li>
+        <li>Devices are managed under <code>/dev</code> and behave like files.</li>
+        <li>Sockets and pipes are used mainly by programs to communicate with each other.</li>
+    </ul>
+</div>
   <div class="card" data-icon="🗂️">
     <h2>3. Linux File System</h2>
 
