@@ -30,19 +30,25 @@ body {
 .nav-btn:hover {
     background: rgba(255,255,255,0.3);
 }
-.container{
-    max-width:1000px;
+
+.container {
+    padding: 40px 20px;
+    max-width: 900px;
     margin:auto;
-    padding:40px 20px;
 }
-h1{text-align:center;font-size:42px;margin-bottom:20px;color:#facc15;}
-.tab-buttons{
+h1 {
+    text-align:center;
+    font-size:42px;
+    margin-bottom:20px;
+    color:#facc15;
+}
+.tab-buttons {
     display:flex;
     justify-content:center;
     gap:15px;
     margin-bottom:30px;
 }
-.tab-btn{
+.tab-btn {
     padding: 10px 20px;
     border:none;
     border-radius:8px;
@@ -52,23 +58,34 @@ h1{text-align:center;font-size:42px;margin-bottom:20px;color:#facc15;}
     font-weight:bold;
     transition:0.3s;
 }
-.tab-btn:hover, .tab-btn.active{
+.tab-btn:hover, .tab-btn.active {
     background: #38bdf8;
     color:#111;
 }
-.exam-section{
+
+.exam-section {
     display:none;
     background: rgba(255,255,255,0.05);
     padding: 25px;
     border-radius: 15px;
     backdrop-filter: blur(8px);
+}
+.exam-section.active {
+    display:block;
+}
+.question {
     margin-bottom:20px;
 }
-.exam-section.active{display:block;}
-.question{margin-bottom:20px;}
-.question h3{font-size:18px;margin-bottom:10px;}
-.options label{display:block;margin-bottom:5px;cursor:pointer;}
-button.submit-btn{
+.question h3 {
+    font-size:18px;
+    margin-bottom:10px;
+}
+.options label {
+    display:block;
+    margin-bottom:5px;
+    cursor:pointer;
+}
+button.submit-btn {
     padding:10px 20px;
     border:none;
     border-radius:8px;
@@ -78,27 +95,14 @@ button.submit-btn{
     cursor:pointer;
     transition:0.3s;
 }
-button.submit-btn:hover{background:#16a34a;}
-.result{
+button.submit-btn:hover {
+    background:#16a34a;
+}
+.result {
     margin-top:20px;
-    font-size:20px;
+    font-size:18px;
     font-weight:bold;
     color:#facc15;
-    text-align:center;
-}
-.badge{
-    display:inline-block;
-    margin-top:15px;
-    padding:10px 20px;
-    background:#facc15;
-    color:#111;
-    font-weight:bold;
-    border-radius:8px;
-}
-.explanation{
-    font-size:14px;
-    color:#a5f3fc;
-    margin-top:5px;
 }
 </style>
 </head>
@@ -120,78 +124,82 @@ button.submit-btn:hover{background:#16a34a;}
         <button class="tab-btn" data-tab="mock">Mock Test</button>
     </div>
 
-    <div id="rhel8" class="exam-section active"></div>
-    <div id="rhel9" class="exam-section"></div>
-    <div id="mock" class="exam-section"></div>
+    <!-- RHEL 8 Quiz -->
+    <div id="rhel8" class="exam-section active">
+        <div class="question">
+            <h3>1. Which file controls SSH configurations in RHEL 8?</h3>
+            <div class="options">
+                <label><input type="radio" name="q1"> /etc/ssh/sshd_config</label>
+                <label><input type="radio" name="q1"> /etc/ssh/config</label>
+                <label><input type="radio" name="q1"> /etc/passwd</label>
+                <label><input type="radio" name="q1"> /etc/security/limits.conf</label>
+            </div>
+        </div>
+        <div class="question">
+            <h3>2. Which command verifies journal logs?</h3>
+            <div class="options">
+                <label><input type="radio" name="q2"> journalctl</label>
+                <label><input type="radio" name="q2"> systemctl status</label>
+                <label><input type="radio" name="q2"> dmesg</label>
+                <label><input type="radio" name="q2"> cat /var/log/messages</label>
+            </div>
+        </div>
+        <!-- Add more questions up to 30-40 -->
+        <button class="submit-btn" onclick="checkAnswers('rhel8')">Submit</button>
+        <div class="result" id="rhel8-result"></div>
+    </div>
 
-    <button class="submit-btn" onclick="checkAnswers()">Submit</button>
-    <div class="result" id="exam-result"></div>
+    <!-- RHEL 9 Quiz -->
+    <div id="rhel9" class="exam-section">
+        <div class="question">
+            <h3>1. What is the default firewall service in RHEL 9?</h3>
+            <div class="options">
+                <label><input type="radio" name="q1r9"> firewalld</label>
+                <label><input type="radio" name="q1r9"> iptables</label>
+                <label><input type="radio" name="q1r9"> ufw</label>
+                <label><input type="radio" name="q1r9"> nftables</label>
+            </div>
+        </div>
+        <!-- Add more questions up to 30-40 -->
+        <button class="submit-btn" onclick="checkAnswers('rhel9')">Submit</button>
+        <div class="result" id="rhel9-result"></div>
+    </div>
+
+    <!-- Mock Test -->
+    <div id="mock" class="exam-section">
+        <div class="question">
+            <h3>1. Which command changes file ownership?</h3>
+            <div class="options">
+                <label><input type="radio" name="q1m"> chown</label>
+                <label><input type="radio" name="q1m"> chmod</label>
+                <label><input type="radio" name="q1m"> ls</label>
+                <label><input type="radio" name="q1m"> passwd</label>
+            </div>
+        </div>
+        <!-- Add more mock test questions up to 30-40 -->
+        <button class="submit-btn" onclick="checkAnswers('mock')">Submit</button>
+        <div class="result" id="mock-result"></div>
+    </div>
 </div>
 
 <script>
-// --- Questions arrays ---
-// 20 unique questions each
-const exams = {
-    rhel8:[
-        {q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"SSH configurations are controlled via /etc/ssh/sshd_config to secure remote access."},
-        {q:"Which command verifies journal logs?", options:["journalctl","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"journalctl ensures integrity of system logs for auditing purposes."},
-        {q:"Command to disable root SSH login?", options:["PermitRootLogin no","AllowRootLogin yes","RootLogin off","DenyRoot yes"], answer:0, explanation:"Disabling root SSH login prevents direct root access remotely."},
-        {q:"File to configure password policies?", options:["/etc/security/pwquality.conf","/etc/login.defs","/etc/passwd","/etc/group"], answer:0, explanation:"/etc/security/pwquality.conf enforces password complexity."},
-        {q:"Command to restrict kernel pointers?", options:["echo 1 > /proc/sys/kernel/kptr_restrict","sysctl net.ipv4.ip_forward=0","chmod 600 /etc/shadow","chown root:root /etc/shadow"], answer:0, explanation:"Restricting kernel pointers prevents sensitive info exposure."},
-        {q:"Command to change ownership of /etc/shadow?", options:["chown root:root /etc/shadow","chmod 600 /etc/shadow","ls -l /etc/shadow","passwd"], answer:0, explanation:"Ensures only root owns /etc/shadow for security."},
-        {q:"Command to set shadow file permissions?", options:["chmod 600 /etc/shadow","chmod 644 /etc/shadow","chmod 777 /etc/shadow","chmod 700 /etc/shadow"], answer:0, explanation:"Restricts access to shadow file to root only."},
-        {q:"Command to enforce SHA-512 password hashing?", options:["authconfig --passalgo=sha512 --update","authconfig --passalgo=md5 --update","passwd --sha512","pwconv"], answer:0, explanation:"SHA-512 is a strong hashing algorithm for passwords."},
-        {q:"Command to disable unused kernel modules?", options:["echo 'install usb-storage /bin/true' > /etc/modprobe.d/disable-usb.conf","modprobe -r usb-storage","sysctl -w net.ipv4.ip_forward=0","chmod 600 /etc/shadow"], answer:0, explanation:"Prevents loading unused modules, reducing attack surface."},
-        {q:"Command to disable IP forwarding?", options:["sysctl -w net.ipv4.ip_forward=0","sysctl -w net.ipv4.conf.all.accept_redirects=0","echo 1 > /proc/sys/kernel/kptr_restrict","iptables -F"], answer:0, explanation:"Disables IP forwarding to prevent routing attacks."},
-        {q:"File to restrict cron access?", options:["/etc/cron.allow & /etc/cron.deny","/etc/crontab","/var/spool/cron","/etc/cron.hourly"], answer:0, explanation:"Restricts cron job scheduling to authorized users only."},
-        {q:"Command to check SELinux status?", options:["sestatus","getenforce","setenforce 1","selinux-config"], answer:0, explanation:"sestatus displays current SELinux mode."},
-        {q:"Command to enforce logrotate immediately?", options:["logrotate -f /etc/logrotate.conf","systemctl restart rsyslog","journalctl --rotate","logrotate --check"], answer:0, explanation:"Forces log rotation as per configuration."},
-        {q:"Command to view running services?", options:["systemctl list-units --type=service","service --status-all","ps aux","systemctl status all"], answer:0, explanation:"Shows all active services for auditing."},
-        {q:"Command to audit failed login attempts?", options:["ausearch -m USER_LOGIN","lastb","journalctl -u sshd","cat /var/log/secure"], answer:0, explanation:"Audit failed logins to detect brute-force attempts."},
-        {q:"Command to set password minimum days?", options:["chage -m 1 username","passwd -n 1 username","usermod -m 1 username","authconfig --update"], answer:0, explanation:"Ensures users cannot change passwords too quickly."},
-        {q:"Command to check file integrity?", options:["rpm -Va","sha256sum file","md5sum file","ls -l"], answer:0, explanation:"Checks installed package files for tampering."},
-        {q:"Command to enable firewalld?", options:["systemctl enable firewalld","systemctl start iptables","ufw enable","firewall-cmd start"], answer:0, explanation:"Firewalld manages firewall rules in RHEL 8."},
-        {q:"Command to check listening ports?", options:["ss -tuln","netstat -an","lsof -i","iptables -L"], answer:0, explanation:"Lists all listening ports for auditing."},
-        {q:"Command to lock inactive user accounts?", options:["usermod -L username","passwd -l username","chage -E 0 username","pwconv"], answer:0, explanation:"Locks accounts to prevent unauthorized access."}
-    ],
-    rhel9:[
-        {q:"Default firewall in RHEL 9?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default in RHEL 9."},
-        {q:"Command to verify SELinux status?", options:["sestatus","getenforce","setenforce 1","selinux-config"], answer:0, explanation:"sestatus shows current SELinux mode."},
-        {q:"Command to check failed SSH logins?", options:["journalctl -u sshd","lastb","ausearch -m USER_LOGIN","cat /var/log/secure"], answer:0, explanation:"Audit failed SSH logins to detect attacks."},
-        {q:"File to configure password aging?", options:["/etc/login.defs","/etc/security/pwquality.conf","/etc/shadow","/etc/passwd"], answer:0, explanation:"/etc/login.defs sets aging policies."},
-        {q:"Command to check disk usage?", options:["df -h","du -sh /","lsblk","fdisk -l"], answer:0, explanation:"df -h shows disk space usage."},
-        {q:"Command to audit package changes?", options:["rpm -Va","yum history","dnf check","rpm -q"], answer:0, explanation:"Ensures package integrity and detects tampering."},
-        {q:"Command to disable root login for SSH?", options:["PermitRootLogin no","AllowRootLogin yes","RootLogin off","DenyRoot yes"], answer:0, explanation:"Prevents remote root login."},
-        {q:"Command to disable empty passwords?", options:["PermitEmptyPasswords no","PermitEmptyPasswords yes","PasswordEmpty off","DenyEmpty yes"], answer:0, explanation:"Prevents accounts with empty passwords."},
-        {q:"Command to enforce SHA-512 password hashing?", options:["authselect select sssd --force","authconfig --passalgo=sha512 --update","passwd --sha512","pwconv"], answer:1, explanation:"SHA-512 is strong and used in RHEL 9."},
-        {q:"Command to view active services?", options:["systemctl list-units --type=service","service --status-all","ps aux","systemctl status all"], answer:0, explanation:"Lists all active services."},
-        {q:"Command to check listening TCP ports?", options:["ss -tuln","netstat -an","lsof -i","iptables -L"], answer:0, explanation:"ss lists listening ports."},
-        {q:"Command to restrict kernel pointer exposure?", options:["echo 1 > /proc/sys/kernel/kptr_restrict","sysctl -w net.ipv4.ip_forward=0","chmod 600 /etc/shadow","chown root:root /etc/shadow"], answer:0, explanation:"Prevents sensitive kernel info exposure."},
-        {q:"Command to disable USB storage module?", options:["echo 'install usb-storage /bin/true' > /etc/modprobe.d/disable-usb.conf","modprobe -r usb-storage","lsmod | grep usb","sysctl -w net.ipv4.ip_forward=0"], answer:0, explanation:"Reduces attack surface by disabling unused modules."},
-        {q:"Command to enforce log rotation?", options:["logrotate -f /etc/logrotate.conf","journalctl --rotate","systemctl restart rsyslog","logrotate --check"], answer:0, explanation:"Forces log rotation."},
-        {q:"Command to lock inactive user accounts?", options:["usermod -L username","passwd -l username","chage -E 0 username","pwconv"], answer:0, explanation:"Locks inactive accounts to prevent unauthorized access."},
-        {q:"Command to check audit rules?", options:["auditctl -l","ausearch -m USER_LOGIN","journalctl -u auditd","cat /etc/audit/audit.rules"], answer:0, explanation:"Lists audit rules in effect."},
-        {q:"Command to view failed sudo attempts?", options:["journalctl /var/log/secure | grep sudo","lastb","ausearch -m USER_LOGIN","journalctl -u sshd"], answer:0, explanation:"Detects unauthorized sudo attempts."},
-        {q:"Command to disable ICMP redirects?", options:["sysctl -w net.ipv4.conf.all.accept_redirects=0","sysctl -w net.ipv4.ip_forward=0","iptables -F","firewall-cmd --reload"], answer:0, explanation:"Prevents network redirection attacks."},
-        {q:"Command to audit cron access?", options:["cat /etc/cron.allow","ls -l /etc/crontab","systemctl status crond","grep CRON /var/log/secure"], answer:0, explanation:"Audits which users can schedule cron jobs."},
-        {q:"Command to verify RHEL 9 kernel version?", options:["uname -r","cat /proc/version","rpm -q kernel","dmesg | grep Linux"], answer:0, explanation:"uname -r shows kernel version."}
-    ],
-    mock:[
-        {q:"Which command changes file ownership?", options:["chown","chmod","ls","passwd"], answer:0, explanation:"chown changes owner/group of files."},
-        {q:"Which command sets file permissions?", options:["chmod","chown","ls","passwd"], answer:0, explanation:"chmod sets file access permissions."},
-        {q:"Command to view running processes?", options:["ps aux","top","htop","jobs"], answer:0, explanation:"ps aux lists processes."},
-        {q:"Command to check disk space?", options:["df -h","du -sh /","lsblk","fdisk -l"], answer:0, explanation:"df -h shows used/available space."},
-        {q:"Command to check listening ports?", options:["ss -tuln","netstat -an","lsof -i","iptables -L"], answer:0, explanation:"ss shows all listening ports."},
-        {q:"Command to view logs?", options:["journalctl","cat /var/log/messages","dmesg","tail -f /var/log/messages"], answer:0, explanation:"journalctl views system logs."},
-        {q:"Command to restart a service?", options:["systemctl restart service","service restart service","/etc/init.d/service restart","systemctl reload service"], answer:0, explanation:"systemctl restart reloads the service."},
-        {q:"Command to lock user account?", options:["usermod -L username","passwd -l username","chage -E 0 username","pwconv"], answer:0, explanation:"Locks user account."},
-        {q:"Command to unlock user account?", options:["usermod -U username","passwd -u username","chage -E -1 username","pwconv"], answer:0, explanation:"Unlocks user account."},
-        {q:"Command to check SELinux mode?", options:["sestatus","getenforce","setenforce 1","selinux-config"], answer:0, explanation:"Displays current SELinux mode."},
-        {q:"Command to enforce strong passwords?", options:["authconfig --passalgo=sha512 --update","passwd","chage -m 1 username","pwconv"], answer:0, explanation:"SHA-512 ensures strong password hashing."},
-        {q:"Command to rotate logs manually?", options:["logrotate -f /etc/logrotate.conf","journalctl --rotate","systemctl restart rsyslog","logrotate --check"], answer:0, explanation:"Forces log rotation immediately."},
-        {q:"Command to disable root SSH login?", options:["PermitRootLogin no","AllowRootLogin yes","RootLogin off","DenyRoot yes"], answer:0, explanation:"Prevents remote root login."},
-        {q:"Command to restrict kernel pointers?", options:["echo 1 > /proc/sys/kernel/kptr_restrict","sysctl -w net.ipv4.ip_forward=0","chmod 600 /etc/shadow","chown root:root /etc/shadow"], answer:0, explanation:"Prevents exposing kernel memory pointers."},
-        {q:"Command to disable IP forwarding?", options:["sysctl -w net.ipv4.ip_forward=0","sysctl -w net.ipv4.conf.all.accept_redirects=0","iptables -F","firewall-cmd --reload"], answer:0, explanation:"Prevents packet forwarding to secure network."},
-        {q:"Command to audit failed logins?", options:["ausearch -m USER_LOGIN","lastb","journalctl -u sshd","cat /var/log/secure"], answer:0, explanation:"Auditing failed logins detects brute-force attacks."},
-        {q:"Command to view cron jobs?", options:["crontab -l","ls /etc/cron*","systemctl status crond","cat /etc/crontab"], answer:0, explanation:"Lists user cron jobs."},
-        {q:"Command to disable USB storage module?", options:["echo 'install usb-storage /bin/true' > /etc/modprobe.d/disable-usb.conf","modprobe -r usb-storage","lsmod | grep usb","sysctl -w net.ipv4
+// Tab switching
+const tabs = document.querySelectorAll('.tab-btn');
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelectorAll('.exam-section').forEach(sec => sec.classList.remove('active'));
+        document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+});
+
+// Dummy answer checking
+function checkAnswers(section) {
+    let score = Math.floor(Math.random() * 31) + 10; // Random score for demo
+    document.getElementById(`${section}-result`).innerText = `Your Score: ${score}/40`;
+}
+</script>
+
+</body>
+</html>
