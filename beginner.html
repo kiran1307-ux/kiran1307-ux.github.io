@@ -1,119 +1,211 @@
-<!-- 19. System Monitoring -->
-<div class="card">
-    <div class="card-header">
-        <span>19. System Monitoring</span>
-        <span class="icon">🔧</span>
-    </div>
-    <div class="card-body">
-        <p>Monitoring Linux systems is essential to maintain performance and uptime.</p>
-        <h3>Key Commands:</h3>
-        <ul>
-            <li><b>top</b> – Show running processes and CPU/memory usage.</li>
-            <li><b>htop</b> – Interactive process viewer (needs installation).</li>
-            <li><b>free -h</b> – Display memory usage.</li>
-            <li><b>df -h</b> – Check disk space.</li>
-            <li><b>du -sh</b> – See size of directories.</li>
-        </ul>
-        <h3>Tips:</h3>
-        <ul>
-            <li>Use <b>cron jobs</b> to automate monitoring scripts.</li>
-            <li>Combine with logging for long-term analysis.</li>
-        </ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beginner Linux & DevOps Tutorials</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color: #fff;
+}
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 10px;
+}
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color:white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    transition: 0.3s, transform 0.3s;
+    font-weight: bold;
+}
+.nav-btn:hover {
+    background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.15));
+    transform: translateY(-2px);
+}
+.header-author {
+    text-align: center;
+    background: linear-gradient(90deg,#facc15,#22c55e);
+    color: #111;
+    padding: 10px 0;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.container {
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+    color: #facc15;
+    text-align: center;
+}
+p.subtitle {
+    opacity: 0.85;
+    margin-bottom: 50px;
+    font-size: 18px;
+    text-align: center;
+}
+.section {
+    margin-bottom: 50px;
+}
+.section h2 {
+    color: #22c55e;
+    margin-bottom: 15px;
+    border-left: 5px solid #facc15;
+    padding-left: 10px;
+}
+.section p {
+    font-size: 16px;
+    line-height: 1.6;
+    opacity: 0.9;
+    margin-bottom: 15px;
+}
+.diagram {
+    text-align: center;
+    margin: 20px 0;
+}
+.diagram img {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 25px 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #facc15;
+    background: linear-gradient(90deg,#0f2027,#203a43,#2c5364);
+    border-top: 3px solid #38bdf8;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
+    transition: 0.3s;
+}
+footer:hover {
+    color: #22c55e;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.7);
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <a href="index.html" class="nav-btn">🏠 Home</a>
+    <a href="tutorials.html" class="nav-btn">💻 Tutorials</a>
+</div>
+
+<!-- HEADER -->
+<div class="header-author">
+    Beginner Linux & DevOps Tutorials – Learn all essential commands & concepts step by step
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+<h1>Beginner Tutorials</h1>
+<p class="subtitle">Start your Linux & DevOps journey with structured tutorials covering commands, file systems, shell scripting, and foundational DevOps concepts.</p>
+
+<!-- SECTION: Linux Basics -->
+<div class="section">
+    <h2>1. Linux Basics</h2>
+    <p>Learn what Linux is, its distributions, basic commands, and navigation of the file system.</p>
+    <ul>
+        <li>Understanding Linux distributions (Ubuntu, CentOS, Fedora)</li>
+        <li>Terminal basics and shell commands</li>
+        <li>File system structure: /home, /etc, /var, /usr</li>
+        <li>File operations: <code>ls, cd, cp, mv, rm, mkdir</code></li>
+        <li>Permissions: <code>chmod, chown, chgrp</code></li>
+    </ul>
+    <div class="diagram">
+        <img src="images/linux-filesystem.png" alt="Linux File System Diagram">
     </div>
 </div>
 
-<!-- 20. System Services & Daemons -->
-<div class="card">
-    <div class="card-header">
-        <span>20. System Services & Daemons</span>
-        <span class="icon">🖥️</span>
-    </div>
-    <div class="card-body">
-        <p>Services run in the background to handle tasks automatically.</p>
-        <h3>Managing Services:</h3>
-        <ul>
-            <li><b>systemctl start/stop/restart service_name</b> – Start or stop services.</li>
-            <li><b>systemctl enable/disable service_name</b> – Auto-start at boot.</li>
-            <li><b>systemctl status service_name</b> – Check service status.</li>
-        </ul>
-        <p>Common services include <b>nginx</b>, <b>apache2</b>, <b>ssh</b>, and <b>docker</b>.</p>
+<!-- SECTION: Shell Scripting -->
+<div class="section">
+    <h2>2. Shell Scripting</h2>
+    <p>Automate tasks with Bash scripting.</p>
+    <ul>
+        <li>Creating scripts: <code>#!/bin/bash</code></li>
+        <li>Variables and user input</li>
+        <li>Conditionals: <code>if, else, elif</code></li>
+        <li>Loops: <code>for, while, until</code></li>
+        <li>Functions and script execution</li>
+    </ul>
+    <div class="diagram">
+        <img src="images/shell-script-flow.png" alt="Shell Scripting Flow Diagram">
     </div>
 </div>
 
-<!-- 21. Logs & System Analysis -->
-<div class="card">
-    <div class="card-header">
-        <span>21. Logs & System Analysis</span>
-        <span class="icon">📊</span>
-    </div>
-    <div class="card-body">
-        <p>Logs are key to troubleshooting and understanding system behavior.</p>
-        <h3>Main Log Files:</h3>
-        <ul>
-            <li><b>/var/log/syslog</b> – General system messages.</li>
-            <li><b>/var/log/auth.log</b> – Authentication and login attempts.</li>
-            <li><b>/var/log/dmesg</b> – Kernel boot messages.</li>
-            <li><b>/var/log/apache2/error.log</b> – Web server errors.</li>
-        </ul>
-        <h3>Useful Commands:</h3>
-        <ul>
-            <li><b>tail -f /var/log/syslog</b> – View logs live.</li>
-            <li><b>grep 'keyword' /var/log/syslog</b> – Filter logs for specific info.</li>
-            <li><b>journalctl -xe</b> – Systemd journal logs.</li>
-        </ul>
+<!-- SECTION: Package Management -->
+<div class="section">
+    <h2>3. Package Management</h2>
+    <p>Learn to install, update, and remove software packages.</p>
+    <ul>
+        <li>Debian-based systems: <code>apt-get, apt</code></li>
+        <li>RedHat-based systems: <code>yum, dnf</code></li>
+        <li>Checking installed packages and updates</li>
+    </ul>
+</div>
+
+<!-- SECTION: Git Basics -->
+<div class="section">
+    <h2>4. Version Control with Git</h2>
+    <p>Track code changes and collaborate using Git.</p>
+    <ul>
+        <li>Installing Git and configuring user</li>
+        <li>Initializing repositories: <code>git init</code></li>
+        <li>Cloning, adding, committing: <code>git clone, git add, git commit</code></li>
+        <li>Branches: <code>git branch, git checkout, git merge</code></li>
+        <li>Remote repositories: <code>git remote, git push, git pull</code></li>
+    </ul>
+    <div class="diagram">
+        <img src="images/git-branching.png" alt="Git Branching Diagram">
     </div>
 </div>
 
-<!-- 22. Environment Variables -->
-<div class="card">
-    <div class="card-header">
-        <span>22. Environment Variables</span>
-        <span class="icon">🧩</span>
-    </div>
-    <div class="card-body">
-        <p>Environment variables store system-wide or user-specific configuration data.</p>
-        <h3>Key Commands:</h3>
-        <ul>
-            <li><b>echo $HOME</b> – Show home directory.</li>
-            <li><b>printenv</b> – List all environment variables.</li>
-            <li><b>export VAR_NAME=value</b> – Set a new variable temporarily.</li>
-        </ul>
-        <p>Permanent variables can be added in <b>~/.bashrc</b> or <b>/etc/environment</b>.</p>
+<!-- SECTION: DevOps Basics -->
+<div class="section">
+    <h2>5. Introduction to DevOps</h2>
+    <p>Understand the fundamental DevOps concepts and tools for automation.</p>
+    <ul>
+        <li>What is DevOps and why it matters</li>
+        <li>CI/CD pipeline basics</li>
+        <li>Introduction to Docker and containers</li>
+        <li>Monitoring and logging basics</li>
+    </ul>
+    <div class="diagram">
+        <img src="images/devops-pipeline.png" alt="DevOps Pipeline Diagram">
     </div>
 </div>
 
-<!-- 23. Networking Tools -->
-<div class="card">
-    <div class="card-header">
-        <span>23. Networking Tools</span>
-        <span class="icon">🔗</span>
-    </div>
-    <div class="card-body">
-        <p>Networking commands help check connectivity and troubleshoot issues.</p>
-        <ul>
-            <li><b>ping google.com</b> – Check network connectivity.</li>
-            <li><b>ifconfig / ip addr</b> – View network interfaces.</li>
-            <li><b>netstat -tulnp</b> – See listening ports and services.</li>
-            <li><b>traceroute google.com</b> – Track packet path.</li>
-            <li><b>nslookup domain.com</b> – DNS resolution check.</li>
-        </ul>
-    </div>
 </div>
 
-<!-- 24. Backup & Restore -->
-<div class="card">
-    <div class="card-header">
-        <span>24. Backup & Restore</span>
-        <span class="icon">💾</span>
-    </div>
-    <div class="card-body">
-        <p>Regular backups prevent data loss and help recovery from mistakes or failures.</p>
-        <h3>Common Commands:</h3>
-        <ul>
-            <li><b>tar -czvf backup.tar.gz /path/to/folder</b> – Compress folder into a backup archive.</li>
-            <li><b>rsync -av /source /destination</b> – Synchronize files/directories efficiently.</li>
-            <li><b>scp backup.tar.gz user@remote:/path</b> – Copy backups to remote server.</li>
-        </ul>
-        <p>Tip: Automate backups using <b>cron</b> for daily or weekly tasks.</p>
-    </div>
-</div>
+<!-- FOOTER -->
+<footer>
+    © 2026 Kiran Negi | Linux & DevOps Beginner Tutorials
+</footer>
+
+</body>
+</html>
