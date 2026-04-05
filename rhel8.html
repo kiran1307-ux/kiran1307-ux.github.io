@@ -1,95 +1,243 @@
-<!-- 1. Current UMASK for root -->
-<div class="card">
-    <h3>Current UMASK for root</h3>
-    <p class="command" id="cmd-umask">echo $UMASK</p>
-    <button class="copy-btn" onclick="copyCommand('cmd-umask')">Copy</button>
-    <button class="toggle-btn">Show Explanation</button>
-    <p class="explanation">
-        <strong>Why:</strong> Ensure root files have restrictive permissions.<br>
-        <strong>Solution:</strong> Set UMASK in /etc/bashrc or /etc/profile: <code>umask 077</code>
-    </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHEL 8 Hardening Guide</title>
+
+<style>
+body {
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:#fff;
+}
+
+.navbar {
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    padding:15px;
+    background: rgba(0,0,0,0.3);
+}
+
+.nav-btn {
+    text-decoration:none;
+    color:white;
+    padding:8px 15px;
+    border-radius:6px;
+    background: rgba(255,255,255,0.1);
+    font-weight:bold;
+    transition:0.3s;
+}
+.nav-btn:hover { background: rgba(255,255,255,0.3); }
+
+.container {
+    max-width:1000px;
+    margin:auto;
+    padding:40px 20px;
+}
+
+h1 {
+    text-align:center;
+    color:#facc15;
+}
+
+.card {
+    background: rgba(255,255,255,0.05);
+    border-radius:15px;
+    padding:50px 20px 20px;
+    margin-bottom:20px;
+    position:relative;
+    transition:0.3s;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+
+.command {
+    background: rgba(0,0,0,0.3);
+    padding:8px 12px;
+    border-radius:8px;
+    display:block;
+    font-family: monospace;
+    white-space: pre-line;
+    margin-bottom:10px;
+    font-size:13px;
+}
+
+.copy-btn, .toggle-btn {
+    position:absolute;
+    top:10px;
+    border:none;
+    cursor:pointer;
+    border-radius:6px;
+    background:#facc15;
+    color:#111;
+}
+
+.copy-btn { right:10px; padding:5px 10px; }
+.toggle-btn { right:110px; padding:5px 10px; }
+
+.explanation {
+    display:none;
+    margin-top:10px;
+    background: rgba(255,255,255,0.1);
+    padding:10px;
+    border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="about.html" class="nav-btn">About</a>
+    <a href="author.html" class="nav-btn">Author</a>
 </div>
 
-<!-- 2. Blacklist 'cramfs' kernel module -->
+<div class="container">
+<h1>RHEL 8 Hardening (CIS Controls)</h1>
+
+<!-- SSH Root Login -->
 <div class="card">
-    <h3>Blacklist 'cramfs'</h3>
-    <p class="command" id="cmd-cramfs">grep cramfs /etc/modprobe.d/*</p>
-    <button class="copy-btn" onclick="copyCommand('cmd-cramfs')">Copy</button>
-    <button class="toggle-btn">Show Explanation</button>
-    <p class="explanation">
-        <strong>Why:</strong> Prevent loading insecure/unneeded kernel modules.<br>
-        <strong>Solution:</strong> Create a blacklist file: <code>echo "install cramfs /bin/true" > /etc/modprobe.d/cramfs.conf</code>
-    </p>
+<h3>Disable Root SSH Login</h3>
+
+<p><strong>Check:</strong></p>
+<p class="command" id="c1">grep PermitRootLogin /etc/ssh/sshd_config</p>
+
+<p><strong>Fix:</strong></p>
+<p class="command" id="f1">echo "PermitRootLogin no" >> /etc/ssh/sshd_config
+systemctl restart sshd</p>
+
+<button class="copy-btn" onclick="copyCommand('f1')">Copy Fix</button>
+<button class="toggle-btn">Show Explanation</button>
+
+<div class="explanation">
+Prevents direct root login via SSH.<br>
+CIS: Must be set to <b>no</b>.
+</div>
 </div>
 
-<!-- 3. Files/dirs in user home with mode > 0750 -->
+<!-- IP Forward -->
 <div class="card">
-    <h3>Files/Dirs in Home &gt; 0750</h3>
-    <p class="command" id="cmd-mode0750">find /home -type f -perm /077</p>
-    <button class="copy-btn" onclick="copyCommand('cmd-mode0750')">Copy</button>
-    <button class="toggle-btn">Show Explanation</button>
-    <p class="explanation">
-        <strong>Why:</strong> Detect overly permissive files.<br>
-        <strong>Solution:</strong> Restrict permissions: <code>chmod 750 /home/username/file</code>
-    </p>
+<h3>Disable IP Forwarding</h3>
+
+<p><strong>Check:</strong></p>
+<p class="command" id="c2">cat /proc/sys/net/ipv4/ip_forward</p>
+
+<p><strong>Fix:</strong></p>
+<p class="command" id="f2">echo "net.ipv4.ip_forward = 0" >> /etc/sysctl.conf
+sysctl -w net.ipv4.ip_forward=0</p>
+
+<button class="copy-btn" onclick="copyCommand('f2')">Copy Fix</button>
+<button class="toggle-btn">Show Explanation</button>
+
+<div class="explanation">
+Stops system from acting as router.<br>
+CIS: Must be 0.
+</div>
 </div>
 
-<!-- 4. Fallock deny setting -->
+<!-- Cramfs -->
 <div class="card">
-    <h3>Fallock Deny Setting</h3>
-    <p class="command" id="cmd-fallock">grep deny /etc/security/faillock.conf</p>
-    <button class="copy-btn" onclick="copyCommand('cmd-fallock')">Copy</button>
-    <button class="toggle-btn">Show Explanation</button>
-    <p class="explanation">
-        <strong>Why:</strong> Lock accounts after failed login attempts.<br>
-        <strong>Solution:</strong> Add or edit: <code>deny = 5</code> in /etc/security/faillock.conf
-    </p>
+<h3>Disable cramfs Filesystem</h3>
+
+<p><strong>Check:</strong></p>
+<p class="command" id="c3">lsmod | grep cramfs</p>
+
+<p><strong>Fix:</strong></p>
+<p class="command" id="f3">echo "install cramfs /bin/true" > /etc/modprobe.d/cramfs.conf</p>
+
+<button class="copy-btn" onclick="copyCommand('f3')">Copy Fix</button>
+<button class="toggle-btn">Show Explanation</button>
+
+<div class="explanation">
+Disables unused filesystem.<br>
+Reduces attack surface.
+</div>
 </div>
 
-<!-- 5. GRUB2 password -->
+<!-- Password Min Length -->
 <div class="card">
-    <h3>GRUB2 Password</h3>
-    <p class="command" id="cmd-grub">grep -i "password_pbkdf2" /boot/grub2/user.cfg</p>
-    <button class="copy-btn" onclick="copyCommand('cmd-grub')">Copy</button>
-    <button class="toggle-btn">Show Explanation</button>
-    <p class="explanation">
-        <strong>Why:</strong> Prevent unauthorized boot modifications.<br>
-        <strong>Solution:</strong> Set password: <code>grub2-setpassword</code> (will use pbkdf2 SHA512)
-    </p>
+<h3>Password Minimum Length</h3>
+
+<p><strong>Check:</strong></p>
+<p class="command" id="c4">grep minlen /etc/security/pwquality.conf</p>
+
+<p><strong>Fix:</strong></p>
+<p class="command" id="f4">echo "minlen = 12" >> /etc/security/pwquality.conf</p>
+
+<button class="copy-btn" onclick="copyCommand('f4')">Copy Fix</button>
+<button class="toggle-btn">Show Explanation</button>
+
+<div class="explanation">
+Enforces strong passwords.<br>
+CIS: Minimum 12 characters.
+</div>
 </div>
 
-<!-- 6. IP Forward -->
+<!-- UMASK -->
 <div class="card">
-    <h3>IP Forward</h3>
-    <p class="command" id="cmd-ipforward">cat /proc/sys/net/ipv4/ip_forward</p>
-    <button class="copy-btn" onclick="copyCommand('cmd-ipforward')">Copy</button>
-    <button class="toggle-btn">Show Explanation</button>
-    <p class="explanation">
-        <strong>Why:</strong> Ensure system does not forward packets unless needed.<br>
-        <strong>Solution:</strong> Disable: <code>sysctl -w net.ipv4.ip_forward=0</code> and persist in /etc/sysctl.conf
-    </p>
+<h3>Set UMASK</h3>
+
+<p><strong>Check:</strong></p>
+<p class="command" id="c5">umask</p>
+
+<p><strong>Fix:</strong></p>
+<p class="command" id="f5">echo "umask 077" >> /etc/profile</p>
+
+<button class="copy-btn" onclick="copyCommand('f5')">Copy Fix</button>
+<button class="toggle-btn">Show Explanation</button>
+
+<div class="explanation">
+Restricts default file permissions.<br>
+CIS: Recommended 077.
+</div>
 </div>
 
-<!-- 7. pwquality maxrepeat -->
+<!-- GRUB Password -->
 <div class="card">
-    <h3>pwquality MaxRepeat</h3>
-    <p class="command" id="cmd-maxrepeat">grep maxrepeat /etc/security/pwquality.conf</p>
-    <button class="copy-btn" onclick="copyCommand('cmd-maxrepeat')">Copy</button>
-    <button class="toggle-btn">Show Explanation</button>
-    <p class="explanation">
-        <strong>Why:</strong> Limits repeated characters in passwords.<br>
-        <strong>Solution:</strong> Set: <code>maxrepeat = 3</code> in /etc/security/pwquality.conf
-    </p>
+<h3>GRUB2 Password</h3>
+
+<p><strong>Check:</strong></p>
+<p class="command" id="c6">grep password_pbkdf2 /boot/grub2/user.cfg</p>
+
+<p><strong>Fix:</strong></p>
+<p class="command" id="f6">grub2-setpassword</p>
+
+<button class="copy-btn" onclick="copyCommand('f6')">Copy Fix</button>
+<button class="toggle-btn">Show Explanation</button>
+
+<div class="explanation">
+Protects bootloader from tampering.
+</div>
 </div>
 
-<!-- 8. pwquality minlen -->
-<div class="card">
-    <h3>pwquality MinLen</h3>
-    <p class="command" id="cmd-minlen">grep minlen /etc/security/pwquality.conf</p>
-    <button class="copy-btn" onclick="copyCommand('cmd-minlen')">Copy</button>
-    <button class="toggle-btn">Show Explanation</button>
-    <p class="explanation">
-        <strong>Why:</strong> Enforces minimum password length.<br>
-        <strong>Solution:</strong> Set: <code>minlen = 12</code> in /etc/security/pwquality.conf
-    </p>
 </div>
+
+<script>
+function copyCommand(id){
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text);
+    alert("Copied!");
+}
+
+document.querySelectorAll('.toggle-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        const exp = btn.nextElementSibling;
+        if(exp.style.display==="block"){
+            exp.style.display="none";
+            btn.textContent="Show Explanation";
+        } else {
+            exp.style.display="block";
+            btn.textContent="Hide Explanation";
+        }
+    });
+});
+</script>
+
+</body>
+</html>
