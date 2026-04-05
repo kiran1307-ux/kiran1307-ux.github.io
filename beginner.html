@@ -11,11 +11,91 @@
     </div>
 
     <div class="card" data-icon="💿">
-        <h2>2. Installing Linux</h2>
-        <p>To start learning Linux, you need to install it. Beginners usually use a virtual machine so they don’t affect their main system.</p>
-        <p><b>Options:</b> VirtualBox (best), Dual Boot, or Cloud (AWS).</p>
-        <p>Using VirtualBox, you can run Linux inside Windows safely and practice commands anytime.</p>
-    </div>
+    <h2>2. Installing Linux</h2>
+
+    <p>Linux is an open-source, stable, and secure operating system used for servers, cloud infrastructure, development, and learning. Installing Linux allows you to practice commands, run scripts, and manage servers safely.</p>
+
+    <!-- Installation Options -->
+    <h3>1. Installation Options</h3>
+    <ul>
+        <li><b>Virtual Machine (Recommended for Beginners):</b> Use <b>VirtualBox</b> or VMware to install Linux inside Windows or macOS. Safe for learning and testing.</li>
+        <li><b>Dual Boot:</b> Install Linux alongside Windows and choose OS at startup. Requires disk partitioning.</li>
+        <li><b>Cloud:</b> Launch Linux servers online using <b>AWS EC2, Azure, or GCP</b>. No local installation needed.</li>
+    </ul>
+
+    <!-- Installation Steps -->
+    <h3>2. Installation Steps (Using VirtualBox)</h3>
+    <ol>
+        <li><b>Download Linux ISO:</b> Examples – Ubuntu, CentOS, Fedora.</li>
+        <li><b>Install VirtualBox:</b> Create a new virtual machine and allocate RAM, CPU, and disk.</li>
+        <li><b>Attach ISO to VM:</b> Boot VM from ISO file.</li>
+        <li><b>Run Installer:</b> Follow prompts: language, time zone, disk setup, create user account and password.</li>
+        <li><b>Complete Installation:</b> Reboot VM and login to your Linux system.</li>
+    </ol>
+
+    <!-- Recommended Linux Distros -->
+    <h3>3. Recommended Linux Distributions for Beginners</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Distribution</th>
+                <th>Features</th>
+                <th>Use Case</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Ubuntu</td><td>User-friendly, large community</td><td>Beginners, DevOps, cloud</td></tr>
+            <tr><td>CentOS / AlmaLinux</td><td>Stable, server-focused</td><td>Servers, enterprise applications</td></tr>
+            <tr><td>Fedora</td><td>Cutting-edge packages</td><td>Learning new tools</td></tr>
+            <tr><td>Debian</td><td>Stable, lightweight</td><td>Servers, scripting</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Installation Diagram -->
+    <h3>4. Installation Workflow Diagram</h3>
+    <pre><code>
+        +---------------------+
+        | Download Linux ISO  |
+        +---------+-----------+
+                  |
+                  v
+        +---------------------+
+        | Install VirtualBox  |
+        +---------+-----------+
+                  |
+                  v
+        +---------------------+
+        | Create VM & Attach  |
+        | ISO file            |
+        +---------+-----------+
+                  |
+                  v
+        +---------------------+
+        | Boot VM & Start     |
+        | Installer           |
+        +---------+-----------+
+                  |
+                  v
+        +---------------------+
+        | Follow Installation |
+        | Steps               |
+        +---------+-----------+
+                  |
+                  v
+        +---------------------+
+        | Reboot & Login      |
+        +---------------------+
+    </code></pre>
+
+    <!-- Tips -->
+    <h3>5. Tips for Beginners</h3>
+    <ul>
+        <li>Use <b>VirtualBox</b> for a safe testing environment.</li>
+        <li>Start with <b>Ubuntu</b> for beginner-friendly experience.</li>
+        <li>Take snapshots in VirtualBox to <b>rollback changes</b> if needed.</li>
+        <li>Practice commands daily to <b>get comfortable with Linux shell</b>.</li>
+    </ul>
+</div>
 
   <div class="card" data-icon="🗂️">
     <h2>3. Linux File System</h2>
