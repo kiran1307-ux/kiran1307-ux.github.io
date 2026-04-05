@@ -1,44 +1,227 @@
-<div class="card">
-    <h3>SSH Hardening</h3>
-    <p><strong>File:</strong> /etc/ssh/sshd_config</p>
-    <p><strong>Settings:</strong> Disable root login, Use Protocol 2, Disable empty passwords</p>
-    <p class="explanation">
-        <strong>Why:</strong> Secures SSH access, prevents unauthorized root access, and protects against brute-force attacks.
-    </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHEL 8 Hardening Guide</title>
+<style>
+body {
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:#fff;
+}
+.navbar {
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    padding:15px;
+    background: rgba(0,0,0,0.3);
+}
+.nav-btn {
+    text-decoration:none;
+    color:white;
+    padding:8px 15px;
+    border-radius:6px;
+    background: rgba(255,255,255,0.1);
+    transition:0.3s;
+    font-weight:bold;
+}
+.nav-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
+.container {
+    max-width:1000px;
+    margin:auto;
+    padding:40px 20px;
+    text-align:center;
+}
+h1 {
+    margin-bottom:30px;
+    font-size:36px;
+    color:#facc15;
+}
+.card {
+    background: rgba(255,255,255,0.05);
+    border-radius:15px;
+    padding:20px;
+    margin-bottom:20px;
+    cursor:pointer;
+    transition:0.3s;
+    text-align:left;
+    position:relative;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+.card h3 {
+    margin:0;
+    font-size:20px;
+}
+.card p {
+    margin:5px 0;
+}
+.explanation {
+    background: rgba(255,255,255,0.1);
+    padding:10px 15px;
+    border-radius:8px;
+    margin-top:10px;
+    display:none;
+}
+.toggle-btn {
+    position:absolute;
+    right:20px;
+    top:20px;
+    background:#22c55e;
+    color:#111;
+    border:none;
+    padding:5px 10px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+}
+.toggle-btn:hover {
+    background:#16a34a;
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="about.html" class="nav-btn">About</a>
+    <a href="author.html" class="nav-btn">Author</a>
+    <a href="exam.html" class="nav-btn">Exam</a>
 </div>
 
-<div class="card">
-    <h3>Journal Logs</h3>
-    <p><strong>Command:</strong> journalctl --verify</p>
-    <p class="explanation">
-        <strong>Why:</strong> Ensures logging integrity and allows auditing of system events, helping detect suspicious activity.
-    </p>
+<div class="container">
+    <h1>RHEL 8 Hardening Controls</h1>
+
+    <!-- SSH Hardening -->
+    <div class="card">
+        <h3>SSH Hardening</h3>
+        <p><strong>File:</strong> /etc/ssh/sshd_config</p>
+        <p><strong>Settings:</strong> Disable root login, Protocol 2, Disable empty passwords</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Secures SSH access, prevents unauthorized root login, and protects against brute-force attacks.
+        </p>
+    </div>
+
+    <!-- Journal Logs -->
+    <div class="card">
+        <h3>Journal Logs</h3>
+        <p><strong>Command:</strong> journalctl --verify</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Ensures logging integrity and allows auditing of system events, helping detect suspicious activity.
+        </p>
+    </div>
+
+    <!-- Modprobe -->
+    <div class="card">
+        <h3>Modprobe Hardening</h3>
+        <p><strong>File:</strong> /etc/modprobe.d/disable-modules.conf</p>
+        <p><strong>Settings:</strong> Disable unused kernel modules</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Reduces attack surface by preventing unnecessary kernel modules from loading.
+        </p>
+    </div>
+
+    <!-- Password Quality -->
+    <div class="card">
+        <h3>Password Quality</h3>
+        <p><strong>File:</strong> /etc/security/pwquality.conf</p>
+        <p><strong>Settings:</strong> Minimum length, complexity, history enforcement</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Enforces strong passwords, reducing risk of brute-force attacks and compromised accounts.
+        </p>
+    </div>
+
+    <!-- Cron Security -->
+    <div class="card">
+        <h3>Cron Security</h3>
+        <p><strong>Files:</strong> /etc/cron.allow & /etc/cron.deny</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Restricts cron job scheduling to authorized users only, preventing unauthorized task execution.
+        </p>
+    </div>
+
+    <!-- Storage Dump -->
+    <div class="card">
+        <h3>Storage Dump Security</h3>
+        <p><strong>File:</strong> /etc/audit/audit.rules</p>
+        <p><strong>Settings:</strong> Monitor critical files and directories</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Detects unauthorized access or modification of important files.
+        </p>
+    </div>
+
+    <!-- Auth Settings -->
+    <div class="card">
+        <h3>Authentication Hardening</h3>
+        <p><strong>File:</strong> /etc/pam.d/system-auth</p>
+        <p><strong>Settings:</strong> Enforce password policies and account lockouts</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Strengthens user authentication and prevents brute-force attacks.
+        </p>
+    </div>
+
+    <!-- Permissions -->
+    <div class="card">
+        <h3>File Permissions</h3>
+        <p><strong>Command:</strong> chmod 600 /etc/shadow</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Restricts sensitive files so only authorized users can read/write them.
+        </p>
+    </div>
+
+    <!-- Ownership -->
+    <div class="card">
+        <h3>File Ownership</h3>
+        <p><strong>Command:</strong> chown root:root /etc/shadow</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Ensures critical files are owned by root to prevent tampering.
+        </p>
+    </div>
+
+    <!-- SELinux -->
+    <div class="card">
+        <h3>SELinux Enforcement</h3>
+        <p><strong>Command:</strong> setenforce 1</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Enables mandatory access controls to protect the system from unauthorized access.
+        </p>
+    </div>
+
 </div>
 
-<div class="card">
-    <h3>modprobe Hardening</h3>
-    <p><strong>File:</strong> /etc/modprobe.d/disable-modules.conf</p>
-    <p><strong>Settings:</strong> Disable unused kernel modules</p>
-    <p class="explanation">
-        <strong>Why:</strong> Reduces attack surface by preventing unnecessary kernel modules from being loaded.
-    </p>
-</div>
+<script>
+// Toggle explanation
+const toggleButtons = document.querySelectorAll('.toggle-btn');
+toggleButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const explanation = btn.nextElementSibling;
+        if(explanation.style.display === "block"){
+            explanation.style.display = "none";
+            btn.textContent = "Show Explanation";
+        } else {
+            explanation.style.display = "block";
+            btn.textContent = "Hide Explanation";
+        }
+    });
+});
+</script>
 
-<div class="card">
-    <h3>Password Quality</h3>
-    <p><strong>File:</strong> /etc/security/pwquality.conf</p>
-    <p><strong>Settings:</strong> Minimum length, complexity, and history enforcement</p>
-    <p class="explanation">
-        <strong>Why:</strong> Enforces strong passwords, reducing risk of brute-force attacks and compromised accounts.
-    </p>
-</div>
-
-<div class="card">
-    <h3>Cron Security</h3>
-    <p><strong>File:</strong> /etc/cron.allow & /etc/cron.deny</p>
-    <p class="Explanation">
-        <strong>Why:</strong> Restricts cron job scheduling to authorized users only, preventing unauthorized task execution.
-    </p>
-</div>
-
-<!-- Similarly add storagedump, auth, permissions, ownership, SELinux, etc. -->
+</body>
+</html>
