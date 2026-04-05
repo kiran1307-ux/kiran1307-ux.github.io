@@ -550,32 +550,189 @@ fi
 <!-- SECTION: Git Basics -->
 <div class="section">
     <h2>4. Version Control with Git</h2>
-    <p>Track code changes and collaborate using Git.</p>
+    <p>Git is a distributed version control system that helps track changes to code, collaborate with others, and manage projects efficiently. Learning Git is essential for DevOps and software development.</p>
+
+    <!-- Installing Git -->
+    <h3>Installing Git</h3>
+    <p>Install Git on Linux:</p>
+    <pre class="code">
+# For Debian/Ubuntu
+sudo apt update
+sudo apt install git
+
+# For CentOS/RHEL
+sudo yum install git
+    </pre>
+
+    <p>Configure your Git username and email:</p>
+    <pre class="code">
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+git config --global color.ui auto   # Enable colored output
+    </pre>
+
+    <!-- Initializing Repositories -->
+    <h3>Initializing a Git Repository</h3>
+    <p>Create a new repository in your project folder:</p>
+    <pre class="code">
+mkdir myproject
+cd myproject
+git init
+# Creates a .git folder to track changes
+    </pre>
+
+    <!-- Cloning Repositories -->
+    <h3>Cloning a Repository</h3>
+    <p>Clone an existing repository from GitHub or any remote server:</p>
+    <pre class="code">
+git clone https://github.com/username/repo.git
+    </pre>
+
+    <!-- Basic Git Workflow -->
+    <h3>Adding and Committing Changes</h3>
+    <p>Track and save changes in Git:</p>
+    <pre class="code">
+git status               # Check current changes
+git add file.txt          # Stage a file
+git add .                 # Stage all changes
+git commit -m "Initial commit"   # Save changes with a message
+    </pre>
+
+    <!-- Branches -->
+    <h3>Working with Branches</h3>
+    <p>Branches let you work on features or experiments without affecting the main code.</p>
+    <pre class="code">
+git branch                # List branches
+git branch feature1       # Create a new branch
+git checkout feature1     # Switch to the branch
+git merge feature1        # Merge feature1 into current branch
+    </pre>
+
+    <!-- Remote Repositories -->
+    <h3>Working with Remote Repositories</h3>
+    <p>Connect your local repository to a remote repository:</p>
+    <pre class="code">
+git remote add origin https://github.com/username/repo.git
+git push -u origin main     # Push local commits to remote
+git pull origin main        # Fetch and merge changes from remote
+    </pre>
+
+    <!-- Viewing History -->
+    <h3>Viewing Commit History</h3>
+    <pre class="code">
+git log                 # Show commit history
+git log --oneline       # Show compact history
+git diff                # Show changes not staged
+git diff --staged       # Show staged changes
+    </pre>
+
+    <!-- Useful Tips -->
+    <h3>Tips for Beginners</h3>
     <ul>
-        <li>Installing Git and configuring user</li>
-        <li>Initializing repositories: <code>git init</code></li>
-        <li>Cloning, adding, committing: <code>git clone, git add, git commit</code></li>
-        <li>Branches: <code>git branch, git checkout, git merge</code></li>
-        <li>Remote repositories: <code>git remote, git push, git pull</code></li>
+        <li>Always commit frequently with meaningful messages.</li>
+        <li>Use branches to work on features separately.</li>
+        <li>Pull changes from remote before starting work.</li>
+        <li>Use <code>git status</code> often to avoid mistakes.</li>
+        <li>GitHub, GitLab, and Bitbucket are popular platforms for hosting repositories.</li>
     </ul>
-    <div class="diagram">
-        <img src="images/git-branching.png" alt="Git Branching Diagram">
-    </div>
+
+    <!-- Example Workflow -->
+    <h3>Example Workflow</h3>
+    <pre class="code">
+# Create project and initialize Git
+mkdir myproject
+cd myproject
+git init
+
+# Add files and commit
+echo "Hello Linux" > hello.txt
+git add hello.txt
+git commit -m "Add hello file"
+
+# Push to remote repository
+git remote add origin https://github.com/username/myproject.git
+git push -u origin main
+    </pre>
+
 </div>
 
 <!-- SECTION: DevOps Basics -->
 <div class="section">
     <h2>5. Introduction to DevOps</h2>
-    <p>Understand the fundamental DevOps concepts and tools for automation.</p>
+    <p>DevOps is a set of practices that combines <b>software development (Dev)</b> and <b>IT operations (Ops)</b> to shorten the software development lifecycle, improve deployment frequency, and deliver high-quality software reliably.</p>
+
+    <!-- What is DevOps -->
+    <h3>What is DevOps and Why It Matters</h3>
+    <p>DevOps focuses on collaboration between developers and operations teams. Key benefits include:</p>
     <ul>
-        <li>What is DevOps and why it matters</li>
-        <li>CI/CD pipeline basics</li>
-        <li>Introduction to Docker and containers</li>
-        <li>Monitoring and logging basics</li>
+        <li>Faster delivery of software updates and features.</li>
+        <li>Continuous integration and continuous deployment (CI/CD).</li>
+        <li>Improved collaboration and communication between teams.</li>
+        <li>Automated testing, deployment, and infrastructure management.</li>
+        <li>Higher reliability and scalability of applications.</li>
     </ul>
-    <div class="diagram">
-        <img src="images/devops-pipeline.png" alt="DevOps Pipeline Diagram">
-    </div>
+
+    <!-- CI/CD Pipeline -->
+    <h3>CI/CD Pipeline Basics</h3>
+    <p>A <b>CI/CD pipeline</b> automates building, testing, and deploying code. The main stages include:</p>
+    <ul>
+        <li><b>Continuous Integration (CI)</b>: Developers push code frequently, automated tests run to verify changes.</li>
+        <li><b>Continuous Delivery (CD)</b>: Validated code is automatically prepared for deployment to production.</li>
+        <li><b>Continuous Deployment</b>: Fully automated deployment to production without manual intervention.</li>
+    </ul>
+    <p>Popular tools for CI/CD include <b>Jenkins, GitLab CI/CD, GitHub Actions, and CircleCI</b>.</p>
+
+    <!-- Containers and Docker -->
+    <h3>Introduction to Docker and Containers</h3>
+    <p>Containers package applications with their dependencies so they run consistently across environments.</p>
+    <ul>
+        <li><b>Docker</b> is a platform for creating, managing, and running containers.</li>
+        <li>Containers are lightweight and isolated, unlike virtual machines.</li>
+        <li>Docker images are templates for containers.</li>
+        <li>Key commands:</li>
+    </ul>
+    <pre class="code">
+docker build -t myapp:1.0 .    # Build Docker image
+docker run -d -p 8080:80 myapp:1.0  # Run container
+docker ps                       # List running containers
+docker stop &lt;container_id&gt;      # Stop a container
+    </pre>
+
+    <!-- Infrastructure as Code -->
+    <h3>Infrastructure as Code (IaC)</h3>
+    <p>IaC allows you to manage and provision infrastructure using code, instead of manual setup. Tools include:</p>
+    <ul>
+        <li><b>Terraform</b> – Define infrastructure in declarative configuration files.</li>
+        <li><b>Ansible</b> – Automate software configuration and deployment.</li>
+        <li><b>Puppet / Chef</b> – Manage server configurations consistently.</li>
+    </ul>
+
+    <!-- Monitoring and Logging -->
+    <h3>Monitoring and Logging Basics</h3>
+    <p>Monitoring and logging ensure system reliability and help troubleshoot issues:</p>
+    <ul>
+        <li><b>Monitoring tools</b>: Prometheus, Grafana, Nagios – track system health, CPU, memory, and application performance.</li>
+        <li><b>Logging tools</b>: ELK Stack (Elasticsearch, Logstash, Kibana), Fluentd – collect, analyze, and visualize logs.</li>
+        <li>Alerts notify teams when issues occur, enabling faster response.</li>
+    </ul>
+
+    <!-- Collaboration Tools -->
+    <h3>Collaboration and Version Control</h3>
+    <p>DevOps heavily relies on collaboration tools and version control:</p>
+    <ul>
+        <li><b>Git</b> – Track code changes and manage branches.</li>
+        <li><b>Slack / Teams / Jira</b> – Communication and task management.</li>
+    </ul>
+
+    <!-- Summary -->
+    <h3>DevOps Summary</h3>
+    <p>In short, DevOps combines:</p>
+    <ul>
+        <li>People: Collaboration across Dev and Ops teams.</li>
+        <li>Processes: Automation of testing, deployment, and infrastructure.</li>
+        <li>Tools: CI/CD, containers, monitoring, IaC, and version control.</li>
+    </ul>
+    <p>💡 Tip: Start small by automating simple tasks with scripts and gradually move to CI/CD pipelines and containerization.</p>
 </div>
 
 </div>
