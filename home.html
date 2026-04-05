@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux Hardening Guide</title>
+<style>
+body {
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:#fff;
+}
+.navbar {
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    padding:15px;
+    background: rgba(0,0,0,0.3);
+}
+.nav-btn {
+    text-decoration:none;
+    color:white;
+    padding:8px 15px;
+    border-radius:6px;
+    background: rgba(255,255,255,0.1);
+    transition:0.3s;
+    font-weight:bold;
+}
+.nav-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
+.container {
+    text-align:center;
+    padding:80px 20px;
+}
+h1 {
+    font-size:48px;
+    margin-bottom:10px;
+}
+p.subtitle {
+    opacity:0.8;
+    margin-bottom:50px;
+    font-size:18px;
+}
+.cards {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:25px;
+}
+.card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);
+    width:250px;
+    padding:30px;
+    border-radius:15px;
+    transition:0.4s;
+    text-decoration:none;
+    color:white;
+}
+.card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+}
+.card h2 {
+    margin-bottom:10px;
+}
+.card p {
+    font-size:14px;
+    opacity:0.9;
+}
+.rhel8 { border-left:5px solid #ff4b2b; }
+.rhel9 { border-left:5px solid #00c6ff; }
+.about { border-left:5px solid #facc15; }
+.author { border-left:5px solid #22c55e; }
+.exam { border-left:5px solid #a78bfa; }
+
+footer {
+    text-align:center;
+    margin-top:60px;
+    padding:20px;
+    opacity:0.7;
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="about.html" class="nav-btn">About</a>
+    <a href="author.html" class="nav-btn">Author</a>
+    <a href="exam.html" class="nav-btn">Exam</a>
+</div>
+
+<div class="container">
+    <h1>🔐 Linux Server Hardening</h1>
+    <p class="subtitle">Choose your environment or explore project resources</p>
+
+    <div class="cards">
+        <a href="rhel8.html" class="card rhel8"><h2>RHEL 8</h2><p>Secure Red Hat Enterprise Linux 8 systems</p></a>
+        <a href="rhel9.html" class="card rhel9"><h2>RHEL 9</h2><p>Advanced hardening for modern RHEL 9</p></a>
+        <a href="about.html" class="card about"><h2>About</h2><p>Learn what this project covers and its objectives</p></a>
+        <a href="author.html" class="card author"><h2>Author</h2><p>Meet the developer & technologies used</p></a>
+        <a href="exam.html" class="card exam"><h2>Exam</h2><p>Practice questions to test your Linux hardening skills</p></a>
+    </div>
+</div>
+
+<footer>Repo Author: Kiran Negi</footer>
+
+</body>
+</html>
