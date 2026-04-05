@@ -286,11 +286,80 @@ footer:hover {
 <!-- SECTION: Permissions -->
 <div class="section">
     <h2>6. File Permissions</h2>
-    <p>Linux permissions control who can read, write, or execute files.</p>
+    <p>Linux permissions control who can <b>read</b>, <b>write</b>, or <b>execute</b> files and directories. Understanding permissions is crucial for system security and proper file management.</p>
+
+    <!-- Understanding Permission Structure -->
+    <h3>Permission Structure</h3>
+    <p>Every file or directory has permissions for three types of users:</p>
     <ul>
-        <li><b>chmod 755 &lt;file&gt;</b> – Change permissions</li>
-        <li><b>chown user:group &lt;file&gt;</b> – Change owner/group</li>
-        <li><b>ls -l</b> – View permissions</li>
+        <li><b>Owner</b> – The user who owns the file.</li>
+        <li><b>Group</b> – Users in the same group as the file.</li>
+        <li><b>Others</b> – All other users.</li>
+    </ul>
+    <p>Permissions are represented as <b>r, w, x</b>:</p>
+    <ul>
+        <li><b>r (read)</b> – Permission to read the file.</li>
+        <li><b>w (write)</b> – Permission to modify the file.</li>
+        <li><b>x (execute)</b> – Permission to run the file as a program or script.</li>
+    </ul>
+
+    <h3>Viewing Permissions</h3>
+    <p>Use <code>ls -l</code> to see file permissions:</p>
+    <pre class="code">
+-rwxr-xr-- 1 kiran devops 1024 Apr 5 2026 myscript.sh
+    </pre>
+    <p>Explanation of <code>-rwxr-xr--</code>:</p>
+    <ul>
+        <li><b>-</b> – Type of file (<b>-</b> for regular file, <b>d</b> for directory, <b>l</b> for link).</li>
+        <li><b>rwx</b> – Permissions for <b>owner</b> (read, write, execute).</li>
+        <li><b>r-x</b> – Permissions for <b>group</b> (read and execute).</li>
+        <li><b>r--</b> – Permissions for <b>others</b> (read only).</li>
+    </ul>
+
+    <h3>Changing Permissions with chmod</h3>
+    <p>There are two ways to set permissions: symbolic and numeric.</p>
+
+    <b>Symbolic Method:</b>
+    <pre class="code">
+chmod u+x myscript.sh   # Add execute permission to owner
+chmod g-w file.txt      # Remove write permission from group
+chmod o=r file.txt      # Set read-only for others
+    </pre>
+
+    <b>Numeric Method:</b>
+    <p>Permissions can also be set using numbers:</p>
+    <ul>
+        <li>r = 4, w = 2, x = 1</li>
+        <li>Sum the numbers for each user type (owner, group, others)</li>
+    </ul>
+    <pre class="code">
+chmod 755 myscript.sh
+# 7 = 4+2+1 -> owner: rwx
+# 5 = 4+0+1 -> group: r-x
+# 5 = 4+0+1 -> others: r-x
+    </pre>
+
+    <h3>Changing Ownership with chown</h3>
+    <p>You can change the file owner or group using <code>chown</code>:</p>
+    <pre class="code">
+chown kiran:devops myscript.sh
+# Owner = kiran, Group = devops
+    </pre>
+
+    <h3>Directory Permissions</h3>
+    <p>Directories use permissions similarly, but <b>x (execute)</b> allows entering the directory:</p>
+    <ul>
+        <li>r – List files in the directory</li>
+        <li>w – Create or delete files in the directory</li>
+        <li>x – Enter the directory</li>
+    </ul>
+
+    <h3>Quick Tips for Beginners</h3>
+    <ul>
+        <li>Use <code>ls -l</code> frequently to check permissions.</li>
+        <li>Be careful with <code>chmod 777</code>, it gives everyone full access.</li>
+        <li>Use <code>chown</code> to correct file ownership when needed.</li>
+        <li>Combine symbolic and numeric methods to simplify permission management.</li>
     </ul>
 </div>
 
