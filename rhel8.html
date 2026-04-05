@@ -62,6 +62,26 @@ h1 {
 .card p {
     margin:5px 0;
 }
+.command {
+    background: rgba(0,0,0,0.2);
+    padding:5px 10px;
+    border-radius:6px;
+    display:inline-block;
+    font-family: monospace;
+    position: relative;
+}
+.copy-btn {
+    position: absolute;
+    right:10px;
+    top:5px;
+    background:#facc15;
+    color:#111;
+    border:none;
+    padding:3px 7px;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:12px;
+}
 .explanation {
     background: rgba(255,255,255,0.1);
     padding:10px 15px;
@@ -73,7 +93,7 @@ h1 {
     position:absolute;
     right:20px;
     top:20px;
-    background:#22c55e;
+    background:#facc15;
     color:#111;
     border:none;
     padding:5px 10px;
@@ -83,7 +103,7 @@ h1 {
     transition:0.3s;
 }
 .toggle-btn:hover {
-    background:#16a34a;
+    background:#eab308;
 }
 </style>
 </head>
@@ -103,105 +123,82 @@ h1 {
     <div class="card">
         <h3>SSH Hardening</h3>
         <p><strong>File:</strong> /etc/ssh/sshd_config</p>
-        <p><strong>Settings:</strong> Disable root login, Protocol 2, Disable empty passwords</p>
+        <p class="command" id="cmd-ssh">PermitRootLogin no<br>Protocol 2<br>PermitEmptyPasswords no</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-ssh')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Secures SSH access, prevents unauthorized root login, and protects against brute-force attacks.
-        </p>
+        <p class="explanation"><strong>Why:</strong> Secures remote SSH access, disables root login, prevents empty passwords, enforces protocol 2.</p>
     </div>
 
-    <!-- Journal Logs -->
+    <!-- Journal -->
     <div class="card">
         <h3>Journal Logs</h3>
-        <p><strong>Command:</strong> journalctl --verify</p>
+        <p class="command" id="cmd-journal">journalctl --verify</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-journal')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Ensures logging integrity and allows auditing of system events, helping detect suspicious activity.
-        </p>
-    </div>
-
-    <!-- Modprobe -->
-    <div class="card">
-        <h3>Modprobe Hardening</h3>
-        <p><strong>File:</strong> /etc/modprobe.d/disable-modules.conf</p>
-        <p><strong>Settings:</strong> Disable unused kernel modules</p>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Reduces attack surface by preventing unnecessary kernel modules from loading.
-        </p>
-    </div>
-
-    <!-- Password Quality -->
-    <div class="card">
-        <h3>Password Quality</h3>
-        <p><strong>File:</strong> /etc/security/pwquality.conf</p>
-        <p><strong>Settings:</strong> Minimum length, complexity, history enforcement</p>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Enforces strong passwords, reducing risk of brute-force attacks and compromised accounts.
-        </p>
-    </div>
-
-    <!-- Cron Security -->
-    <div class="card">
-        <h3>Cron Security</h3>
-        <p><strong>Files:</strong> /etc/cron.allow & /etc/cron.deny</p>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Restricts cron job scheduling to authorized users only, preventing unauthorized task execution.
-        </p>
-    </div>
-
-    <!-- Storage Dump -->
-    <div class="card">
-        <h3>Storage Dump Security</h3>
-        <p><strong>File:</strong> /etc/audit/audit.rules</p>
-        <p><strong>Settings:</strong> Monitor critical files and directories</p>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Detects unauthorized access or modification of important files.
-        </p>
-    </div>
-
-    <!-- Auth Settings -->
-    <div class="card">
-        <h3>Authentication Hardening</h3>
-        <p><strong>File:</strong> /etc/pam.d/system-auth</p>
-        <p><strong>Settings:</strong> Enforce password policies and account lockouts</p>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Strengthens user authentication and prevents brute-force attacks.
-        </p>
-    </div>
-
-    <!-- Permissions -->
-    <div class="card">
-        <h3>File Permissions</h3>
-        <p><strong>Command:</strong> chmod 600 /etc/shadow</p>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Restricts sensitive files so only authorized users can read/write them.
-        </p>
+        <p class="explanation"><strong>Why:</strong> Ensures log integrity for auditing and detecting tampering.</p>
     </div>
 
     <!-- Ownership -->
     <div class="card">
         <h3>File Ownership</h3>
-        <p><strong>Command:</strong> chown root:root /etc/shadow</p>
+        <p class="command" id="cmd-ownership">chown root:root /etc/shadow</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-ownership')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Ensures critical files are owned by root to prevent tampering.
-        </p>
+        <p class="explanation"><strong>Why:</strong> Prevents unauthorized modification of critical files.</p>
     </div>
 
-    <!-- SELinux -->
+    <!-- Permissions -->
     <div class="card">
-        <h3>SELinux Enforcement</h3>
-        <p><strong>Command:</strong> setenforce 1</p>
+        <h3>File Permissions</h3>
+        <p class="command" id="cmd-permissions">chmod 600 /etc/shadow</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-permissions')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Enables mandatory access controls to protect the system from unauthorized access.
-        </p>
+        <p class="explanation"><strong>Why:</strong> Restricts access to sensitive files to authorized users only.</p>
+    </div>
+
+    <!-- Authentication -->
+    <div class="card">
+        <h3>Authentication Hardening</h3>
+        <p class="command" id="cmd-auth">authconfig --passalgo=sha512 --update</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-auth')">Copy</button>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation"><strong>Why:</strong> Uses SHA-512 for secure password hashing.</p>
+    </div>
+
+    <!-- Storage Dump -->
+    <div class="card">
+        <h3>Storage Dump Prevention</h3>
+        <p class="command" id="cmd-storagedump">echo 1 > /proc/sys/kernel/kptr_restrict</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-storagedump')">Copy</button>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation"><strong>Why:</strong> Prevents exposure of kernel pointers to unprivileged users.</p>
+    </div>
+
+    <!-- Password Quality -->
+    <div class="card">
+        <h3>Password Quality</h3>
+        <p class="command" id="cmd-pwquality">/etc/security/pwquality.conf (minlen=12, dcredit=-1, ucredit=-1)</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-pwquality')">Copy</button>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation"><strong>Why:</strong> Enforces strong password complexity to prevent brute-force attacks.</p>
+    </div>
+
+    <!-- Kernel Hardening -->
+    <div class="card">
+        <h3>Kernel Hardening</h3>
+        <p class="command" id="cmd-kernel">sysctl -w net.ipv4.ip_forward=0<br>sysctl -w net.ipv4.conf.all.accept_redirects=0</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-kernel')">Copy</button>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation"><strong>Why:</strong> Disables IP forwarding and ICMP redirects for network security.</p>
+    </div>
+
+    <!-- Modprobe / Disable Unused Modules -->
+    <div class="card">
+        <h3>Modprobe Hardening</h3>
+        <p class="command" id="cmd-modprobe">echo "install usb-storage /bin/true" > /etc/modprobe.d/disable-usb.conf</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-modprobe')">Copy</button>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation"><strong>Why:</strong> Disables unused kernel modules to reduce attack surface.</p>
     </div>
 
 </div>
@@ -221,6 +218,14 @@ toggleButtons.forEach(btn => {
         }
     });
 });
+
+// Copy command functionality
+function copyCommand(id){
+    const commandText = document.getElementById(id).innerText.replace(/\n/g, "\n");
+    navigator.clipboard.writeText(commandText).then(() => {
+        alert("Command copied to clipboard!");
+    });
+}
 </script>
 
 </body>
