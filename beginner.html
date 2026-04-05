@@ -21,7 +21,152 @@
         <h2>3. Linux File System</h2>
         <p>Linux uses a hierarchical file structure that starts from the root directory (/). Everything in Linux is treated as a file.</p>
         <p><b>Important directories:</b></p>
-        <p>/home → user files | /etc → configuration files | /var → logs | /bin → commands</p>
+        <p>🐧 1. What is the Linux File System?
+
+In Linux, the file system is the way data is stored, organized, and accessed. Everything in Linux is treated as a file—even hardware devices.
+
+📁 2. Linux File System Hierarchy (FHS)
+
+Linux follows a standard directory structure called the
+Filesystem Hierarchy Standard.
+
+Root Directory: /
+The top of the entire file system
+Everything starts from here
+📂 Important Directories
+🔹 /bin
+Essential user binaries (commands)
+Examples: ls, cp, mv
+🔹 /sbin
+System binaries (admin commands)
+Used by root (e.g., fsck, reboot)
+🔹 /etc
+Configuration files
+Example: /etc/passwd
+🔹 /home
+User home directories
+Example: /home/user
+🔹 /root
+Home directory of the root user
+🔹 /var
+Variable data (logs, cache, mail)
+Example: /var/log
+🔹 /tmp
+Temporary files (cleared often)
+🔹 /usr
+User programs and libraries
+Contains /usr/bin, /usr/lib
+🔹 /lib and /lib64
+Shared libraries required by binaries
+🔹 /dev
+Device files (represents hardware)
+Example: /dev/sda
+🔹 /proc
+Virtual filesystem showing system info
+Example: CPU, memory
+🔹 /sys
+Kernel and hardware information
+🔹 /boot
+Bootloader files (kernel, initramfs)
+🔹 /mnt and /media
+Mount points for external devices
+🧱 3. Types of Linux File Systems
+
+Linux supports many filesystem types. Here are the main ones:
+
+📦 A. Native Linux File Systems
+🔸 ext2
+Old filesystem
+No journaling
+🔸 ext3
+Introduced journaling
+Safer than ext2
+🔸 ext4 (most common)
+Modern, fast, reliable
+Supports large files and partitions
+
+👉 Most Linux systems today use ext4 by default.
+
+🔸 XFS
+High performance
+Good for large data & servers
+🔸 Btrfs
+Advanced features:
+Snapshots
+Copy-on-write
+Built-in RAID
+💾 B. Non-native (Supported) File Systems
+
+Linux can also use:
+
+🔹 FAT32
+Used in USB drives
+Compatible with Windows
+🔹 exFAT
+For large USB drives/SD cards
+🔹 NTFS
+Windows filesystem
+Linux can read/write using drivers
+🌐 C. Network File Systems
+🔹 NFS (Network File System)
+Share files over network
+🔹 SMB/CIFS
+Used by Windows file sharing
+💿 D. Special File Systems
+🔹 tmpfs
+Stored in RAM (temporary)
+🔹 procfs (/proc)
+Virtual system info
+🔹 sysfs (/sys)
+Kernel interface
+🔧 4. File Types in Linux
+
+Linux defines several file types:
+
+Type	Symbol	Description
+Regular file	-	Text, binary files
+Directory	d	Folder
+Link	l	Shortcut
+Character device	c	Keyboard, mouse
+Block device	b	Hard disks
+Socket	s	IPC communication
+FIFO (pipe)	p	Process communication
+🔐 5. File Permissions
+
+Each file has:
+
+Owner
+Group
+Others
+
+Permissions:
+
+r → Read
+w → Write
+x → Execute
+
+Example:
+
+-rwxr-xr--
+🔗 6. Mounting in Linux
+
+Linux does not use drive letters like Windows.
+
+Instead, devices are mounted into directories.
+
+Example:
+
+/dev/sda1 → /mnt/data
+
+Command:
+
+mount /dev/sda1 /mnt
+⚙️ 7. Journaling (Important Concept)
+
+Used in modern file systems like ext4.
+
+Keeps a log of changes
+Helps recover data after crashes</p>
         <p>Understanding the file system helps you navigate and manage data efficiently.</p>
     </div>
 
