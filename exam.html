@@ -1,3 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux Hardening Exam</title>
+<style>
+body {
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:#fff;
+}
+.navbar{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    padding:15px;
+    background: rgba(0,0,0,0.3);
+}
+.nav-btn{
+    text-decoration:none;
+    color:white;
+    padding:8px 15px;
+    border-radius:6px;
+    background: rgba(255,255,255,0.1);
+    transition:0.3s;
+    font-weight:bold;
+}
+.nav-btn:hover{background: rgba(255,255,255,0.3);}
+.container{
+    padding: 40px 20px;
+    max-width: 900px;
+    margin:auto;
+}
+h1{text-align:center;font-size:42px;margin-bottom:20px;color:#facc15;}
+.tab-buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-bottom:30px;
+}
+.tab-btn{
+    padding: 10px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background: rgba(255,255,255,0.1);
+    color:#fff;
+    font-weight:bold;
+    transition:0.3s;
+}
+.tab-btn:hover, .tab-btn.active{
+    background: #38bdf8;
+    color:#111;
+}
+.exam-section{
+    display:none;
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 15px;
+    backdrop-filter: blur(8px);
+}
+.exam-section.active{display:block;}
+.question{margin-bottom:20px;}
+.question h3{font-size:18px;margin-bottom:10px;}
+.options label{
+    display:block;
+    margin-bottom:5px;
+    cursor:pointer;
+    padding:3px 6px;
+    border-radius:4px;
+    transition:0.3s;
+}
+button.submit-btn{
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    background:#22c55e;
+    color:#111;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+    margin-right:10px;
+}
+button.submit-btn:hover{background:#16a34a;}
+button.reset-btn{
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    background:#f43f5e;
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+button.reset-btn:hover{background:#be123c;}
+.result{
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+    color:#facc15;
+    white-space: pre-line;
+}
+.explanation{
+    font-size:14px;
+    color:#a5f3fc;
+    margin-top:5px;
+    display:none;
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="about.html" class="nav-btn">About</a>
+    <a href="author.html" class="nav-btn">Author</a>
+    <a href="exam.html" class="nav-btn">Exam</a>
+</div>
+
+<div class="container">
+    <h1>📝 Linux Hardening Practice Exams</h1>
+    
+    <div class="tab-buttons">
+        <button class="tab-btn active" data-tab="rhel8">RHEL 8 Quiz</button>
+        <button class="tab-btn" data-tab="rhel9">RHEL 9 Quiz</button>
+        <button class="tab-btn" data-tab="mock">Mock Test</button>
+    </div>
+
+    <div id="rhel8" class="exam-section active"></div>
+    <div id="rhel9" class="exam-section"></div>
+    <div id="mock" class="exam-section"></div>
+
+    <button class="submit-btn" onclick="checkAnswers()">Submit</button>
+    <button class="reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+    <div class="result" id="exam-result"></div>
+</div>
+
 <script>
 // ==========================
 // Questions Arrays
@@ -13,18 +152,17 @@ const exams = {
         {q:"Default firewall service in RHEL 8?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default in RHEL 8."},
         {q:"Which file stores password aging information?", options:["/etc/shadow","/etc/passwd","/etc/login.defs","/etc/security/limits.conf"], answer:0, explanation:"/etc/shadow includes password hashes and aging."},
         {q:"Command to disable a systemd service?", options:["systemctl disable service","service stop service","chkconfig off service","systemctl mask service"], answer:0, explanation:"`disable` prevents the service from starting at boot."},
-        {q:"Which command checks for open ports?", options:["ss -tuln","netstat -anp","lsof -i","All of the above"], answer:3, explanation:"All listed commands can check open ports."},
-        {q:"Which package provides audit tools?", options:["audit","auditd","audisp","rsyslog"], answer:1, explanation:"`auditd` is the daemon for auditing."},
+        {q:"Which command lists active firewalld zones?", options:["firewall-cmd --get-active-zones","firewall-cmd --list-all","iptables -L","ufw status"], answer:0, explanation:"Lists currently active zones."},
+        {q:"Command to enforce password complexity?", options:["authconfig --passalgo=sha512","pam_pwquality","/etc/security/pwquality.conf","All of the above"], answer:3, explanation:"All configure password complexity policies."},
+        {q:"Which command scans for vulnerabilities?", options:["OpenSCAP","nmap","Lynis","All of the above"], answer:2, explanation:"Lynis audits system security settings."},
         {q:"Command to view failed login attempts?", options:["lastb","last","journalctl","who"], answer:0, explanation:"`lastb` shows bad login attempts."},
         {q:"Which file contains mounted filesystem info?", options:["/etc/fstab","/etc/mtab","/proc/mounts","All of the above"], answer:3, explanation:"All provide mount info."},
-        {q:"Default password hashing algorithm?", options:["SHA-512","MD5","DES","Blowfish"], answer:0, explanation:"RHEL 8 uses SHA-512 by default."},
-        {q:"Command to enforce password complexity?", options:["authconfig --passalgo=sha512","pam_pwquality","/etc/security/pwquality.conf","All of the above"], answer:3, explanation:"All configure password complexity policies."},
-        {q:"Which file limits user resources?", options:["/etc/security/limits.conf","/etc/limits","/etc/login.defs","/etc/security.conf"], answer:0, explanation:"`limits.conf` sets resource limits."},
         {q:"Command to enable SELinux temporarily?", options:["setenforce 1","getenforce 1","sestatus 1","selinuxon"], answer:0, explanation:"`setenforce 1` switches SELinux to enforcing temporarily."},
-        {q:"Which command lists active firewalld zones?", options:["firewall-cmd --get-active-zones","firewall-cmd --list-all","iptables -L","ufw status"], answer:0, explanation:"Lists currently active zones."},
+        {q:"Which command checks for open ports?", options:["ss -tuln","netstat -anp","lsof -i","All of the above"], answer:3, explanation:"All listed commands can check open ports."},
+        {q:"Which package provides audit tools?", options:["audit","auditd","audisp","rsyslog"], answer:1, explanation:"`auditd` is the daemon for auditing."},
         {q:"Which service is used for centralized logging?", options:["rsyslog","syslogd","journald","auditd"], answer:0, explanation:"rsyslog provides centralized logging."},
         {q:"Command to check file permissions?", options:["ls -l filename","stat filename","getfacl filename","All of the above"], answer:3, explanation:"All methods show file permissions."},
-        {q:"Which command scans for vulnerabilities?", options:["OpenSCAP","nmap","Lynis","All of the above"], answer:2, explanation:"Lynis audits system security settings."}
+        {q:"Default password hashing algorithm?", options:["SHA-512","MD5","DES","Blowfish"], answer:0, explanation:"RHEL 8 uses SHA-512 by default."}
     ],
     rhel9: [
         {q:"Default firewall service in RHEL 9?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default for RHEL 9."},
@@ -37,8 +175,6 @@ const exams = {
         {q:"Command to enable firewall permanently?", options:["systemctl enable firewalld","firewall-cmd --permanent","firewall-cmd --runtime-to-permanent","All of the above"], answer:3, explanation:"All methods contribute to permanent firewall setup."},
         {q:"Which command lists failed login attempts?", options:["lastb","journalctl -xe","faillog","All of the above"], answer:3, explanation:"All can be used to see failed logins."},
         {q:"Command to audit file changes?", options:["auditctl -w /etc/passwd -p wa","inotifywait","tripwire","All of the above"], answer:3, explanation:"All can audit file changes."},
-        {q:"Which command checks open ports?", options:["ss -tuln","netstat -anp","lsof -i","All of the above"], answer:3, explanation:"All listed commands can check open ports."},
-        {q:"Which service logs system messages?", options:["rsyslog","syslogd","journald","All of the above"], answer:3, explanation:"All are used for system logging."},
         {q:"Command to lock a user account?", options:["usermod -L username","passwd -l username","chage -E 0 username","All of the above"], answer:3, explanation:"All lock accounts effectively."},
         {q:"Which file lists sudo privileges?", options:["/etc/sudoers","/etc/passwd","/etc/group","/etc/shadow"], answer:0, explanation:"Sudo privileges are defined in /etc/sudoers."},
         {q:"Which command audits system configuration?", options:["OpenSCAP","Lynis","AIDE","All of the above"], answer:1, explanation:"Lynis audits security configurations."},
@@ -46,7 +182,9 @@ const exams = {
         {q:"Which file stores password expiration info?", options:["/etc/shadow","/etc/passwd","/etc/login.defs","/etc/security/limits.conf"], answer:0, explanation:"Password info is in /etc/shadow."},
         {q:"Command to disable a systemd service?", options:["systemctl disable service","systemctl stop service","chkconfig off service","All of the above"], answer:0, explanation:"Disable prevents autostart."},
         {q:"Command to view SELinux boolean values?", options:["getsebool -a","setsebool","semanage boolean","All of the above"], answer:0, explanation:"getsebool shows SELinux booleans."},
-        {q:"Which command checks disk usage?", options:["df -h","du -sh /path","ls -lh /path","All of the above"], answer:3, explanation:"All check disk usage information."}
+        {q:"Which command checks disk usage?", options:["df -h","du -sh /path","ls -lh /path","All of the above"], answer:3, explanation:"All check disk usage information."},
+        {q:"Command to view audit rules?", options:["auditctl -l","ausearch -m","augenrules","All of the above"], answer:3, explanation:"All can show audit rules."},
+        {q:"Which command restarts the SSH service?", options:["systemctl restart sshd","service sshd restart","/etc/init.d/sshd restart","All of the above"], answer:3, explanation:"All restart SSH service."}
     ],
     mock: [
         {q:"Which command changes file ownership?", options:["chown","chmod","ls","passwd"], answer:0, explanation:"chown changes file owner/group."},
@@ -96,28 +234,4 @@ for (let key in exams) {
         div.className = 'question';
         let opts = '';
         item.options.forEach((opt,j)=>{
-            opts += `<label><input type="radio" name="${key}-${i}" value="${j}"> ${opt}</label>`;
-        });
-        div.innerHTML = `<h3>${i+1}. ${item.q}</h3><div class="options">${opts}</div><p class="explanation">${item.explanation}</p>`;
-        container.appendChild(div);
-    });
-}
-
-// ==========================
-// Check Answers
-// ==========================
-function checkAnswers(){
-    const activeTab = document.querySelector('.exam-section.active').id;
-    let score = 0;
-    exams[activeTab].forEach((item,i)=>{
-        const sel = document.querySelector(`input[name="${activeTab}-${i}"]:checked`);
-        const exp = document.querySelectorAll(`#${activeTab} .explanation`)[i];
-        if(sel && parseInt(sel.value)===item.answer) score++;
-        exp.style.display = 'block'; // show explanation after submit
-    });
-    const total = exams[activeTab].length;
-    const percentage = Math.round((score/total)*100);
-    let msg = percentage >= 80 ? "Good job! Keep practicing." : "Keep practicing! You can improve.";
-    document.getElementById('exam-result').innerText = `Your Score: ${score}/${total} (${percentage}%)\n${msg}`;
-}
-</script>
+            opts += `<label><input type="radio" name="${key}-${i}" value="${j}"> ${opt
