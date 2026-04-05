@@ -39,7 +39,7 @@ body {
 h1 {
     margin-bottom:30px;
     font-size:36px;
-    color:#38bdf8;
+    color:#22c55e;
 }
 .card {
     background: rgba(255,255,255,0.05);
@@ -62,6 +62,26 @@ h1 {
 .card p {
     margin:5px 0;
 }
+.command {
+    background: rgba(0,0,0,0.2);
+    padding:5px 10px;
+    border-radius:6px;
+    display:inline-block;
+    font-family: monospace;
+    position: relative;
+}
+.copy-btn {
+    position: absolute;
+    right:10px;
+    top:5px;
+    background:#22c55e;
+    color:#111;
+    border:none;
+    padding:3px 7px;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:12px;
+}
 .explanation {
     background: rgba(255,255,255,0.1);
     padding:10px 15px;
@@ -73,7 +93,7 @@ h1 {
     position:absolute;
     right:20px;
     top:20px;
-    background:#38bdf8;
+    background:#22c55e;
     color:#111;
     border:none;
     padding:5px 10px;
@@ -83,7 +103,7 @@ h1 {
     transition:0.3s;
 }
 .toggle-btn:hover {
-    background:#0ea5e9;
+    background:#16a34a;
 }
 </style>
 </head>
@@ -103,94 +123,82 @@ h1 {
     <div class="card">
         <h3>SSH Hardening</h3>
         <p><strong>File:</strong> /etc/ssh/sshd_config</p>
-        <p><strong>Settings:</strong> Disable root login, Use Protocol 2, Disable empty passwords, Use strong ciphers</p>
+        <p class="command" id="cmd-ssh-r9">PermitRootLogin no<br>Protocol 2<br>PermitEmptyPasswords no</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-ssh-r9')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Protects remote access with modern encryption, prevents root login attacks, and secures SSH communications.
-        </p>
+        <p class="explanation"><strong>Why:</strong> Protects SSH from unauthorized root access and weak authentication.</p>
     </div>
 
-    <!-- FirewallD -->
+    <!-- Journal -->
     <div class="card">
-        <h3>FirewallD Configuration</h3>
-        <p><strong>Command:</strong> firewall-cmd --permanent --zone=public --add-service=ssh</p>
-        <p><strong>Settings:</strong> Enable default zone, allow necessary services, block unused ports</p>
+        <h3>Journal Logs</h3>
+        <p class="command" id="cmd-journal-r9">journalctl --verify</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-journal-r9')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Reduces attack surface by allowing only necessary network traffic and securing open ports.
-        </p>
-    </div>
-
-    <!-- SELinux -->
-    <div class="card">
-        <h3>SELinux Enforcement</h3>
-        <p><strong>Command:</strong> setenforce 1</p>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Enables mandatory access controls to prevent unauthorized access and privilege escalation.
-        </p>
-    </div>
-
-    <!-- Password Quality -->
-    <div class="card">
-        <h3>Password Quality</h3>
-        <p><strong>File:</strong> /etc/security/pwquality.conf</p>
-        <p><strong>Settings:</strong> Minimum length, complexity, enforce history, account lockout</p>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Ensures strong passwords and prevents brute-force attacks.
-        </p>
-    </div>
-
-    <!-- AuditD -->
-    <div class="card">
-        <h3>AuditD Configuration</h3>
-        <p><strong>File:</strong> /etc/audit/audit.rules</p>
-        <p><strong>Settings:</strong> Monitor sensitive directories and commands</p>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Tracks changes to critical files and detects suspicious activity.
-        </p>
-    </div>
-
-    <!-- Cron Security -->
-    <div class="card">
-        <h3>Cron Security</h3>
-        <p><strong>Files:</strong> /etc/cron.allow & /etc/cron.deny</p>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Ensures only authorized users can schedule tasks, preventing misuse.
-        </p>
-    </div>
-
-    <!-- Permissions -->
-    <div class="card">
-        <h3>File Permissions</h3>
-        <p><strong>Command:</strong> chmod 600 /etc/shadow</p>
-        <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Protects sensitive files from unauthorized access.
-        </p>
+        <p class="explanation"><strong>Why:</strong> Ensures integrity of logs for auditing and troubleshooting.</p>
     </div>
 
     <!-- Ownership -->
     <div class="card">
         <h3>File Ownership</h3>
-        <p><strong>Command:</strong> chown root:root /etc/shadow</p>
+        <p class="command" id="cmd-ownership-r9">chown root:root /etc/shadow</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-ownership-r9')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Ensures critical files are owned by root, preventing tampering.
-        </p>
+        <p class="explanation"><strong>Why:</strong> Prevents unauthorized modifications of sensitive files.</p>
     </div>
 
-    <!-- Journald -->
+    <!-- Permissions -->
     <div class="card">
-        <h3>Journal Logs</h3>
-        <p><strong>Command:</strong> journalctl --verify</p>
+        <h3>File Permissions</h3>
+        <p class="command" id="cmd-permissions-r9">chmod 600 /etc/shadow</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-permissions-r9')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation">
-            <strong>Why:</strong> Verifies logs for tampering and ensures accurate auditing.
-        </p>
+        <p class="explanation"><strong>Why:</strong> Limits access to critical files to authorized users only.</p>
+    </div>
+
+    <!-- Authentication -->
+    <div class="card">
+        <h3>Authentication Hardening</h3>
+        <p class="command" id="cmd-auth-r9">authselect select sssd with-mkhomedir --force</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-auth-r9')">Copy</button>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation"><strong>Why:</strong> Centralizes authentication, ensures secure user management.</p>
+    </div>
+
+    <!-- Storage Dump -->
+    <div class="card">
+        <h3>Storage Dump Prevention</h3>
+        <p class="command" id="cmd-storagedump-r9">echo 1 > /proc/sys/kernel/kptr_restrict</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-storagedump-r9')">Copy</button>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation"><strong>Why:</strong> Hides kernel pointers to unprivileged users.</p>
+    </div>
+
+    <!-- Password Quality -->
+    <div class="card">
+        <h3>Password Quality</h3>
+        <p class="command" id="cmd-pwquality-r9">/etc/security/pwquality.conf (minlen=12, dcredit=-1, ucredit=-1)</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-pwquality-r9')">Copy</button>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation"><strong>Why:</strong> Enforces strong passwords, reduces brute-force risks.</p>
+    </div>
+
+    <!-- Kernel Hardening -->
+    <div class="card">
+        <h3>Kernel Hardening</h3>
+        <p class="command" id="cmd-kernel-r9">sysctl -w net.ipv4.ip_forward=0<br>sysctl -w net.ipv4.conf.all.accept_redirects=0</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-kernel-r9')">Copy</button>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation"><strong>Why:</strong> Enhances network security by disabling IP forwarding and ICMP redirects.</p>
+    </div>
+
+    <!-- Modprobe / Disable Unused Modules -->
+    <div class="card">
+        <h3>Modprobe Hardening</h3>
+        <p class="command" id="cmd-modprobe-r9">echo "install usb-storage /bin/true" > /etc/modprobe.d/disable-usb.conf</p>
+        <button class="copy-btn" onclick="copyCommand('cmd-modprobe-r9')">Copy</button>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation"><strong>Why:</strong> Reduces attack surface by disabling unnecessary kernel modules.</p>
     </div>
 
 </div>
@@ -210,6 +218,14 @@ toggleButtons.forEach(btn => {
         }
     });
 });
+
+// Copy command functionality
+function copyCommand(id){
+    const commandText = document.getElementById(id).innerText.replace(/\n/g, "\n");
+    navigator.clipboard.writeText(commandText).then(() => {
+        alert("Command copied to clipboard!");
+    });
+}
 </script>
 
 </body>
