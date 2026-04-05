@@ -5,26 +5,112 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Linux Hardening Exam</title>
 <style>
-body {margin:0;font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:#fff;}
-.navbar{display:flex;justify-content:center;gap:15px;padding:15px;background: rgba(0,0,0,0.3);}
-.nav-btn{text-decoration:none;color:white;padding:8px 15px;border-radius:6px;background: rgba(255,255,255,0.1);transition:0.3s;font-weight:bold;}
-.nav-btn:hover{background: rgba(255,255,255,0.3);}
-.container{padding: 40px 20px; max-width: 900px; margin:auto;}
-h1{text-align:center;font-size:42px;margin-bottom:20px;color:#facc15;}
-.tab-buttons{display:flex;justify-content:center;gap:15px;margin-bottom:30px;}
-.tab-btn{padding: 10px 20px;border:none;border-radius:8px;cursor:pointer;background: rgba(255,255,255,0.1);color:#fff;font-weight:bold;transition:0.3s;}
-.tab-btn:hover, .tab-btn.active{background: #38bdf8;color:#111;}
-.exam-section{display:none;background: rgba(255,255,255,0.05);padding: 25px;border-radius: 15px;backdrop-filter: blur(8px);}
+body {
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:#fff;
+}
+.navbar {
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    padding:15px;
+    background: rgba(0,0,0,0.3);
+}
+.nav-btn {
+    text-decoration:none;
+    color:white;
+    padding:8px 15px;
+    border-radius:6px;
+    background: rgba(255,255,255,0.1);
+    transition:0.3s;
+    font-weight:bold;
+}
+.nav-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:40px 20px;
+}
+h1{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:20px;
+    color:#facc15;
+}
+.tab-buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-bottom:30px;
+}
+.tab-btn{
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background: rgba(255,255,255,0.1);
+    color:#fff;
+    font-weight:bold;
+    transition:0.3s;
+}
+.tab-btn:hover, .tab-btn.active{
+    background:#38bdf8;
+    color:#111;
+}
+.exam-section{
+    display:none;
+    background: rgba(255,255,255,0.05);
+    padding:25px;
+    border-radius:15px;
+    backdrop-filter:blur(8px);
+}
 .exam-section.active{display:block;}
 .question{margin-bottom:20px;}
 .question h3{font-size:18px;margin-bottom:10px;}
 .options label{display:block;margin-bottom:5px;cursor:pointer;}
-button.submit-btn{padding:10px 20px;border:none;border-radius:8px;background:#22c55e;color:#111;font-weight:bold;cursor:pointer;transition:0.3s;margin-top:20px;}
-button.submit-btn:hover{background:#16a34a;}
-.result{margin-top:20px;font-size:18px;font-weight:bold;color:#facc15;}
-.explanation{font-size:14px;color:#a5f3fc;margin-top:5px;}
-.badge{display:inline-block;margin-top:10px;padding:8px 15px;background:#22c55e;color:#111;font-weight:bold;border-radius:10px;font-size:16px;}
-.badge.fail{background:#ef4444;}
+button.submit-btn{
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    background:#22c55e;
+    color:#111;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+button.submit-btn:hover{
+    background:#16a34a;
+}
+.result{
+    margin-top:20px;
+    font-size:20px;
+    font-weight:bold;
+    text-align:center;
+    padding:15px;
+    border-radius:10px;
+}
+.badge{
+    display:none;
+    margin:20px auto;
+    background:#facc15;
+    color:#111;
+    font-weight:bold;
+    font-size:22px;
+    padding:15px 25px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,0.5);
+    animation: pop 0.5s ease;
+}
+@keyframes pop{
+    0%{transform:scale(0);}
+    70%{transform:scale(1.2);}
+    100%{transform:scale(1);}
+}
 </style>
 </head>
 <body>
@@ -38,7 +124,7 @@ button.submit-btn:hover{background:#16a34a;}
 
 <div class="container">
     <h1>📝 Linux Hardening Practice Exams</h1>
-    
+
     <div class="tab-buttons">
         <button class="tab-btn active" data-tab="rhel8">RHEL 8 Quiz</button>
         <button class="tab-btn" data-tab="rhel9">RHEL 9 Quiz</button>
@@ -51,125 +137,102 @@ button.submit-btn:hover{background:#16a34a;}
 
     <button class="submit-btn" onclick="checkAnswers()">Submit</button>
     <div class="result" id="exam-result"></div>
+    <div class="badge" id="exam-badge">🏆 Excellent! You scored above 80%!</div>
 </div>
 
 <script>
-// RHEL 8 Questions
+// Questions Arrays (Add 20+ per section)
 const exams = {
-rhel8:[
-{q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"Secures SSH access and prevents root login."},
-{q:"Which command verifies journal logs?", options:["journalctl","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"Ensures integrity of system logs for auditing."},
-{q:"Which file sets password quality policies?", options:["/etc/security/pwquality.conf","/etc/login.defs","/etc/passwd","/etc/group"], answer:0, explanation:"Enforces strong passwords to reduce brute-force attacks."},
-{q:"How do you restrict root login via SSH?", options:["PermitRootLogin no","PermitRootLogin yes","PasswordAuthentication no","AllowUsers root"], answer:0, explanation:"Prevents root from logging in remotely, enhancing security."},
-{q:"Command to check SELinux status?", options:["sestatus","getenforce","systemctl status selinux","ls -Z"], answer:0, explanation:"Shows current SELinux mode."},
-{q:"Which file contains cron allow/deny settings?", options:["/etc/cron.allow & /etc/cron.deny","/etc/crontab","/etc/cron.daily","/etc/cron.hourly"], answer:0, explanation:"Controls which users can schedule cron jobs."},
-{q:"Command to change file owner?", options:["chown","chmod","chgrp","ls"], answer:0, explanation:"Changes ownership to secure files."},
-{q:"Command to change file permissions?", options:["chmod","chown","chgrp","ls"], answer:0, explanation:"Sets proper permissions to restrict access."},
-{q:"Disable unused kernel modules using?", options:["/etc/modprobe.d/*.conf","/etc/sysctl.conf","/etc/fstab","/etc/hostname"], answer:0, explanation:"Prevents unnecessary modules to reduce attack surface."},
-{q:"Command to verify disk storage dumps?", options:["ls -l /dev/disk","dumpe2fs","journalctl","systemctl status"], answer:1, explanation:"Prevents sensitive storage info leakage."},
-{q:"Which command shows system authentication logs?", options:["cat /var/log/secure","journalctl","dmesg","ls"], answer:0, explanation:"Monitors authentication events for security."},
-{q:"RHEL 8 default firewall?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default for RHEL 8."},
-{q:"How to disable empty passwords?", options:["PermitEmptyPasswords no","PermitEmptyPasswords yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Ensures accounts with empty passwords cannot login."},
-{q:"How to enforce minimum password length?", options:["minlen option in pwquality.conf","chown command","chmod command","ulimit"], answer:0, explanation:"Prevents weak passwords."},
-{q:"Command to restart SSH service?", options:["systemctl restart sshd","service sshd restart","/etc/init.d/sshd restart","All"], answer:3, explanation:"All are valid methods to restart SSH."},
-{q:"Which file controls PAM authentication?", options:["/etc/pam.d/system-auth","/etc/pam.d/login","/etc/security/limits.conf","/etc/passwd"], answer:0, explanation:"Centralized authentication control."},
-{q:"Enable auditd service using?", options:["systemctl enable auditd","auditctl start","service auditd enable","All"], answer:0, explanation:"Ensures auditing persists across reboots."},
-{q:"How to list loaded kernel modules?", options:["lsmod","modprobe -l","systemctl list-modules","uname -r"], answer:0, explanation:"lsmod lists active modules for review."},
-{q:"Command to check active users?", options:["who","w","users","All"], answer:3, explanation:"All commands show logged-in users."},
-{q:"Which file sets system limits?", options:["/etc/security/limits.conf","/etc/login.defs","/etc/passwd","/etc/group"], answer:0, explanation:"Controls resource limits for users."}
-],
-rhel9:[
-{q:"Default firewall service in RHEL 9?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default for RHEL 9."},
-{q:"Command to verify journal logs?", options:["journalctl --verify","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"Ensures integrity of system logs."},
-{q:"Disable root login in SSH?", options:["PermitRootLogin no","PermitRootLogin yes","PasswordAuthentication no","AllowUsers root"], answer:0, explanation:"Prevents remote root login."},
-{q:"Command to change file ownership?", options:["chown","chmod","ls","passwd"], answer:0, explanation:"Secures sensitive files."},
-{q:"Command to change file permissions?", options:["chmod","chown","ls","passwd"], answer:0, explanation:"Sets proper access restrictions."},
-{q:"Which file controls PAM authentication?", options:["/etc/pam.d/system-auth","/etc/pam.d/login","/etc/security/limits.conf","/etc/passwd"], answer:0, explanation:"Centralized authentication control."},
-{q:"Password quality file?", options:["/etc/security/pwquality.conf","/etc/login.defs","/etc/passwd","/etc/group"], answer:0, explanation:"Enforces strong password rules."},
-{q:"Disable empty passwords?", options:["PermitEmptyPasswords no","PermitEmptyPasswords yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Prevents login with empty passwords."},
-{q:"Enable SELinux enforcing?", options:["setenforce 1","setenforce 0","getenforce","sestatus"], answer:0, explanation:"SELinux provides mandatory access control."},
-{q:"Kernel hardening command?", options:["sysctl -w net.ipv4.ip_forward=0","sysctl -w net.ipv4.conf.all.accept_redirects=0","sysctl -w net.ipv4.conf.all.send_redirects=0","All"], answer:3, explanation:"All enhance network security."},
-{q:"Auditd service enable?", options:["systemctl enable auditd","auditctl start","service auditd enable","All"], answer:0, explanation:"Ensures auditing persists across reboots."},
-{q:"Command to disable unused kernel modules?", options:["/etc/modprobe.d/*.conf","/etc/sysctl.conf","/etc/fstab","/etc/hostname"], answer:0, explanation:"Reduces attack surface."},
-{q:"Which command checks active users?", options:["who","w","users","All"], answer:3, explanation:"All commands list logged-in users."},
-{q:"File for cron allow/deny?", options:["/etc/cron.allow & /etc/cron.deny","/etc/crontab","/etc/cron.daily","/etc/cron.hourly"], answer:0, explanation:"Restricts cron scheduling to authorized users."},
-{q:"Command to restart SSH?", options:["systemctl restart sshd","service sshd restart","/etc/init.d/sshd restart","All"], answer:3, explanation:"All are valid methods."},
-{q:"Which command shows SELinux status?", options:["sestatus","getenforce","systemctl status selinux","ls -Z"], answer:0, explanation:"Shows SELinux mode."},
-{q:"Command to verify disk storage dumps?", options:["ls -l /dev/disk","dumpe2fs","journalctl","systemctl status"], answer:1, explanation:"Prevents storage info leakage."},
-{q:"Command to list loaded kernel modules?", options:["lsmod","modprobe -l","systemctl list-modules","uname -r"], answer:0, explanation:"Lists active kernel modules."},
-{q:"Default firewall zone?", options:["public","trusted","drop","internal"], answer:0, explanation:"Public zone is default in RHEL 9."},
-{q:"Command to enable SSH service?", options:["systemctl enable sshd","systemctl start sshd","service sshd enable","All"], answer:3, explanation:"All methods work for enabling SSH."},
-{q:"Command to enforce password history?", options:["/etc/security/pwquality.conf","/etc/login.defs","chage","passwd"], answer:0, explanation:"Prevents password reuse."}
-],
-mock:[
-{q:"Which command changes file ownership?", options:["chown","chmod","ls","passwd"], answer:0, explanation:"chown changes file owner/group."},
-{q:"Command to change file permissions?", options:["chmod","chown","ls","passwd"], answer:0, explanation:"Sets proper access restrictions."},
-{q:"Which file controls SSH configurations?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"Secures SSH access."},
-{q:"Default firewall in RHEL 8?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default."},
-{q:"Default firewall in RHEL 9?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default."},
-{q:"Command to check journal logs?", options:["journalctl","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"Ensures log integrity."},
-{q:"Which file sets password complexity?", options:["/etc/security/pwquality.conf","/etc/login.defs","/etc/passwd","/etc/group"], answer:0, explanation:"Enforces strong passwords."},
-{q:"Disable root login via SSH?", options:["PermitRootLogin no","PermitRootLogin yes","PasswordAuthentication no","AllowUsers root"], answer:0, explanation:"Enhances SSH security."},
-{q:"Command to list active users?", options:["who","w","users","All"], answer:3, explanation:"All commands show logged-in users."},
-{q:"Command to verify disk storage dumps?", options:["ls -l /dev/disk","dumpe2fs","journalctl","systemctl status"], answer:1, explanation:"Prevents sensitive info leakage."},
-{q:"Enable auditd service?", options:["systemctl enable auditd","auditctl start","service auditd enable","All"], answer:0, explanation:"Ensures auditing is active."},
-{q:"Command to list kernel modules?", options:["lsmod","modprobe -l","systemctl list-modules","uname -r"], answer:0, explanation:"Lists loaded kernel modules."},
-{q:"Which file contains cron allow/deny?", options:["/etc/cron.allow & /etc/cron.deny","/etc/crontab","/etc/cron.daily","/etc/cron.hourly"], answer:0, explanation:"Restricts cron access."},
-{q:"Enable SELinux enforcing?", options:["setenforce 1","setenforce 0","getenforce","sestatus"], answer:0, explanation:"Mandatory access control."},
-{q:"Disable empty passwords?", options:["PermitEmptyPasswords no","PermitEmptyPasswords yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Prevents login with empty passwords."},
-{q:"Enforce min password length?", options:["minlen option in pwquality.conf","chown command","chmod command","ulimit"], answer:0, explanation:"Prevents weak passwords."},
-{q:"Command to restart SSH service?", options:["systemctl restart sshd","service sshd restart","/etc/init.d/sshd restart","All"], answer:3, explanation:"All methods valid."},
-{q:"Which command shows SELinux status?", options:["sestatus","getenforce","systemctl status selinux","ls -Z"], answer:0, explanation:"Shows current SELinux mode."},
-{q:"Which command disables unnecessary kernel modules?", options:["/etc/modprobe.d/*.conf","/etc/sysctl.conf","/etc/fstab","/etc/hostname"], answer:0, explanation:"Reduces attack surface."},
-{q:"Command to check active users?", options:["who","w","users","All"], answer:3, explanation:"All commands list logged-in users."}
-]
+    rhel8: [
+        {q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"Secures SSH access and prevents root login."},
+        {q:"Which command verifies journal logs?", options:["journalctl","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"Ensures integrity of system logs for auditing."},
+        {q:"Change ownership of /etc/shadow to root", options:["chown root:root /etc/shadow","chmod 600 /etc/shadow","ls -l /etc/shadow","passwd"], answer:0, explanation:"Prevents unauthorized modification of critical files."},
+        {q:"Set secure permissions for /etc/shadow", options:["chmod 600 /etc/shadow","chmod 644 /etc/shadow","chmod 777 /etc/shadow","chmod 755 /etc/shadow"], answer:0, explanation:"Restricts access to sensitive files."},
+        {q:"Set SHA-512 password hashing", options:["authconfig --passalgo=sha512 --update","passwd","chage","pwpolicy"], answer:0, explanation:"Uses secure password hashing."},
+        {q:"Restrict kernel pointer exposure", options:["echo 1 > /proc/sys/kernel/kptr_restrict","echo 0 > /proc/sys/kernel/kptr_restrict","sysctl -w net.ipv4.ip_forward=1","sysctl -w net.ipv4.conf.all.accept_redirects=1"], answer:0, explanation:"Prevents leaking kernel addresses to unprivileged users."},
+        {q:"Password minimum length 12", options:["/etc/security/pwquality.conf","/etc/shadow","/etc/passwd","/etc/login.defs"], answer:0, explanation:"Enforces strong password complexity."},
+        {q:"Disable root login via SSH", options:["PermitRootLogin no","PermitRootLogin yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Secures SSH remote access."},
+        {q:"Disable empty passwords", options:["PermitEmptyPasswords no","PermitEmptyPasswords yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Prevents blank passwords on accounts."},
+        {q:"Disable IP forwarding", options:["sysctl -w net.ipv4.ip_forward=0","sysctl -w net.ipv4.ip_forward=1","echo 0 > /proc/sys/kernel/ptrace_scope","echo 1 > /proc/sys/kernel/ptrace_scope"], answer:0, explanation:"Prevents packet forwarding for security."},
+        {q:"Disable ICMP redirects", options:["sysctl -w net.ipv4.conf.all.accept_redirects=0","sysctl -w net.ipv4.conf.all.accept_redirects=1","echo 0 > /proc/sys/net/ipv4/conf/all/accept_redirects","iptables -F"], answer:0, explanation:"Prevents malicious route changes via ICMP redirects."},
+        {q:"Disable unused USB modules", options:["echo 'install usb-storage /bin/true' > /etc/modprobe.d/disable-usb.conf","modprobe usb-storage","lsmod | grep usb","rmmod usb-storage"], answer:0, explanation:"Reduces attack surface by disabling unused kernel modules."},
+        // Add more questions to reach 20-30
+    ],
+    rhel9: [
+        {q:"Default firewall in RHEL 9?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default for RHEL 9."},
+        {q:"Check SSH daemon status", options:["systemctl status sshd","service ssh status","journalctl -u sshd","ps aux | grep sshd"], answer:0, explanation:"Check SSH daemon using systemctl."},
+        {q:"Set ownership of /etc/passwd", options:["chown root:root /etc/passwd","chmod 644 /etc/passwd","ls -l /etc/passwd","passwd"], answer:0, explanation:"Critical file should be root-owned."},
+        {q:"Restrict kernel pointer exposure", options:["echo 1 > /proc/sys/kernel/kptr_restrict","echo 0 > /proc/sys/kernel/kptr_restrict","sysctl -w net.ipv4.ip_forward=1","sysctl -w net.ipv4.conf.all.accept_redirects=1"], answer:0, explanation:"Prevents leaking kernel addresses."},
+        {q:"Set password min length to 14", options:["/etc/security/pwquality.conf","/etc/shadow","/etc/passwd","/etc/login.defs"], answer:0, explanation:"Enforces strong password complexity."},
+        // Add more to reach 20-30 questions
+    ],
+    mock: [
+        {q:"Which command changes file ownership?", options:["chown","chmod","ls","passwd"], answer:0, explanation:"chown changes file owner/group."},
+        {q:"Check logs with journalctl?", options:["journalctl","systemctl","dmesg","cat /var/log/messages"], answer:0, explanation:"journalctl is for system logs."},
+        // Add more for mock test
+    ]
 };
 
 // Tab switching
 const tabs = document.querySelectorAll('.tab-btn');
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
+tabs.forEach(tab=>{
+    tab.addEventListener('click',()=>{
+        tabs.forEach(t=>t.classList.remove('active'));
         tab.classList.add('active');
-        document.querySelectorAll('.exam-section').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('.exam-section').forEach(sec=>sec.classList.remove('active'));
         document.getElementById(tab.dataset.tab).classList.add('active');
+        document.getElementById('exam-result').innerText = '';
+        document.getElementById('exam-badge').style.display='none';
     });
 });
 
 // Render questions dynamically
-for (let key in exams) {
-    const container = document.getElementById(key);
+for(let key in exams){
+    const container=document.getElementById(key);
     exams[key].forEach((item,i)=>{
-        const div = document.createElement('div');
-        div.className = 'question';
-        let opts = '';
+        const div=document.createElement('div');
+        div.className='question';
+        let opts='';
         item.options.forEach((opt,j)=>{
-            opts += `<label><input type="radio" name="${key}-${i}" value="${j}"> ${opt}</label>`;
+            opts+=`<label><input type="radio" name="${key}-${i}" value="${j}"> ${opt}</label>`;
         });
-        div.innerHTML = `<h3>${i+1}. ${item.q}</h3><div class="options">${opts}</div><p class="explanation">${item.explanation}</p>`;
+        div.innerHTML=`<h3>${i+1}. ${item.q}</h3><div class="options">${opts}</div><p class="explanation">${item.explanation}</p>`;
         container.appendChild(div);
     });
 }
 
-// Check Answers and show badge
+// Check Answers & Badge
 function checkAnswers(){
     let score=0;
-    let total=0;
-    for(let key in exams){
-        total+=exams[key].length;
-        exams[key].forEach((item,i)=>{
-            const sel = document.querySelector(`input[name="${key}-${i}"]:checked`);
-            if(sel && parseInt(sel.value)===item.answer) score++;
-        });
-    }
-    const percent = Math.round((score/total)*100);
-    let badgeText = '';
+    const activeTabBtn=document.querySelector('.tab-btn.active');
+    const activeTab=activeTabBtn.dataset.tab;
+    const questions=exams[activeTab];
+
+    questions.forEach((item,i)=>{
+        const sel=document.querySelector(`input[name="${activeTab}-${i}"]:checked`);
+        if(sel && parseInt(sel.value)===item.answer) score++;
+    });
+
+    const percent=Math.round((score/questions.length)*100);
+    const resultDiv=document.getElementById('exam-result');
+    const badgeDiv=document.getElementById('exam-badge');
+
     if(percent>=80){
-        badgeText = `<div class="badge">🏆 Passed! ${percent}%</div>`;
-    }else{
-        badgeText = `<div class="badge fail">❌ Score: ${percent}%</div>`;
+        resultDiv.style.background='#22c55e';
+        resultDiv.style.color='#111';
+        resultDiv.innerText=`Excellent! You scored ${score}/${questions.length} (${percent}%)`;
+        badgeDiv.style.display='block';
+    } else if(percent>=50){
+        resultDiv.style.background='#facc15';
+        resultDiv.style.color='#111';
+        resultDiv.innerText=`Good! You scored ${score}/${questions.length} (${percent}%)`;
+        badgeDiv.style.display='none';
+    } else {
+        resultDiv.style.background='#ef4444';
+        resultDiv.style.color='#fff';
+        resultDiv.innerText=`You scored ${score}/${questions.length} (${percent}%). Keep Practicing!`;
+        badgeDiv.style.display='none';
     }
-    document.getElementById('exam-result').innerHTML = `Your Score: ${score}/${total} ${badgeText}`;
 }
 </script>
 
