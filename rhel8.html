@@ -538,6 +538,227 @@ systemctl enable --now auditd</span><button class="copy-mini" onclick="copyComma
 <div class="explanation">Disable privilege escalation.</div>
 </div>
 
+
+<!-- 41 -->
+<div class="card">
+<h3>SSH Banner Configured</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c41">grep Banner /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('c41',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f41">echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('f41',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Display warning banner before login.</div>
+</div>
+
+<!-- 42 -->
+<div class="card">
+<h3>/etc/issue.net Banner</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c42">cat /etc/issue.net</span><button class="copy-mini" onclick="copyCommand('c42',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f42">echo "Authorized access only" > /etc/issue.net</span><button class="copy-mini" onclick="copyCommand('f42',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Legal login warning.</div>
+</div>
+
+<!-- 43 -->
+<div class="card">
+<h3>/etc/motd Banner</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c43">cat /etc/motd</span><button class="copy-mini" onclick="copyCommand('c43',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f43">echo "Authorized use only. Activity monitored." > /etc/motd</span><button class="copy-mini" onclick="copyCommand('f43',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Post-login warning banner.</div>
+</div>
+
+<!-- 44 -->
+<div class="card">
+<h3>IgnoreUserKnownHosts</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c44">grep IgnoreUserKnownHosts /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('c44',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f44">echo "IgnoreUserKnownHosts yes" >> /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('f44',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Ignore user SSH trust files.</div>
+</div>
+
+<!-- 45 -->
+<div class="card">
+<h3>HostbasedAuthentication</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c45">grep HostbasedAuthentication /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('c45',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f45">echo "HostbasedAuthentication no" >> /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('f45',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Disable host-based auth.</div>
+</div>
+
+<!-- 46 -->
+<div class="card">
+<h3>PermitUserEnvironment</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c46">grep PermitUserEnvironment /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('c46',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f46">echo "PermitUserEnvironment no" >> /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('f46',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Prevent env manipulation.</div>
+</div>
+
+<!-- 47 -->
+<div class="card">
+<h3>UsePAM Enabled</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c47">grep UsePAM /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('c47',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f47">echo "UsePAM yes" >> /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('f47',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Enable PAM controls.</div>
+</div>
+
+<!-- 48 -->
+<div class="card">
+<h3>Core Dump Restricted</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c48">grep ProcessSizeMax /etc/systemd/coredump.conf</span><button class="copy-mini" onclick="copyCommand('c48',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f48">echo "ProcessSizeMax=0" >> /etc/systemd/coredump.conf</span><button class="copy-mini" onclick="copyCommand('f48',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Disable core dumps.</div>
+</div>
+
+<!-- 49 -->
+<div class="card">
+<h3>Chrony Options</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c49">cat /etc/sysconfig/chronyd</span><button class="copy-mini" onclick="copyCommand('c49',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f49">echo 'OPTIONS="-u chrony"' >> /etc/sysconfig/chronyd</span><button class="copy-mini" onclick="copyCommand('f49',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Run chrony securely.</div>
+</div>
+
+<!-- 50 -->
+<div class="card">
+<h3>Repositories Configured</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c50">dnf repolist</span><button class="copy-mini" onclick="copyCommand('c50',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f50">dnf config-manager --disable *</span><button class="copy-mini" onclick="copyCommand('f50',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Disable unused repos.</div>
+</div>
+
+<!-- 51 -->
+<div class="card">
+<h3>pam_wheel Config</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c51">grep pam_wheel /etc/pam.d/su</span><button class="copy-mini" onclick="copyCommand('c51',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f51">auth required pam_wheel.so use_uid</span><button class="copy-mini" onclick="copyCommand('f51',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Restrict su access.</div>
+</div>
+
+<!-- 52 -->
+<div class="card">
+<h3>pam_faillock Password-auth</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c52">grep faillock /etc/pam.d/password-auth</span><button class="copy-mini" onclick="copyCommand('c52',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f52">auth required pam_faillock.so</span><button class="copy-mini" onclick="copyCommand('f52',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Enable lockout policy.</div>
+</div>
+
+<!-- 53 -->
+<div class="card">
+<h3>pam_faillock system-auth</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c53">grep faillock /etc/pam.d/system-auth</span><button class="copy-mini" onclick="copyCommand('c53',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f53">auth required pam_faillock.so</span><button class="copy-mini" onclick="copyCommand('f53',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">System-wide lockout.</div>
+</div>
+
+<!-- 54 -->
+<div class="card">
+<h3>Cron Directory Permissions</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c54">ls -ld /etc/cron.d</span><button class="copy-mini" onclick="copyCommand('c54',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f54">chmod 700 /etc/cron.d</span><button class="copy-mini" onclick="copyCommand('f54',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Restrict cron access.</div>
+</div>
+
+<!-- 55 -->
+<div class="card">
+<h3>AIDE Cron Job</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c55">crontab -l</span><button class="copy-mini" onclick="copyCommand('c55',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f55">echo "0 5 * * * /usr/sbin/aide --check" >> /var/spool/cron/root</span><button class="copy-mini" onclick="copyCommand('f55',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Daily integrity check.</div>
+</div>
+
+<!-- 56 -->
+<div class="card">
+<h3>Password Remember</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c56">grep remember /etc/pam.d/password-auth</span><button class="copy-mini" onclick="copyCommand('c56',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f56">echo "remember=5" >> /etc/pam.d/password-auth</span><button class="copy-mini" onclick="copyCommand('f56',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Prevent reuse.</div>
+</div>
+
+<!-- 57 -->
+<div class="card">
+<h3>Rsyslog FileCreateMode</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c57">grep FileCreateMode /etc/rsyslog.conf</span><button class="copy-mini" onclick="copyCommand('c57',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f57">echo "$FileCreateMode 0640" >> /etc/rsyslog.conf</span><button class="copy-mini" onclick="copyCommand('f57',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Secure log files.</div>
+</div>
+
+<!-- 58 -->
+<div class="card">
+<h3>Remote Log Host</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c58">grep '@@' /etc/rsyslog.conf</span><button class="copy-mini" onclick="copyCommand('c58',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f58">*.* @@logserver</span><button class="copy-mini" onclick="copyCommand('f58',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Enable centralized logging.</div>
+</div>
+
+<!-- 59 -->
+<div class="card">
+<h3>RuntimeMaxUse Journald</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c59">grep RuntimeMaxUse /etc/systemd/journald.conf</span><button class="copy-mini" onclick="copyCommand('c59',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f59">echo "RuntimeMaxUse=100M" >> /etc/systemd/journald.conf</span><button class="copy-mini" onclick="copyCommand('f59',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Limit log usage.</div>
+</div>
+
+<!-- 60 -->
+<div class="card">
+<h3>RuntimeKeepFree Journald</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c60">grep RuntimeKeepFree /etc/systemd/journald.conf</span><button class="copy-mini" onclick="copyCommand('c60',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f60">echo "RuntimeKeepFree=50M" >> /etc/systemd/journald.conf</span><button class="copy-mini" onclick="copyCommand('f60',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Reserve disk space.</div>
+</div>
+
 </div>
 
 <script>
