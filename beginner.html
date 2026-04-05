@@ -345,19 +345,128 @@ footer:hover {
 <!-- SECTION: Shell Scripting -->
 <div class="section">
     <h2>2. Shell Scripting</h2>
-    <p>Automate tasks with Bash scripting.</p>
-    <ul>
-        <li>Creating scripts: <code>#!/bin/bash</code></li>
-        <li>Variables and user input</li>
-        <li>Conditionals: <code>if, else, elif</code></li>
-        <li>Loops: <code>for, while, until</code></li>
-        <li>Functions and script execution</li>
-    </ul>
-    <div class="diagram">
-        <img src="images/shell-script-flow.png" alt="Shell Scripting Flow Diagram">
-    </div>
-</div>
+    <p>Shell scripting allows you to automate tasks in Linux using the Bash shell. Scripts are a sequence of commands written in a file that can be executed like a program.</p>
 
+    <!-- Shebang -->
+    <h3>Shebang</h3>
+    <p>The first line of a shell script should start with <code>#!/bin/bash</code> to indicate that the script should be run with Bash:</p>
+    <pre class="code">
+#!/bin/bash
+echo "Hello, Linux World!"
+    </pre>
+
+    <!-- Variables -->
+    <h3>Variables</h3>
+    <p>Variables store data that you can use in scripts:</p>
+    <pre class="code">
+name="Kiran"
+echo "Hello $name"
+    </pre>
+    <p><b>User Input:</b> You can ask the user for input:</p>
+    <pre class="code">
+echo "Enter your name:"
+read name
+echo "Hello $name"
+    </pre>
+
+    <!-- Conditionals -->
+    <h3>Conditionals</h3>
+    <p>Use <code>if</code>, <code>elif</code>, and <code>else</code> to make decisions in scripts:</p>
+    <pre class="code">
+echo "Enter a number:"
+read num
+
+if [ $num -gt 10 ]; then
+    echo "Number is greater than 10"
+elif [ $num -eq 10 ]; then
+    echo "Number is 10"
+else
+    echo "Number is less than 10"
+fi
+    </pre>
+
+    <!-- Loops -->
+    <h3>Loops</h3>
+    <p>Loops help perform repetitive tasks:</p>
+    
+    <b>For Loop:</b>
+    <pre class="code">
+for i in 1 2 3 4 5
+do
+    echo "Number $i"
+done
+    </pre>
+
+    <b>While Loop:</b>
+    <pre class="code">
+count=1
+while [ $count -le 5 ]
+do
+    echo "Count: $count"
+    ((count++))
+done
+    </pre>
+
+    <b>Until Loop:</b>
+    <pre class="code">
+count=1
+until [ $count -gt 5 ]
+do
+    echo "Count: $count"
+    ((count++))
+done
+    </pre>
+
+    <!-- Functions -->
+    <h3>Functions</h3>
+    <p>Functions group commands to reuse them in scripts:</p>
+    <pre class="code">
+greet() {
+    echo "Hello $1"
+}
+
+greet "Kiran"
+    </pre>
+
+    <!-- Script Execution -->
+    <h3>Script Execution</h3>
+    <p>Make your script executable and run it:</p>
+    <pre class="code">
+chmod +x myscript.sh
+./myscript.sh
+    </pre>
+
+    <!-- Useful Tips -->
+    <h3>Useful Tips for Beginners</h3>
+    <ul>
+        <li>Use comments <code>#</code> to explain your code.</li>
+        <li>Test scripts with <code>bash -x script.sh</code> to debug step by step.</li>
+        <li>Use <code>$0</code>, <code>$1</code>, <code>$2</code> for script and argument variables.</li>
+        <li>Use loops and conditionals to automate repetitive tasks.</li>
+        <li>Combine multiple commands using <code>;</code>, <code>&&</code>, or <code>||</code>.</li>
+    </ul>
+
+    <!-- Example Script -->
+    <h3>Example Script</h3>
+    <pre class="code">
+#!/bin/bash
+# Script to greet a user and check age
+
+echo "Enter your name:"
+read name
+echo "Hello $name!"
+
+echo "Enter your age:"
+read age
+
+if [ $age -ge 18 ]; then
+    echo "You are an adult."
+else
+    echo "You are a minor."
+fi
+    </pre>
+
+</div>
 <!-- SECTION: Package Management -->
 <div class="section">
     <h2>3. Package Management</h2>
