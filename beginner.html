@@ -1,423 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux & DevOps Beginner Tutorials</title>
+<style>
+    /* Reset & Base */
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background: #f5f7fa; color: #333; line-height: 1.6; font-size: 16px; }
+
+    /* Header */
+    .header-title {
+        text-align: center;
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: #0d6efd;
+        margin-top: 40px;
+    }
+    .header-subtitle {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #555;
+        margin: 10px 0 40px;
+    }
+
+    /* Container */
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 0 20px 60px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+    }
+
+    /* Collapsible Cards */
+    .card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        padding: 0;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.15); }
+
+    /* Card Header */
+    .card-header {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 25px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        background: #f0f4ff;
+        color: #0d6efd;
+    }
+
+    .card-header span.icon {
+        font-size: 1.8rem;
+    }
+
+    /* Card Body (collapsible) */
+    .card-body {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding: 0 25px;
+    }
+    .card-body.open {
+        padding: 20px 25px;
+    }
+
+    .card-body p, .card-body ul, .card-body ol, .card-body table, .card-body pre {
+        margin-bottom: 12px;
+    }
+
+    .card-body table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .card-body table th, .card-body table td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+    .card-body table th { background-color: #e3edff; color: #0d6efd; }
+
+    .card-body pre {
+        background: #f0f4ff;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9rem;
+    }
+
+</style>
+</head>
+<body>
+
 <div class="header-title">Linux & DevOps Beginner Tutorials</div>
 <div class="header-subtitle">Build strong fundamentals with clear explanations and real-world understanding</div>
 
 <div class="container">
-
-    <div class="card" data-icon="🖥️">
-        <h2>1. What is Linux?</h2>
-        <p>Linux is an open-source operating system used to run servers, cloud infrastructure, and DevOps tools. Unlike Windows, Linux gives full control to users and is highly customizable.</p>
-        <p>It is widely used because it is stable, secure, and free. Most websites, applications, and cloud platforms run on Linux.</p>
-        <p><b>Architecture:</b> User interacts with Shell → Shell communicates with Kernel → Kernel controls Hardware.</p>
+    <!-- Example Card -->
+    <div class="card">
+        <div class="card-header">
+            <span>1. What is Linux?</span>
+            <span class="icon">🖥️</span>
+        </div>
+        <div class="card-body">
+            <p>Linux is an open-source operating system used to run servers, cloud infrastructure, and DevOps tools. Unlike Windows, Linux gives full control to users and is highly customizable.</p>
+            <p>It is widely used because it is stable, secure, and free. Most websites, applications, and cloud platforms run on Linux.</p>
+            <p><b>Architecture:</b> User interacts with Shell → Shell communicates with Kernel → Kernel controls Hardware.</p>
+        </div>
     </div>
 
-    <div class="card" data-icon="💿">
-    <h2>2. Installing Linux</h2>
+    <div class="card">
+        <div class="card-header">
+            <span>2. Installing Linux</span>
+            <span class="icon">💿</span>
+        </div>
+        <div class="card-body">
+            <p>Installing Linux allows you to practice commands, run scripts, and manage servers safely.</p>
+            <h3>Installation Options</h3>
+            <ul>
+                <li><b>Virtual Machine:</b> Use VirtualBox or VMware inside Windows/macOS.</li>
+                <li><b>Dual Boot:</b> Install Linux alongside Windows.</li>
+                <li><b>Cloud:</b> Launch Linux servers online using AWS, Azure, or GCP.</li>
+            </ul>
+            <h3>Installation Steps</h3>
+            <ol>
+                <li>Download Linux ISO (Ubuntu, CentOS, Fedora).</li>
+                <li>Install VirtualBox and create VM.</li>
+                <li>Attach ISO and boot VM.</li>
+                <li>Follow installer prompts.</li>
+                <li>Reboot and login to Linux.</li>
+            </ol>
+        </div>
+    </div>
 
-    <p>Linux is an open-source, stable, and secure operating system used for servers, cloud infrastructure, development, and learning. Installing Linux allows you to practice commands, run scripts, and manage servers safely.</p>
+    <div class="card">
+        <div class="card-header">
+            <span>3. Linux File System</span>
+            <span class="icon">🗂️</span>
+        </div>
+        <div class="card-body">
+            <p>Linux uses a hierarchical file structure starting from <code>/</code>. Everything is treated as a file, including hardware devices.</p>
+        </div>
+    </div>
 
-    <!-- Installation Options -->
-    <h3>1. Installation Options</h3>
-    <ul>
-        <li><b>Virtual Machine (Recommended for Beginners):</b> Use <b>VirtualBox</b> or VMware to install Linux inside Windows or macOS. Safe for learning and testing.</li>
-        <li><b>Dual Boot:</b> Install Linux alongside Windows and choose OS at startup. Requires disk partitioning.</li>
-        <li><b>Cloud:</b> Launch Linux servers online using <b>AWS EC2, Azure, or GCP</b>. No local installation needed.</li>
-    </ul>
-
-    <!-- Installation Steps -->
-    <h3>2. Installation Steps (Using VirtualBox)</h3>
-    <ol>
-        <li><b>Download Linux ISO:</b> Examples – Ubuntu, CentOS, Fedora.</li>
-        <li><b>Install VirtualBox:</b> Create a new virtual machine and allocate RAM, CPU, and disk.</li>
-        <li><b>Attach ISO to VM:</b> Boot VM from ISO file.</li>
-        <li><b>Run Installer:</b> Follow prompts: language, time zone, disk setup, create user account and password.</li>
-        <li><b>Complete Installation:</b> Reboot VM and login to your Linux system.</li>
-    </ol>
-
-    <!-- Recommended Linux Distros -->
-    <h3>3. Recommended Linux Distributions for Beginners</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Distribution</th>
-                <th>Features</th>
-                <th>Use Case</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>Ubuntu</td><td>User-friendly, large community</td><td>Beginners, DevOps, cloud</td></tr>
-            <tr><td>CentOS / AlmaLinux</td><td>Stable, server-focused</td><td>Servers, enterprise applications</td></tr>
-            <tr><td>Fedora</td><td>Cutting-edge packages</td><td>Learning new tools</td></tr>
-            <tr><td>Debian</td><td>Stable, lightweight</td><td>Servers, scripting</td></tr>
-        </tbody>
-    </table>
-
-    <!-- Installation Diagram -->
-    <h3>4. Installation Workflow Diagram</h3>
-    <pre><code>
-        +---------------------+
-        | Download Linux ISO  |
-        +---------+-----------+
-                  |
-                  v
-        +---------------------+
-        | Install VirtualBox  |
-        +---------+-----------+
-                  |
-                  v
-        +---------------------+
-        | Create VM & Attach  |
-        | ISO file            |
-        +---------+-----------+
-                  |
-                  v
-        +---------------------+
-        | Boot VM & Start     |
-        | Installer           |
-        +---------+-----------+
-                  |
-                  v
-        +---------------------+
-        | Follow Installation |
-        | Steps               |
-        +---------+-----------+
-                  |
-                  v
-        +---------------------+
-        | Reboot & Login      |
-        +---------------------+
-    </code></pre>
-
-    <!-- Tips -->
-    <h3>5. Tips for Beginners</h3>
-    <ul>
-        <li>Use <b>VirtualBox</b> for a safe testing environment.</li>
-        <li>Start with <b>Ubuntu</b> for beginner-friendly experience.</li>
-        <li>Take snapshots in VirtualBox to <b>rollback changes</b> if needed.</li>
-        <li>Practice commands daily to <b>get comfortable with Linux shell</b>.</li>
-    </ul>
+    <!-- Add additional cards in the same structure for 4–18 sections -->
 </div>
 
-<div class="card" data-icon="📁">
-    <h2>4. File Types in Linux</h2>
+<script>
+    // Collapsible functionality
+    const headers = document.querySelectorAll('.card-header');
+    headers.forEach(header => {
+        header.addEventListener('click', () => {
+            const body = header.nextElementSibling;
+            body.classList.toggle('open');
+            if(body.classList.contains('open')) {
+                body.style.maxHeight = body.scrollHeight + "px";
+            } else {
+                body.style.maxHeight = null;
+            }
+        });
+    });
+</script>
 
-    <p>In Linux, everything is treated as a file, including hardware devices, directories, and processes. Understanding file types is essential to navigate and manage the system effectively.</p>
-
-    <!-- File Types Explanation -->
-    <h3>1. Linux File Types</h3>
-    <p>Each file in Linux has a type, represented by a symbol when using commands like <code>ls -l</code>:</p>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Type</th>
-                <th>Symbol</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>Regular file</td><td>-</td><td>Text or binary files (documents, scripts, programs)</td></tr>
-            <tr><td>Directory</td><td>d</td><td>Folder containing files and other directories</td></tr>
-            <tr><td>Link</td><td>l</td><td>Shortcut pointing to another file or directory</td></tr>
-            <tr><td>Character device</td><td>c</td><td>Hardware devices like keyboard or mouse</td></tr>
-            <tr><td>Block device</td><td>b</td><td>Hardware storage devices like hard disks</td></tr>
-            <tr><td>Socket</td><td>s</td><td>Inter-process communication (IPC) endpoints</td></tr>
-            <tr><td>FIFO (Pipe)</td><td>p</td><td>Communication channel between processes</td></tr>
-        </tbody>
-    </table>
-
-    <!-- Visual Diagram -->
-    <h3>2. Visual Diagram – Linux File Types</h3>
-    <pre><code>
-          File System
-          /          \
-     Regular       Special
-      File         Files
-      (-)       ---------------
-               |     |       |
-            Directory  Device  Communication
-             (d)     /dev     (s, p)
-                      |
-                  c (char) b (block)
-    </code></pre>
-
-    <!-- Permissions Note -->
-    <h3>3. Permissions and File Types</h3>
-    <p>Each file type also has permissions that control access for <b>Owner</b>, <b>Group</b>, and <b>Others</b>:</p>
-    <ul>
-        <li><b>r</b> → Read</li>
-        <li><b>w</b> → Write</li>
-        <li><b>x</b> → Execute</li>
-    </ul>
-    <p>Example: <code>-rwxr-xr--</code> means a regular file with read/write/execute for owner, read/execute for group, and read-only for others.</p>
-
-    <!-- Tips -->
-    <h3>4. Tips</h3>
-    <ul>
-        <li>Use <code>ls -l</code> to see file types and permissions.</li>
-        <li>Links (<code>l</code>) can point to directories or files anywhere in the system.</li>
-        <li>Devices are managed under <code>/dev</code> and behave like files.</li>
-        <li>Sockets and pipes are used mainly by programs to communicate with each other.</li>
-    </ul>
-</div>
-  <div class="card" data-icon="🗂️">
-    <h2>3. Linux File System</h2>
-
-    <p>Linux uses a hierarchical file structure starting from the root directory <code>/</code>. Everything in Linux is treated as a file—even hardware devices.</p>
-
-    <!-- What is Linux File System -->
-    <h3>🐧 1. What is the Linux File System?</h3>
-    <p>In Linux, the file system defines how data is stored, organized, and accessed. It provides a unified way to interact with both files and hardware devices.</p>
-    <p><b>Architecture:</b> User interacts with Shell → Shell communicates with Kernel → Kernel controls Hardware.</p>
-
-    <!-- File System Hierarchy -->
-    <h3>📁 2. Linux File System Hierarchy (FHS)</h3>
-    <p>Linux follows the <b>Filesystem Hierarchy Standard (FHS)</b>, which defines the purpose of each directory.</p>
-    <ul>
-        <li><b>/bin</b> – Essential user binaries (e.g., ls, cp, mv)</li>
-        <li><b>/sbin</b> – System binaries (admin commands, e.g., fsck, reboot)</li>
-        <li><b>/etc</b> – Configuration files (e.g., /etc/passwd)</li>
-        <li><b>/home</b> – User home directories (e.g., /home/user)</li>
-        <li><b>/root</b> – Home directory for the root user</li>
-        <li><b>/var</b> – Variable data like logs, cache, mail (/var/log)</li>
-        <li><b>/tmp</b> – Temporary files (cleared regularly)</li>
-        <li><b>/usr</b> – User programs and libraries (/usr/bin, /usr/lib)</li>
-        <li><b>/lib & /lib64</b> – Shared libraries required by binaries</li>
-        <li><b>/dev</b> – Device files (e.g., /dev/sda)</li>
-        <li><b>/proc</b> – Virtual filesystem showing system info (CPU, memory)</li>
-        <li><b>/sys</b> – Kernel and hardware information</li>
-        <li><b>/boot</b> – Bootloader files (kernel, initramfs)</li>
-        <li><b>/mnt & /media</b> – Mount points for external devices</li>
-    </ul>
-
-    <!-- Types of File Systems -->
-    <h3>🧱 3. Types of Linux File Systems</h3>
-    <h4>📦 A. Native Linux File Systems</h4>
-    <ul>
-        <li><b>ext2</b> – Old filesystem, no journaling</li>
-        <li><b>ext3</b> – Introduced journaling, safer than ext2</li>
-        <li><b>ext4</b> – Modern, fast, supports large files/partitions (most common)</li>
-        <li><b>XFS</b> – High performance, ideal for large data & servers</li>
-        <li><b>Btrfs</b> – Advanced features: snapshots, copy-on-write, built-in RAID</li>
-    </ul>
-
-    <h4>💾 B. Non-native (Supported) File Systems</h4>
-    <ul>
-        <li><b>FAT32</b> – USB drives, Windows-compatible</li>
-        <li><b>exFAT</b> – Large USB drives/SD cards</li>
-        <li><b>NTFS</b> – Windows filesystem, Linux can read/write with drivers</li>
-    </ul>
-
-    <h4>🌐 C. Network File Systems</h4>
-    <ul>
-        <li><b>NFS</b> – Network file sharing</li>
-        <li><b>SMB/CIFS</b> – Windows file sharing</li>
-    </ul>
-
-    <h4>💿 D. Special File Systems</h4>
-    <ul>
-        <li><b>tmpfs</b> – Stored in RAM (temporary)</li>
-        <li><b>procfs (/proc)</b> – Virtual system info</li>
-        <li><b>sysfs (/sys)</b> – Kernel interface</li>
-    </ul>
-
-    <!-- File Types -->
-    <h3>🔧 4. File Types in Linux</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Type</th>
-                <th>Symbol</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>Regular file</td><td>-</td><td>Text or binary files</td></tr>
-            <tr><td>Directory</td><td>d</td><td>Folder</td></tr>
-            <tr><td>Link</td><td>l</td><td>Shortcut</td></tr>
-            <tr><td>Character device</td><td>c</td><td>Keyboard, mouse</td></tr>
-            <tr><td>Block device</td><td>b</td><td>Hard disks</td></tr>
-            <tr><td>Socket</td><td>s</td><td>IPC communication</td></tr>
-            <tr><td>FIFO (pipe)</td><td>p</td><td>Process communication</td></tr>
-        </tbody>
-    </table>
-
-    <!-- File Permissions -->
-    <h3>🔐 5. File Permissions</h3>
-    <p>Each file has <b>owner, group, and others</b> with permissions:</p>
-    <ul>
-        <li>r → Read</li>
-        <li>w → Write</li>
-        <li>x → Execute</li>
-    </ul>
-    <p>Example: <code>-rwxr-xr--</code></p>
-
-    <!-- Mounting -->
-    <h3>🔗 6. Mounting in Linux</h3>
-    <p>Linux uses <b>mount points</b> instead of drive letters.</p>
-    <pre><code>/dev/sda1 → /mnt/data
-mount /dev/sda1 /mnt</code></pre>
-
-    <!-- Journaling -->
-    <h3>⚙️ 7. Journaling</h3>
-    <p>Modern file systems like ext4 keep a <b>journal</b> of changes to help recover data after crashes.</p>
-
-    <!-- Architecture Diagram -->
-    <h3>📊 Linux File System Architecture Diagram</h3>
-    <pre><code>
-                /   (Root Directory)
-                |
- ├──────────────┼───────────────────────────────┐
- |              |                               |
-/bin          /boot                           /dev
- |              |                               |
-User cmds     Kernel, GRUB                  Device files
-(ls, cp)      initramfs                     (sda, tty)
-
- ├──────────────┼───────────────────────────────┐
- |              |                               |
-/etc          /home                           /lib, /lib64
- |              |                               |
-Config files  User directories               Shared libraries
-
- ├──────────────┼───────────────────────────────┐
- |              |                               |
-/media        /mnt                            /opt
- |              |                               |
-Removable     Temporary mounts               Optional software
-devices       (manual mount)
-
- ├──────────────┼───────────────────────────────┐
- |              |                               |
-/proc         /root                           /run
- |              |                               |
-Process info  Root user home                 Runtime data
-
- ├──────────────┼───────────────────────────────┐
- |              |                               |
-/sbin         /tmp                            /usr
- |              |                               |
-System cmds   Temp files                     User programs
-(fsck)        (auto delete)                  (/usr/bin, /usr/lib)
-
-                       |
-                     /var
-                       |
-               Logs, cache, spool
-               (/var/log)
-    </code></pre>
-
-    <p>Understanding the Linux file system helps you navigate, manage data efficiently, and lays the foundation for DevOps practices.</p>
-</div>
-
-    <div class="card" data-icon="⌨️">
-        <h2>4. Basic Commands</h2>
-        <p>Linux is controlled using commands typed in the terminal.</p>
-        <p><b>Examples:</b> ls (list files), cd (change directory), pwd (current path).</p>
-        <p>You also use commands like mkdir (create folder), rm (delete), cp (copy), and mv (move).</p>
-        <p>Practicing these daily is the first step to mastering Linux.</p>
-    </div>
-
-    <div class="card" data-icon="🔑">
-        <h2>5. File Permissions</h2>
-        <p>Linux is a multi-user system, so it controls who can access files using permissions.</p>
-        <p>Each file has read (r), write (w), and execute (x) permissions for owner, group, and others.</p>
-        <p><b>Command:</b> chmod is used to change permissions.</p>
-        <p>This ensures system security and proper access control.</p>
-    </div>
-
-    <div class="card" data-icon="👥">
-        <h2>6. Users & Groups</h2>
-        <p>Linux allows multiple users to work on the same system securely.</p>
-        <p>Users can be grouped together to manage permissions easily.</p>
-        <p><b>Example:</b> Admin users have more control than normal users.</p>
-        <p>This concept is important for managing servers in real environments.</p>
-    </div>
-
-    <div class="card" data-icon="📦">
-        <h2>7. Package Management</h2>
-        <p>Linux uses package managers to install, update, and remove software.</p>
-        <p><b>Examples:</b> apt (Ubuntu), yum (CentOS).</p>
-        <p>You don’t download software manually like Windows — everything is installed using commands.</p>
-        <p>This makes software management fast and efficient.</p>
-    </div>
-
-    <div class="card" data-icon="⚡">
-        <h2>8. Process Management</h2>
-        <p>A process is a running program in Linux.</p>
-        <p>You can view processes using commands like ps and top.</p>
-        <p>If a process is not working properly, you can stop it using the kill command.</p>
-        <p>This helps in monitoring system performance.</p>
-    </div>
-
-    <div class="card" data-icon="🌐">
-        <h2>9. Networking Basics</h2>
-        <p>Networking allows systems to communicate with each other.</p>
-        <p>Important concepts include IP address, ports, and DNS.</p>
-        <p><b>Commands:</b> ping (check connectivity), ssh (remote login).</p>
-        <p>This is essential for working with servers and cloud systems.</p>
-    </div>
-
-    <div class="card" data-icon="📝">
-        <h2>10. Shell Scripting</h2>
-        <p>Shell scripting is used to automate repetitive tasks in Linux.</p>
-        <p>You can write scripts using Bash to perform multiple commands at once.</p>
-        <p>This saves time and reduces manual effort in DevOps workflows.</p>
-    </div>
-
-    <div class="card" data-icon="🔐">
-        <h2>11. SSH (Remote Access)</h2>
-        <p>SSH allows you to connect to remote servers securely.</p>
-        <p>It is widely used in DevOps to manage cloud servers.</p>
-        <p>Instead of physically accessing a server, you can control it from anywhere.</p>
-    </div>
-
-    <div class="card" data-icon="📜">
-        <h2>12. Logs & Debugging</h2>
-        <p>Logs store system activity and errors.</p>
-        <p>They are very important for troubleshooting issues.</p>
-        <p>Most logs are stored in /var/log directory.</p>
-        <p>By reading logs, you can identify and fix problems quickly.</p>
-    </div>
-
-    <div class="card" data-icon="⚙️">
-        <h2>13. Introduction to DevOps</h2>
-        <p>DevOps is a culture that combines development and operations.</p>
-        <p>It focuses on automation, faster delivery, and collaboration.</p>
-        <p>The goal is to deliver software quickly and reliably.</p>
-    </div>
-
-    <div class="card" data-icon="🛠️">
-        <h2>14. Git Basics</h2>
-        <p>Git is a version control system used to track code changes.</p>
-        <p>It allows teams to collaborate and manage code efficiently.</p>
-        <p>You can save versions, revert changes, and work with multiple developers.</p>
-    </div>
-
-    <div class="card" data-icon="🔄">
-        <h2>15. CI/CD Basics</h2>
-        <p>CI/CD automates the process of building, testing, and deploying code.</p>
-        <p>This reduces manual work and speeds up development.</p>
-        <p>It is one of the most important concepts in DevOps.</p>
-    </div>
-
-    <div class="card" data-icon="🐳">
-        <h2>16. Docker Introduction</h2>
-        <p>Docker allows you to run applications in containers.</p>
-        <p>Containers include the app and its dependencies, ensuring it runs the same everywhere.</p>
-        <p>This solves the “it works on my machine” problem.</p>
-    </div>
-
-    <div class="card" data-icon="☁️">
-        <h2>17. Cloud Basics</h2>
-        <p>Cloud platforms like AWS, Azure, and GCP provide servers over the internet.</p>
-        <p>You don’t need physical hardware — everything runs in the cloud.</p>
-        <p>This is widely used in modern DevOps environments.</p>
-    </div>
-
-    <div class="card" data-icon="🎯">
-        <h2>18. Beginner Roadmap</h2>
-        <p>Start with Linux basics → Learn commands → Practice scripting → Learn Git → Understand Docker → Learn CI/CD → Move to Cloud.</p>
-        <p>Following this step-by-step path will help you become a DevOps engineer.</p>
-    </div>
-
-</div>
+</body>
+</html>
