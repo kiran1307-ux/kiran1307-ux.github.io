@@ -17,158 +17,155 @@
         <p>Using VirtualBox, you can run Linux inside Windows safely and practice commands anytime.</p>
     </div>
 
-    <div class="card" data-icon="🗂️">
-        <h2>3. Linux File System</h2>
-        <p>Linux uses a hierarchical file structure that starts from the root directory (/). Everything in Linux is treated as a file.</p>
-        <p><b>Important directories:</b></p>
-        <p>🐧 1. What is the Linux File System?
+  <div class="card" data-icon="🗂️">
+    <h2>3. Linux File System</h2>
 
-In Linux, the file system is the way data is stored, organized, and accessed. Everything in Linux is treated as a file—even hardware devices.
+    <p>Linux uses a hierarchical file structure starting from the root directory <code>/</code>. Everything in Linux is treated as a file—even hardware devices.</p>
 
-📁 2. Linux File System Hierarchy (FHS)
+    <!-- What is Linux File System -->
+    <h3>🐧 1. What is the Linux File System?</h3>
+    <p>In Linux, the file system defines how data is stored, organized, and accessed. It provides a unified way to interact with both files and hardware devices.</p>
+    <p><b>Architecture:</b> User interacts with Shell → Shell communicates with Kernel → Kernel controls Hardware.</p>
 
-Linux follows a standard directory structure called the
-Filesystem Hierarchy Standard.
+    <!-- File System Hierarchy -->
+    <h3>📁 2. Linux File System Hierarchy (FHS)</h3>
+    <p>Linux follows the <b>Filesystem Hierarchy Standard (FHS)</b>, which defines the purpose of each directory.</p>
+    <ul>
+        <li><b>/bin</b> – Essential user binaries (e.g., ls, cp, mv)</li>
+        <li><b>/sbin</b> – System binaries (admin commands, e.g., fsck, reboot)</li>
+        <li><b>/etc</b> – Configuration files (e.g., /etc/passwd)</li>
+        <li><b>/home</b> – User home directories (e.g., /home/user)</li>
+        <li><b>/root</b> – Home directory for the root user</li>
+        <li><b>/var</b> – Variable data like logs, cache, mail (/var/log)</li>
+        <li><b>/tmp</b> – Temporary files (cleared regularly)</li>
+        <li><b>/usr</b> – User programs and libraries (/usr/bin, /usr/lib)</li>
+        <li><b>/lib & /lib64</b> – Shared libraries required by binaries</li>
+        <li><b>/dev</b> – Device files (e.g., /dev/sda)</li>
+        <li><b>/proc</b> – Virtual filesystem showing system info (CPU, memory)</li>
+        <li><b>/sys</b> – Kernel and hardware information</li>
+        <li><b>/boot</b> – Bootloader files (kernel, initramfs)</li>
+        <li><b>/mnt & /media</b> – Mount points for external devices</li>
+    </ul>
 
-Root Directory: /
-The top of the entire file system
-Everything starts from here
-📂 Important Directories
-🔹 /bin
-Essential user binaries (commands)
-Examples: ls, cp, mv
-🔹 /sbin
-System binaries (admin commands)
-Used by root (e.g., fsck, reboot)
-🔹 /etc
-Configuration files
-Example: /etc/passwd
-🔹 /home
-User home directories
-Example: /home/user
-🔹 /root
-Home directory of the root user
-🔹 /var
-Variable data (logs, cache, mail)
-Example: /var/log
-🔹 /tmp
-Temporary files (cleared often)
-🔹 /usr
-User programs and libraries
-Contains /usr/bin, /usr/lib
-🔹 /lib and /lib64
-Shared libraries required by binaries
-🔹 /dev
-Device files (represents hardware)
-Example: /dev/sda
-🔹 /proc
-Virtual filesystem showing system info
-Example: CPU, memory
-🔹 /sys
-Kernel and hardware information
-🔹 /boot
-Bootloader files (kernel, initramfs)
-🔹 /mnt and /media
-Mount points for external devices
-🧱 3. Types of Linux File Systems
+    <!-- Types of File Systems -->
+    <h3>🧱 3. Types of Linux File Systems</h3>
+    <h4>📦 A. Native Linux File Systems</h4>
+    <ul>
+        <li><b>ext2</b> – Old filesystem, no journaling</li>
+        <li><b>ext3</b> – Introduced journaling, safer than ext2</li>
+        <li><b>ext4</b> – Modern, fast, supports large files/partitions (most common)</li>
+        <li><b>XFS</b> – High performance, ideal for large data & servers</li>
+        <li><b>Btrfs</b> – Advanced features: snapshots, copy-on-write, built-in RAID</li>
+    </ul>
 
-Linux supports many filesystem types. Here are the main ones:
+    <h4>💾 B. Non-native (Supported) File Systems</h4>
+    <ul>
+        <li><b>FAT32</b> – USB drives, Windows-compatible</li>
+        <li><b>exFAT</b> – Large USB drives/SD cards</li>
+        <li><b>NTFS</b> – Windows filesystem, Linux can read/write with drivers</li>
+    </ul>
 
-📦 A. Native Linux File Systems
-🔸 ext2
-Old filesystem
-No journaling
-🔸 ext3
-Introduced journaling
-Safer than ext2
-🔸 ext4 (most common)
-Modern, fast, reliable
-Supports large files and partitions
+    <h4>🌐 C. Network File Systems</h4>
+    <ul>
+        <li><b>NFS</b> – Network file sharing</li>
+        <li><b>SMB/CIFS</b> – Windows file sharing</li>
+    </ul>
 
-👉 Most Linux systems today use ext4 by default.
+    <h4>💿 D. Special File Systems</h4>
+    <ul>
+        <li><b>tmpfs</b> – Stored in RAM (temporary)</li>
+        <li><b>procfs (/proc)</b> – Virtual system info</li>
+        <li><b>sysfs (/sys)</b> – Kernel interface</li>
+    </ul>
 
-🔸 XFS
-High performance
-Good for large data & servers
-🔸 Btrfs
-Advanced features:
-Snapshots
-Copy-on-write
-Built-in RAID
-💾 B. Non-native (Supported) File Systems
+    <!-- File Types -->
+    <h3>🔧 4. File Types in Linux</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Regular file</td><td>-</td><td>Text or binary files</td></tr>
+            <tr><td>Directory</td><td>d</td><td>Folder</td></tr>
+            <tr><td>Link</td><td>l</td><td>Shortcut</td></tr>
+            <tr><td>Character device</td><td>c</td><td>Keyboard, mouse</td></tr>
+            <tr><td>Block device</td><td>b</td><td>Hard disks</td></tr>
+            <tr><td>Socket</td><td>s</td><td>IPC communication</td></tr>
+            <tr><td>FIFO (pipe)</td><td>p</td><td>Process communication</td></tr>
+        </tbody>
+    </table>
 
-Linux can also use:
+    <!-- File Permissions -->
+    <h3>🔐 5. File Permissions</h3>
+    <p>Each file has <b>owner, group, and others</b> with permissions:</p>
+    <ul>
+        <li>r → Read</li>
+        <li>w → Write</li>
+        <li>x → Execute</li>
+    </ul>
+    <p>Example: <code>-rwxr-xr--</code></p>
 
-🔹 FAT32
-Used in USB drives
-Compatible with Windows
-🔹 exFAT
-For large USB drives/SD cards
-🔹 NTFS
-Windows filesystem
-Linux can read/write using drivers
-🌐 C. Network File Systems
-🔹 NFS (Network File System)
-Share files over network
-🔹 SMB/CIFS
-Used by Windows file sharing
-💿 D. Special File Systems
-🔹 tmpfs
-Stored in RAM (temporary)
-🔹 procfs (/proc)
-Virtual system info
-🔹 sysfs (/sys)
-Kernel interface
-🔧 4. File Types in Linux
+    <!-- Mounting -->
+    <h3>🔗 6. Mounting in Linux</h3>
+    <p>Linux uses <b>mount points</b> instead of drive letters.</p>
+    <pre><code>/dev/sda1 → /mnt/data
+mount /dev/sda1 /mnt</code></pre>
 
-Linux defines several file types:
+    <!-- Journaling -->
+    <h3>⚙️ 7. Journaling</h3>
+    <p>Modern file systems like ext4 keep a <b>journal</b> of changes to help recover data after crashes.</p>
 
-Type	Symbol	Description
-Regular file	-	Text, binary files
-Directory	d	Folder
-Link	l	Shortcut
-Character device	c	Keyboard, mouse
-Block device	b	Hard disks
-Socket	s	IPC communication
-FIFO (pipe)	p	Process communication
-🔐 5. File Permissions
+    <!-- Architecture Diagram -->
+    <h3>📊 Linux File System Architecture Diagram</h3>
+    <pre><code>
+                /   (Root Directory)
+                |
+ ├──────────────┼───────────────────────────────┐
+ |              |                               |
+/bin          /boot                           /dev
+ |              |                               |
+User cmds     Kernel, GRUB                  Device files
+(ls, cp)      initramfs                     (sda, tty)
 
-Each file has:
+ ├──────────────┼───────────────────────────────┐
+ |              |                               |
+/etc          /home                           /lib, /lib64
+ |              |                               |
+Config files  User directories               Shared libraries
 
-Owner
-Group
-Others
+ ├──────────────┼───────────────────────────────┐
+ |              |                               |
+/media        /mnt                            /opt
+ |              |                               |
+Removable     Temporary mounts               Optional software
+devices       (manual mount)
 
-Permissions:
+ ├──────────────┼───────────────────────────────┐
+ |              |                               |
+/proc         /root                           /run
+ |              |                               |
+Process info  Root user home                 Runtime data
 
-r → Read
-w → Write
-x → Execute
+ ├──────────────┼───────────────────────────────┐
+ |              |                               |
+/sbin         /tmp                            /usr
+ |              |                               |
+System cmds   Temp files                     User programs
+(fsck)        (auto delete)                  (/usr/bin, /usr/lib)
 
-Example:
+                       |
+                     /var
+                       |
+               Logs, cache, spool
+               (/var/log)
+    </code></pre>
 
--rwxr-xr--
-🔗 6. Mounting in Linux
-
-Linux does not use drive letters like Windows.
-
-Instead, devices are mounted into directories.
-
-Example:
-
-/dev/sda1 → /mnt/data
-
-Command:
-
-mount /dev/sda1 /mnt
-⚙️ 7. Journaling (Important Concept)
-
-Used in modern file systems like ext4.
-
-Keeps a log of changes
-Helps recover data after crashes</p>
-        <p>Understanding the file system helps you navigate and manage data efficiently.</p>
-    </div>
+    <p>Understanding the Linux file system helps you navigate, manage data efficiently, and lays the foundation for DevOps practices.</p>
+</div>
 
     <div class="card" data-icon="⌨️">
         <h2>4. Basic Commands</h2>
