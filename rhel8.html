@@ -317,6 +317,227 @@ systemctl enable --now auditd</span><button class="copy-mini" onclick="copyComma
 <div class="explanation">Disable redirect sending.</div>
 </div>
 
+
+<!-- 21 -->
+<div class="card">
+<h3>Kernel ptrace_scope</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c21">sysctl kernel.yama.ptrace_scope</span><button class="copy-mini" onclick="copyCommand('c21',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f21">sysctl -w kernel.yama.ptrace_scope=1</span><button class="copy-mini" onclick="copyCommand('f21',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Restrict process tracing.</div>
+</div>
+
+<!-- 22 -->
+<div class="card">
+<h3>net.ipv4.conf.all.log_martians</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c22">sysctl net.ipv4.conf.all.log_martians</span><button class="copy-mini" onclick="copyCommand('c22',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f22">sysctl -w net.ipv4.conf.all.log_martians=1</span><button class="copy-mini" onclick="copyCommand('f22',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Log suspicious packets.</div>
+</div>
+
+<!-- 23 -->
+<div class="card">
+<h3>IPv6 Accept Redirects</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c23">sysctl net.ipv6.conf.all.accept_redirects</span><button class="copy-mini" onclick="copyCommand('c23',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f23">sysctl -w net.ipv6.conf.all.accept_redirects=0</span><button class="copy-mini" onclick="copyCommand('f23',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Disable IPv6 redirects.</div>
+</div>
+
+<!-- 24 -->
+<div class="card">
+<h3>Disable IPv6</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c24">sysctl net.ipv6.conf.all.disable_ipv6</span><button class="copy-mini" onclick="copyCommand('c24',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f24">sysctl -w net.ipv6.conf.all.disable_ipv6=1</span><button class="copy-mini" onclick="copyCommand('f24',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Disable IPv6 if unused.</div>
+</div>
+
+<!-- 25 -->
+<div class="card">
+<h3>Unowned Files</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c25">find / -nouser</span><button class="copy-mini" onclick="copyCommand('c25',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f25">chown user:group filename</span><button class="copy-mini" onclick="copyCommand('f25',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Fix orphan files.</div>
+</div>
+
+<!-- 26 -->
+<div class="card">
+<h3>Ungrouped Files</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c26">find / -nogroup</span><button class="copy-mini" onclick="copyCommand('c26',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f26">chown :group filename</span><button class="copy-mini" onclick="copyCommand('f26',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Fix missing group ownership.</div>
+</div>
+
+<!-- 27 -->
+<div class="card">
+<h3>AIDE Installed</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c27">rpm -q aide</span><button class="copy-mini" onclick="copyCommand('c27',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f27">yum install aide -y</span><button class="copy-mini" onclick="copyCommand('f27',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">File integrity monitoring.</div>
+</div>
+
+<!-- 28 -->
+<div class="card">
+<h3>dnsmasq Package</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c28">rpm -q dnsmasq</span><button class="copy-mini" onclick="copyCommand('c28',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f28">yum remove dnsmasq -y</span><button class="copy-mini" onclick="copyCommand('f28',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Remove unnecessary service.</div>
+</div>
+
+<!-- 29 -->
+<div class="card">
+<h3>LogLevel SSH</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c29">grep LogLevel /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('c29',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f29">echo "LogLevel INFO" >> /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('f29',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Improve logging.</div>
+</div>
+
+<!-- 30 -->
+<div class="card">
+<h3>MACs Setting</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c30">grep MACs /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('c30',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f30">echo "MACs hmac-sha2-512,hmac-sha2-256" >> /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('f30',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Use strong MAC algorithms.</div>
+</div>
+
+<!-- 31 -->
+<div class="card">
+<h3>MaxSessions</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c31">grep MaxSessions /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('c31',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f31">echo "MaxSessions 10" >> /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('f31',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Limit sessions.</div>
+</div>
+
+<!-- 32 -->
+<div class="card">
+<h3>MaxStartups</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c32">grep MaxStartups /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('c32',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f32">echo "MaxStartups 10:30:60" >> /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('f32',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Prevent DoS.</div>
+</div>
+
+<!-- 33 -->
+<div class="card">
+<h3>Log Martians Default</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c33">sysctl net.ipv4.conf.default.log_martians</span><button class="copy-mini" onclick="copyCommand('c33',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f33">sysctl -w net.ipv4.conf.default.log_martians=1</span><button class="copy-mini" onclick="copyCommand('f33',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Log suspicious traffic.</div>
+</div>
+
+<!-- 34 -->
+<div class="card">
+<h3>nodev /tmp</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c34">mount | grep /tmp</span><button class="copy-mini" onclick="copyCommand('c34',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f34">mount -o remount,nodev /tmp</span><button class="copy-mini" onclick="copyCommand('f34',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Restrict device files.</div>
+</div>
+
+<!-- 35 -->
+<div class="card">
+<h3>noexec /tmp</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c35">mount | grep /tmp</span><button class="copy-mini" onclick="copyCommand('c35',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f35">mount -o remount,noexec /tmp</span><button class="copy-mini" onclick="copyCommand('f35',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Prevent execution.</div>
+</div>
+
+<!-- 36 -->
+<div class="card">
+<h3>nosuid /tmp</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c36">mount | grep /tmp</span><button class="copy-mini" onclick="copyCommand('c36',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f36">mount -o remount,nosuid /tmp</span><button class="copy-mini" onclick="copyCommand('f36',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Disable SUID.</div>
+</div>
+
+<!-- 37 -->
+<div class="card">
+<h3>nodev /var</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c37">mount | grep /var</span><button class="copy-mini" onclick="copyCommand('c37',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f37">mount -o remount,nodev /var</span><button class="copy-mini" onclick="copyCommand('f37',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Secure /var.</div>
+</div>
+
+<!-- 38 -->
+<div class="card">
+<h3>nodev /home</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c38">mount | grep /home</span><button class="copy-mini" onclick="copyCommand('c38',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f38">mount -o remount,nodev /home</span><button class="copy-mini" onclick="copyCommand('f38',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Restrict device usage.</div>
+</div>
+
+<!-- 39 -->
+<div class="card">
+<h3>noexec /var/tmp</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c39">mount | grep /var/tmp</span><button class="copy-mini" onclick="copyCommand('c39',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f39">mount -o remount,noexec /var/tmp</span><button class="copy-mini" onclick="copyCommand('f39',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Prevent execution.</div>
+</div>
+
+<!-- 40 -->
+<div class="card">
+<h3>nosuid /var/tmp</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c40">mount | grep /var/tmp</span><button class="copy-mini" onclick="copyCommand('c40',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f40">mount -o remount,nosuid /var/tmp</span><button class="copy-mini" onclick="copyCommand('f40',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Disable privilege escalation.</div>
+</div>
+
 </div>
 
 <script>
