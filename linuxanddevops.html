@@ -1,174 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interview Preparation</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            background: #f0f2f5;
-            color: #333;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux & DevOps Tutorials</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* BODY */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color: #fff;
+}
 
-        /* Navigation Bar */
-        nav {
-            background: #1e2a38;
-            padding: 15px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        nav .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: #fff;
-        }
-        nav ul {
-            list-style: none;
-            display: flex;
-            margin: 0;
-            padding: 0;
-        }
-        nav ul li {
-            margin-left: 25px;
-        }
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        nav ul li a:hover {
-            color: #00bfff;
-        }
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 10px;
+}
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color:white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    transition: 0.3s, transform 0.3s;
+    font-weight: bold;
+}
+.nav-btn:hover {
+    background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.15));
+    transform: translateY(-2px);
+}
 
-        /* Hero Section */
-        header {
-            background: linear-gradient(135deg, #00bfff, #007BFF);
-            color: #fff;
-            text-align: center;
-            padding: 100px 20px 60px 20px;
-        }
-        header h1 {
-            font-size: 48px;
-            margin: 0 0 15px 0;
-        }
-        header p {
-            font-size: 20px;
-            margin: 0;
-        }
+/* HEADER AUTHOR INFO */
+.header-author {
+    text-align: center;
+    background: linear-gradient(90deg,#facc15,#22c55e);
+    color: #111;
+    padding: 10px 0;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
 
-        /* Cards Section */
-        .cards {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            padding: 60px 20px;
-        }
-        .card {
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            width: 280px;
-            text-align: center;
-            padding: 30px 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.2);
-        }
-        .card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #007BFF;
-        }
-        .card p {
-            font-size: 16px;
-            margin-bottom: 20px;
-            color: #555;
-        }
-        .card button {
-            padding: 12px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            background: #007BFF;
-            color: #fff;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .card button:hover {
-            background: #0056b3;
-        }
+/* MAIN CONTAINER */
+.container {
+    text-align: center;
+    padding: 40px 20px;
+}
+h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+    color: #facc15;
+}
+p.subtitle {
+    opacity: 0.85;
+    margin-bottom: 50px;
+    font-size: 18px;
+}
 
-        /* Footer */
-        footer {
-            text-align: center;
-            background: #1e2a38;
-            color: #fff;
-            padding: 20px 10px;
-            font-size: 16px;
-        }
+/* CARDS */
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+.card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    width: 250px;
+    padding: 30px 20px;
+    border-radius: 20px;
+    transition: transform 0.4s, box-shadow 0.4s, background 0.4s;
+    text-decoration: none;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+.card:hover {
+    transform: translateY(-15px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    background: rgba(255,255,255,0.15);
+}
+.card h2 {
+    margin-bottom: 10px;
+}
+.card p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+.card::before {
+    content: attr(data-icon);
+    font-size: 40px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    opacity: 0.2;
+}
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 36px;
-            }
-            header p {
-                font-size: 18px;
-            }
-            .cards {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
+/* CARD BORDER COLORS */
+.beginner { border-left: 5px solid #ff4b2b; }
+.intermediate { border-left: 5px solid #00c6ff; }
+.advanced { border-left: 5px solid #facc15; }
+.interview { border-left: 5px solid #22c55e; }
+
+/* FOOTER */
+footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 25px 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #facc15;
+    background: linear-gradient(90deg,#0f2027,#203a43,#2c5364);
+    border-top: 3px solid #38bdf8;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
+    transition: 0.3s;
+}
+footer:hover {
+    color: #22c55e;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.7);
+}
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div class="logo">Interview Prep</div>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Author</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Exam</a></li>
-        </ul>
-    </nav>
 
-    <!-- Hero Section -->
-    <header>
-        <h1>Prepare for Linux & DevOps Interviews</h1>
-        <p>Interactive guides, tips, and practice to ace your technical interviews</p>
-    </header>
+<!-- NAVBAR -->
+<div class="navbar">
+    <a href="index.html" class="nav-btn">🏠 Home</a>
+    <a href="overview.html" class="nav-btn">📘 Overview</a>
+    <a href="aboutme.html" class="nav-btn">👤 About Me</a>
+</div>
 
-    <!-- Cards Section -->
-    <section class="cards">
-        <div class="card">
-            <h3>Linux</h3>
-            <p>Master Linux administration, commands, scripting, and troubleshooting for your interviews.</p>
-            <button onclick="alert('Start Linux Preparation!')">Prepare</button>
-        </div>
-        <div class="card">
-            <h3>DevOps</h3>
-            <p>Learn DevOps tools, CI/CD pipelines, and best practices to excel in DevOps interviews.</p>
-            <button onclick="alert('Start DevOps Preparation!')">Prepare</button>
-        </div>
-    </section>
+<!-- MAIN CONTENT -->
+<div class="container">
+    <h1>💻 Linux & DevOps Tutorials</h1>
+    <p class="subtitle">Select your level or prepare for interviews</p>
 
-    <!-- Footer -->
-    <footer>
-        Kiran Negi - Author | Interview Preparation 2026
-    </footer>
+    <div class="cards">
+        <a href="#" class="card beginner" data-icon="📗">
+            <h2>Beginner</h2>
+            <p>Learn Linux basics, shell scripting, file management, and simple DevOps workflows</p>
+        </a>
+
+        <a href="#" class="card intermediate" data-icon="📘">
+            <h2>Intermediate</h2>
+            <p>Master Bash scripting, Ansible, Docker, and CI/CD pipelines</p>
+        </a>
+
+        <a href="#" class="card advanced" data-icon="📙">
+            <h2>Advanced</h2>
+            <p>Advanced Kubernetes, DevOps automation, monitoring, and system optimization</p>
+        </a>
+
+        <a href="#" class="card interview" data-icon="📝">
+            <h2>Interview Prep</h2>
+            <p>Prepare for Linux & DevOps interviews with questions and real-world scenarios</p>
+        </a>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    © 2026 Kiran Negi | Linux & DevOps Tutorials
+</footer>
+
 </body>
 </html>
