@@ -1,39 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>About</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - Linux Hardening Guide</title>
 <style>
-body { font-family: Arial; background:#111; color:white; text-align:center; padding:50px;}
-a { color:#00c6ff; }
+body {margin:0; font-family:'Segoe UI',sans-serif; background:#111; color:#fff;}
+.navbar {display:flex; justify-content:center; gap:15px; padding:15px; background: rgba(0,0,0,0.3);}
+.nav-btn {text-decoration:none; color:white; padding:8px 15px; border-radius:6px; background: rgba(255,255,255,0.1); transition:0.3s; font-weight:bold;}
+.nav-btn:hover {background: rgba(255,255,255,0.3);}
+.container {text-align:center; padding:60px 20px;}
+h1 {font-size:42px; margin-bottom:20px;}
+p {max-width:700px; margin:auto; opacity:0.8; font-size:16px;}
+.cards {display:flex; flex-wrap:wrap; justify-content:center; gap:20px; margin-top:40px;}
+.card {background:rgba(255,255,255,0.1); backdrop-filter:blur(10px); padding:25px; border-radius:15px; width:250px; transition:0.3s; text-decoration:none; color:white;}
+.card:hover {transform:translateY(-8px) scale(1.05); box-shadow:0 10px 25px rgba(0,0,0,0.5);}
+.card h3 {margin-bottom:10px;}
 </style>
 </head>
 <body>
 
-<h1>About This Project</h1>
+<div class="navbar">
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="about.html" class="nav-btn">About</a>
+    <a href="author.html" class="nav-btn">Author</a>
+    <a href="exam.html" class="nav-btn">Exam</a>
+</div>
 
-<p>
-This Linux Hardening Guide provides practical security configurations
-for RHEL 8 and RHEL 9 systems.
-</p>
+<div class="container">
+<h1>📘 About This Project</h1>
+<p>This Linux Hardening Guide provides practical security configurations for RHEL 8 and RHEL 9 systems. It includes SSH, PAM, logging, kernel hardening, file permissions, and more. Designed for learning, practice, and real-world implementation.</p>
 
-<p>
-It includes real-world controls based on industry standards such as:
-</p>
+<div class="cards">
+    <div class="card">
+        <h3>✅ Purpose</h3>
+        <p>Help users secure Linux servers following best practices.</p>
+    </div>
+    <div class="card">
+        <h3>🛠 Scope</h3>
+        <p>Covers RHEL 8 & 9 configurations including SSH, PAM, cron, journald, kernel modules, and permissions.</p>
+    </div>
+    <div class="card">
+        <h3>🎯 Goal</h3>
+        <p>Provide an interactive, professional learning platform for Linux security.</p>
+    </div>
+</div>
 
-<ul>
-<li>SSH Security</li>
-<li>Authentication & PAM</li>
-<li>File Permissions</li>
-<li>Kernel Hardening</li>
-<li>Logging & Monitoring</li>
-</ul>
-
-<p>
-This project is designed for learning, practice, and real-world server security implementation.
-</p>
-
-<br>
-<a href="index.html">⬅ Back</a>
+<br><a href="index.html" style="color:#0ea5e9; text-decoration:none;">⬅ Back</a>
+</div>
 
 </body>
 </html>
