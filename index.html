@@ -1,20 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My First Webpage</title>
+    <meta charset="UTF-8">
+    <title>Learning Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #0078D4, #232F3E);
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .azure {
+            background-color: #0078D4;
+        }
+
+        .azure:hover {
+            background-color: #005a9e;
+        }
+
+        .linux {
+            background-color: #f39c12;
+        }
+
+        .linux:hover {
+            background-color: #d68910;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 16px;
+            opacity: 0.8;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Welcome to My Website</h1>
-    <p>This is a simple HTML page.</p>
+    <h1>Learning Guide</h1>
+    <p>Select a topic to start learning</p>
 
-    <button onclick="showMessage()">Click Me</button>
+    <a href="#" class="btn azure">Azure</a>
+    <a href="#" class="btn linux">Linux</a>
 
-    <script>
-        function showMessage() {
-            alert("Hello! You clicked the button.");
-        }
-    </script>
+    <footer>
+        Author: Kiran Negi
+    </footer>
 
 </body>
 </html>
