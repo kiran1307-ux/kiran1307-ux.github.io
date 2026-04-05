@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Practice Exam</title>
+<style>
+body { font-family: Arial; background:#1e293b; color:white; padding:40px;}
+.question { margin-bottom:20px; }
+button { padding:10px; background:#00c6ff; border:none; cursor:pointer;}
+</style>
+
+<script>
+function checkAnswers() {
+    let score = 0;
+
+    if(document.querySelector('input[name="q1"]:checked')?.value === "b") score++;
+    if(document.querySelector('input[name="q2"]:checked')?.value === "a") score++;
+
+    alert("Your Score: " + score + "/2");
+}
+</script>
+
+</head>
+<body>
+
+<h1>Linux Hardening Practice Test</h1>
+
+<div class="question">
+<p>1. Which setting disables root SSH login?</p>
+<input type="radio" name="q1" value="a"> PermitRootLogin yes<br>
+<input type="radio" name="q1" value="b"> PermitRootLogin no<br>
+</div>
+
+<div class="question">
+<p>2. What enforces password complexity?</p>
+<input type="radio" name="q2" value="a"> pwquality.conf<br>
+<input type="radio" name="q2" value="b"> sshd_config<br>
+</div>
+
+<br>
+<button onclick="checkAnswers()">Submit</button>
+
+<br><br>
+<a href="index.html">⬅ Back</a>
+
+</body>
+</html>
