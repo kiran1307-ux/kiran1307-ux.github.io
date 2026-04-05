@@ -39,12 +39,12 @@ body {
 h1 {
     margin-bottom:30px;
     font-size:36px;
-    color:#22c55e;
+    color:#facc15;
 }
 .card {
     background: rgba(255,255,255,0.05);
     border-radius:15px;
-    padding:20px;
+    padding:50px 20px 20px 20px;
     margin-bottom:20px;
     cursor:pointer;
     transition:0.3s;
@@ -68,13 +68,13 @@ h1 {
     border-radius:6px;
     display:inline-block;
     font-family: monospace;
-    position: relative;
+    white-space: pre-line;
 }
 .copy-btn {
     position: absolute;
-    right:10px;
-    top:5px;
-    background:#22c55e;
+    right: 10px;
+    top: 10px;
+    background:#facc15;
     color:#111;
     border:none;
     padding:3px 7px;
@@ -82,18 +82,11 @@ h1 {
     cursor:pointer;
     font-size:12px;
 }
-.explanation {
-    background: rgba(255,255,255,0.1);
-    padding:10px 15px;
-    border-radius:8px;
-    margin-top:10px;
-    display:none;
-}
 .toggle-btn {
-    position:absolute;
-    right:20px;
-    top:20px;
-    background:#22c55e;
+    position: absolute;
+    right: 100px;
+    top: 10px;
+    background:#facc15;
     color:#111;
     border:none;
     padding:5px 10px;
@@ -103,7 +96,15 @@ h1 {
     transition:0.3s;
 }
 .toggle-btn:hover {
-    background:#16a34a;
+    background:#eab308;
+}
+.explanation {
+    background: rgba(255,255,255,0.1);
+    padding:10px 15px;
+    border-radius:8px;
+    margin-top:10px;
+    display:none;
+    font-size:14px;
 }
 </style>
 </head>
@@ -123,82 +124,93 @@ h1 {
     <div class="card">
         <h3>SSH Hardening</h3>
         <p><strong>File:</strong> /etc/ssh/sshd_config</p>
-        <p class="command" id="cmd-ssh-r9">PermitRootLogin no<br>Protocol 2<br>PermitEmptyPasswords no</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-ssh-r9')">Copy</button>
+        <p class="command" id="cmd9-ssh">PermitRootLogin no
+Protocol 2
+PermitEmptyPasswords no
+AllowUsers admin</p>
+        <button class="copy-btn" onclick="copyCommand('cmd9-ssh')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Protects SSH from unauthorized root access and weak authentication.</p>
+        <p class="explanation"><strong>Why:</strong> Secures SSH, disables root login, enforces protocol 2, prevents empty passwords, and allows only authorized users.</p>
     </div>
 
-    <!-- Journal -->
+    <!-- Journal Logs -->
     <div class="card">
         <h3>Journal Logs</h3>
-        <p class="command" id="cmd-journal-r9">journalctl --verify</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-journal-r9')">Copy</button>
+        <p class="command" id="cmd9-journal">journalctl --verify
+journalctl --disk-usage</p>
+        <button class="copy-btn" onclick="copyCommand('cmd9-journal')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Ensures integrity of logs for auditing and troubleshooting.</p>
+        <p class="explanation"><strong>Why:</strong> Checks log integrity and disk usage to ensure auditing reliability.</p>
     </div>
 
-    <!-- Ownership -->
+    <!-- File Ownership -->
     <div class="card">
         <h3>File Ownership</h3>
-        <p class="command" id="cmd-ownership-r9">chown root:root /etc/shadow</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-ownership-r9')">Copy</button>
+        <p class="command" id="cmd9-ownership">chown root:root /etc/shadow
+chown root:root /etc/passwd</p>
+        <button class="copy-btn" onclick="copyCommand('cmd9-ownership')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Prevents unauthorized modifications of sensitive files.</p>
+        <p class="explanation"><strong>Why:</strong> Ensures sensitive files are owned by root to prevent unauthorized changes.</p>
     </div>
 
-    <!-- Permissions -->
+    <!-- File Permissions -->
     <div class="card">
         <h3>File Permissions</h3>
-        <p class="command" id="cmd-permissions-r9">chmod 600 /etc/shadow</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-permissions-r9')">Copy</button>
+        <p class="command" id="cmd9-permissions">chmod 600 /etc/shadow
+chmod 644 /etc/passwd</p>
+        <button class="copy-btn" onclick="copyCommand('cmd9-permissions')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Limits access to critical files to authorized users only.</p>
+        <p class="explanation"><strong>Why:</strong> Restricts access to critical files while keeping necessary files readable.</p>
     </div>
 
     <!-- Authentication -->
     <div class="card">
         <h3>Authentication Hardening</h3>
-        <p class="command" id="cmd-auth-r9">authselect select sssd with-mkhomedir --force</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-auth-r9')">Copy</button>
+        <p class="command" id="cmd9-auth">authselect select sssd --force
+authselect enable-feature with-faillock</p>
+        <button class="copy-btn" onclick="copyCommand('cmd9-auth')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Centralizes authentication, ensures secure user management.</p>
+        <p class="explanation"><strong>Why:</strong> Uses SSSD for centralized authentication and enables account lockout on failed attempts.</p>
     </div>
 
     <!-- Storage Dump -->
     <div class="card">
         <h3>Storage Dump Prevention</h3>
-        <p class="command" id="cmd-storagedump-r9">echo 1 > /proc/sys/kernel/kptr_restrict</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-storagedump-r9')">Copy</button>
+        <p class="command" id="cmd9-storagedump">echo 2 > /proc/sys/kernel/kptr_restrict
+sysctl -w kernel.dmesg_restrict=1</p>
+        <button class="copy-btn" onclick="copyCommand('cmd9-storagedump')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Hides kernel pointers to unprivileged users.</p>
+        <p class="explanation"><strong>Why:</strong> Hides kernel pointers and restricts dmesg access to prevent information leaks.</p>
     </div>
 
     <!-- Password Quality -->
     <div class="card">
         <h3>Password Quality</h3>
-        <p class="command" id="cmd-pwquality-r9">/etc/security/pwquality.conf (minlen=12, dcredit=-1, ucredit=-1)</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-pwquality-r9')">Copy</button>
+        <p class="command" id="cmd9-pwquality">/etc/security/pwquality.conf (minlen=14, dcredit=-1, ucredit=-1, ocredit=-1)</p>
+        <button class="copy-btn" onclick="copyCommand('cmd9-pwquality')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Enforces strong passwords, reduces brute-force risks.</p>
+        <p class="explanation"><strong>Why:</strong> Enforces strong password complexity to reduce brute-force attack risk.</p>
     </div>
 
     <!-- Kernel Hardening -->
     <div class="card">
         <h3>Kernel Hardening</h3>
-        <p class="command" id="cmd-kernel-r9">sysctl -w net.ipv4.ip_forward=0<br>sysctl -w net.ipv4.conf.all.accept_redirects=0</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-kernel-r9')">Copy</button>
+        <p class="command" id="cmd9-kernel">sysctl -w net.ipv4.ip_forward=0
+sysctl -w net.ipv4.conf.all.accept_redirects=0
+sysctl -w net.ipv4.conf.all.send_redirects=0</p>
+        <button class="copy-btn" onclick="copyCommand('cmd9-kernel')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Enhances network security by disabling IP forwarding and ICMP redirects.</p>
+        <p class="explanation"><strong>Why:</strong> Disables IP forwarding and ICMP redirects for improved network security.</p>
     </div>
 
-    <!-- Modprobe / Disable Unused Modules -->
+    <!-- Modprobe -->
     <div class="card">
         <h3>Modprobe Hardening</h3>
-        <p class="command" id="cmd-modprobe-r9">echo "install usb-storage /bin/true" > /etc/modprobe.d/disable-usb.conf</p>
-        <button class="copy-btn" onclick="copyCommand('cmd-modprobe-r9')">Copy</button>
+        <p class="command" id="cmd9-modprobe">echo "install usb-storage /bin/true" > /etc/modprobe.d/disable-usb.conf
+echo "install firewire-core /bin/true" > /etc/modprobe.d/disable-firewire.conf</p>
+        <button class="copy-btn" onclick="copyCommand('cmd9-modprobe')">Copy</button>
         <button class="toggle-btn">Show Explanation</button>
-        <p class="explanation"><strong>Why:</strong> Reduces attack surface by disabling unnecessary kernel modules.</p>
+        <p class="explanation"><strong>Why:</strong> Disables unused kernel modules to reduce the system attack surface.</p>
     </div>
 
 </div>
@@ -221,7 +233,7 @@ toggleButtons.forEach(btn => {
 
 // Copy command functionality
 function copyCommand(id){
-    const commandText = document.getElementById(id).innerText.replace(/\n/g, "\n");
+    const commandText = document.getElementById(id).innerText;
     navigator.clipboard.writeText(commandText).then(() => {
         alert("Command copied to clipboard!");
     });
