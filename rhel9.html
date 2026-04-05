@@ -144,6 +144,171 @@ h1 { margin-bottom:30px; font-size:36px; color:#facc15; }
 <div class="explanation">Enforce strong passwords.</div>
 </div>
 
+<!-- 11 -->
+<div class="card">
+<h3>SHA1 Disabled in Crypto Policies</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c11">grep -i sha1 /etc/crypto-policies/state/current</span><button class="copy-mini" onclick="copyCommand('c11',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f11">update-crypto-policies --set FUTURE</span><button class="copy-mini" onclick="copyCommand('f11',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Ensures SHA1 is disabled and only strong hashes are used.</div>
+</div>
+
+<!-- 12 -->
+<div class="card">
+<h3>Systemd Journal Remote Disabled</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c12">systemctl is-enabled systemd-journal-remote</span><button class="copy-mini" onclick="copyCommand('c12',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f12">systemctl disable --now systemd-journal-remote</span><button class="copy-mini" onclick="copyCommand('f12',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Remote journal logging should be disabled unless needed.</div>
+</div>
+
+<!-- 13 -->
+<div class="card">
+<h3>Systemd Journal Upload Disabled</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c13">systemctl is-enabled systemd-journal-upload</span><button class="copy-mini" onclick="copyCommand('c13',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f13">systemctl disable --now systemd-journal-upload</span><button class="copy-mini" onclick="copyCommand('f13',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Uploads to remote journald should be disabled unless required.</div>
+</div>
+
+<!-- 14 -->
+<div class="card">
+<h3>RSYSLOG FileCreateMode</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c14">grep FileCreateMode /etc/rsyslog.conf</span><button class="copy-mini" onclick="copyCommand('c14',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f14">echo "FileCreateMode 0640" >> /etc/rsyslog.conf</span><button class="copy-mini" onclick="copyCommand('f14',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Ensures new log files are created with correct permissions.</div>
+</div>
+
+<!-- 15 -->
+<div class="card">
+<h3>Login Banner /etc/issue</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c15">cat /etc/issue</span><button class="copy-mini" onclick="copyCommand('c15',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f15">echo "Authorized users only!" > /etc/issue</span><button class="copy-mini" onclick="copyCommand('f15',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Displays warning banner at login prompt.</div>
+</div>
+
+<!-- 16 -->
+<div class="card">
+<h3>Login Banner SSHD</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c16">grep Banner /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('c16',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f16">sed -i 's|#Banner.*|Banner /etc/issue|' /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('f16',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">SSH login banner should match /etc/issue warning.</div>
+</div>
+
+<!-- 17 -->
+<div class="card">
+<h3>SSH ClientAliveCountMax</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c17">grep ClientAliveCountMax /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('c17',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f17">sed -i 's/^#ClientAliveCountMax.*/ClientAliveCountMax 3/' /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('f17',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Limits number of missed client alive messages before disconnect.</div>
+</div>
+
+<!-- 18 -->
+<div class="card">
+<h3>SSH ClientAliveInterval</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c18">grep ClientAliveInterval /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('c18',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f18">sed -i 's/^#ClientAliveInterval.*/ClientAliveInterval 300/' /etc/ssh/sshd_config</span><button class="copy-mini" onclick="copyCommand('f18',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Disconnect idle SSH sessions after interval.</div>
+</div>
+
+<!-- 19 -->
+<div class="card">
+<h3>Systemd Journald Compress</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c19">grep Compress /etc/systemd/journald.conf</span><button class="copy-mini" onclick="copyCommand('c19',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f19">sed -i 's/^#Compress.*/Compress=yes/' /etc/systemd/journald.conf</span><button class="copy-mini" onclick="copyCommand('f19',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Enables journal compression to save disk space.</div>
+</div>
+
+<!-- 20 -->
+<div class="card">
+<h3>Yama ptrace_scope</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c20">cat /proc/sys/kernel/yama/ptrace_scope</span><button class="copy-mini" onclick="copyCommand('c20',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f20">echo 1 > /proc/sys/kernel/yama/ptrace_scope</span><button class="copy-mini" onclick="copyCommand('f20',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Restrict ptrace to improve process security.</div>
+</div>
+
+<!-- 21 -->
+<div class="card">
+<h3>Disable IPv6 Router Advertisements</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c21">sysctl net.ipv6.conf.all.accept_ra</span><button class="copy-mini" onclick="copyCommand('c21',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f21">sysctl -w net.ipv6.conf.all.accept_ra=0</span><button class="copy-mini" onclick="copyCommand('f21',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Prevents accepting router advertisements in IPv6.</div>
+</div>
+
+<!-- 22 -->
+<div class="card">
+<h3>Disable Source Routing</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c22">sysctl net.ipv4.conf.all.accept_source_route</span><button class="copy-mini" onclick="copyCommand('c22',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f22">sysctl -w net.ipv4.conf.all.accept_source_route=0</span><button class="copy-mini" onclick="copyCommand('f22',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Disables source routing for security.</div>
+</div>
+
+<!-- 23 -->
+<div class="card">
+<h3>Disable ICMP Redirects</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c23">sysctl net.ipv4.conf.all.accept_redirects</span><button class="copy-mini" onclick="copyCommand('c23',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f23">sysctl -w net.ipv4.conf.all.accept_redirects=0</span><button class="copy-mini" onclick="copyCommand('f23',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Prevents man-in-the-middle attacks via ICMP redirects.</div>
+</div>
+
+<!-- 24 -->
+<div class="card">
+<h3>Enable SELinux Enforcing</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c24">getenforce</span><button class="copy-mini" onclick="copyCommand('c24',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f24">setenforce 1</span><button class="copy-mini" onclick="copyCommand('f24',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Enforces SELinux policies for security.</div>
+</div>
+
+<!-- 25 -->
+<div class="card">
+<h3>Enable Firewalld</h3>
+<span class="label">Check</span>
+<div class="command-box"><span id="c25">systemctl is-enabled firewalld</span><button class="copy-mini" onclick="copyCommand('c25',this)">Copy</button></div>
+<span class="label">Fix</span>
+<div class="command-box"><span id="f25">systemctl enable --now firewalld</span><button class="copy-mini" onclick="copyCommand('f25',this)">Copy</button></div>
+<button class="toggle-btn">Show Explanation</button>
+<div class="explanation">Enables host firewall for protection.</div>
+</div>
+
 </div>
 
 <script>
