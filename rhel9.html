@@ -2,91 +2,184 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>RHEL 9 Hardening</title>
+<title>RHEL 9 Enterprise Hardening</title>
 
 <style>
-    body {
-        font-family: 'Segoe UI';
-        margin: 0;
-        background: #0c1b1e;
-        color: #eee;
-    }
-
-    header {
-        background: #00c6ff;
-        padding: 20px;
-        text-align: center;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    .container {
-        padding: 40px;
-        max-width: 900px;
-        margin: auto;
-    }
-
-    .card {
-        background: #132f33;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 12px;
-        border-left: 5px solid #00c6ff;
-    }
-
-    code {
-        display: block;
-        background: #000;
-        padding: 10px;
-        margin-top: 10px;
-        border-radius: 5px;
-        color: #00ffcc;
-    }
-
-    .back {
-        display: inline-block;
-        margin-top: 20px;
-        color: #00c6ff;
-        text-decoration: none;
-    }
+body {
+    font-family: 'Segoe UI';
+    margin: 0;
+    background: #020617;
+    color: #e2e8f0;
+}
+header {
+    background: #0ea5e9;
+    padding: 20px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+}
+.container {
+    padding: 30px;
+    max-width: 1000px;
+    margin: auto;
+}
+.section-title {
+    margin-top: 40px;
+    color: #38bdf8;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 8px;
+}
+.card {
+    background: #1e293b;
+    padding: 20px;
+    margin-top: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #0ea5e9;
+}
+code {
+    display: block;
+    background: #000;
+    padding: 8px;
+    margin-top: 8px;
+    border-radius: 5px;
+    color: #22c55e;
+}
+.copy-btn {
+    margin-top: 5px;
+    padding: 4px 10px;
+    background: #0ea5e9;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
+a { color: #7dd3fc; }
 </style>
 </head>
 
 <body>
 
-<header>RHEL 9 Hardening Guide</header>
+<header>🔐 RHEL 9 Enterprise Hardening Guide</header>
 
 <div class="container">
 
-<div class="card">
-<h3>🔐 SSH Key Authentication</h3>
-<p><b>Control:</b> Disable password login</p>
-<code>PasswordAuthentication no</code>
-</div>
+<!-- SSHD -->
+<h2 class="section-title">🔐 SSHD Configuration</h2>
 
 <div class="card">
-<h3>🚫 Fail2Ban</h3>
-<p><b>Control:</b> Prevent brute-force</p>
-<code>dnf install fail2ban</code>
+<h3>Secure SSH Parameters</h3>
+<code>PermitRootLogin no</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>PasswordAuthentication no</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>PubkeyAuthentication yes</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>X11Forwarding no</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>MaxAuthTries 3</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>ClientAliveInterval 300</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>ClientAliveCountMax 0</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
 </div>
+
+<!-- JOURNAL -->
+<h2 class="section-title">📊 Journald Logging</h2>
 
 <div class="card">
-<h3>📊 Audit Logs</h3>
-<p><b>Control:</b> Monitor activity</p>
-<code>systemctl enable auditd</code>
+<code>Storage=persistent</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>Compress=yes</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>ForwardToSyslog=yes</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
 </div>
+
+<!-- MODPROBE -->
+<h2 class="section-title">⚙️ Kernel Module Hardening</h2>
 
 <div class="card">
-<h3>💻 Updates</h3>
-<p><b>Control:</b> Patch vulnerabilities</p>
-<code>dnf update -y</code>
+<code>install usb-storage /bin/true</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>install cramfs /bin/true</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>install squashfs /bin/true</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
 </div>
 
-<a href="index.html" class="back">⬅ Back</a>
+<!-- CORE DUMP -->
+<h2 class="section-title">💾 Core Dump Restriction</h2>
+
+<div class="card">
+<code>* hard core 0</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>fs.suid_dumpable = 0</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+</div>
+
+<!-- PWQUALITY -->
+<h2 class="section-title">🔑 Password Quality</h2>
+
+<div class="card">
+<code>minlen = 14</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>dcredit = -1</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>ucredit = -1</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>lcredit = -1</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>ocredit = -1</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+</div>
+
+<!-- AUTH -->
+<h2 class="section-title">🔐 Authentication (PAM)</h2>
+
+<div class="card">
+<code>auth required pam_faillock.so deny=5 unlock_time=900</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>account required pam_faillock.so</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+</div>
+
+<!-- CRON -->
+<h2 class="section-title">⏰ Cron Security</h2>
+
+<div class="card">
+<code>chmod 600 /etc/crontab</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>chmod 700 /etc/cron.d</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+</div>
+
+<!-- PERMISSIONS -->
+<h2 class="section-title">📁 File Permissions</h2>
+
+<div class="card">
+<code>chmod 600 /etc/passwd</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>chmod 000 /etc/shadow</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+</div>
+
+<!-- OWNERSHIP -->
+<h2 class="section-title">👤 File Ownership</h2>
+
+<div class="card">
+<code>chown root:root /etc/passwd</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>chown root:root /etc/shadow</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+</div>
+
+<!-- NETWORK -->
+<h2 class="section-title">🌐 Network Kernel Parameters</h2>
+
+<div class="card">
+<code>net.ipv4.ip_forward = 0</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>net.ipv4.conf.all.accept_redirects = 0</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>net.ipv4.conf.all.secure_redirects = 0</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>net.ipv4.conf.all.log_martians = 1</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+</div>
+
+<!-- SERVICES -->
+<h2 class="section-title">⚙️ Service Hardening</h2>
+
+<div class="card">
+<code>dnf remove telnet</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<code>systemctl disable vsftpd</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+</div>
+
+<br>
+<a href="index.html">⬅ Back</a>
 
 </div>
 
-<footer style="text-align:center; padding:20px;">Repo Author: Kiran Negi</footer>
+<footer style="text-align:center; padding:20px;">
+Repo Author: Kiran Negi
+</footer>
+
+<script>
+function copyCode(btn) {
+    let code = btn.previousElementSibling.innerText;
+    navigator.clipboard.writeText(code);
+    btn.innerText = "Copied!";
+}
+</script>
 
 </body>
 </html>
