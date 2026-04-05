@@ -1,161 +1,265 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Linux & DevOps Advanced Tutorials</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<style>
-body {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-    color: #fff;
-}
-.navbar {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding: 15px;
-    background: rgba(0,0,0,0.4);
-    border-radius: 10px;
-    flex-wrap: wrap;
-}
-.nav-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    color:white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-    transition: 0.3s, transform 0.3s;
-    font-weight: bold;
-}
-.nav-btn:hover {
-    background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.15));
-    transform: translateY(-2px);
-}
-.header-title {
-    text-align: center;
-    font-size: 40px;
-    font-weight: bold;
-    color: #f87171;
-    margin-top: 40px;
-}
-.header-subtitle {
-    text-align: center;
-    font-size: 18px;
-    opacity: 0.85;
-    margin-bottom: 50px;
-}
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    padding: 20px;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-.card {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    width: 90%;
-    padding: 25px 20px;
-    border-radius: 20px;
-    transition: transform 0.4s, box-shadow 0.4s, background 0.4s;
-    position: relative;
-}
-.card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    background: rgba(255,255,255,0.1);
-}
-.card h2 {
-    color: #f87171;
-    margin-bottom: 15px;
-}
-.card p {
-    font-size: 16px;
-    line-height: 1.6;
-}
-.card::before {
-    content: attr(data-icon);
-    font-size: 40px;
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    opacity: 0.2;
-}
-footer {
-    text-align: center;
-    margin-top: 60px;
-    padding: 25px 0;
-    font-size: 16px;
-    font-weight: bold;
-    color: #facc15;
-    background: linear-gradient(90deg,#0f2027,#203a43,#2c5364);
-    border-top: 3px solid #38bdf8;
-}
-</style>
-</head>
-<body>
-
-<div class="navbar">
-    <a href="index.html" class="nav-btn">🏠 Home</a>
-    <a href="beginner.html" class="nav-btn">🟢 Beginner</a>
-    <a href="intermediate.html" class="nav-btn">🟡 Intermediate</a>
-    <a href="advanced.html" class="nav-btn">🔴 Advanced</a>
-    <a href="interview.html" class="nav-btn">📝 Interview Prep</a>
-</div>
-
-<div class="header-title">Linux & DevOps Advanced Tutorials</div>
-<div class="header-subtitle">Master enterprise-level Linux administration, advanced DevOps, and scalable infrastructure practices</div>
-
 <div class="container">
 
+    <!-- 1. What is Linux -->
     <div class="card" data-icon="🖥️">
-        <h2>1. Advanced Linux Administration</h2>
-        <p>System performance tuning, kernel parameters, advanced networking, storage management (LVM, RAID, NFS), and troubleshooting complex system issues.</p>
+        <h2>1. What is Linux?</h2>
+
+        <p>Linux is an <b>open-source operating system</b> used in servers, cloud, and DevOps.</p>
+
+<pre>
+User → Shell → Kernel → Hardware
+</pre>
+
+        <ul>
+            <li><b>Kernel:</b> Brain of OS</li>
+            <li><b>Shell:</b> Command interface</li>
+            <li><b>Distros:</b> Ubuntu, CentOS, RHEL</li>
+        </ul>
     </div>
 
-    <div class="card" data-icon="🔒">
-        <h2>2. Security & Compliance</h2>
-        <p>Implement SELinux policies, advanced firewall rules, auditd, log monitoring, encryption (LUKS), and compliance with security frameworks like CIS Benchmarks.</p>
+    <!-- 2. Install Linux -->
+    <div class="card" data-icon="💿">
+        <h2>2. How to Install Linux</h2>
+
+<pre>
+Options:
+✔ VirtualBox (Recommended)
+✔ Dual Boot
+✔ Cloud VM (AWS)
+</pre>
+
+        <ul>
+            <li>Download Ubuntu ISO</li>
+            <li>Create VM</li>
+            <li>Start learning safely</li>
+        </ul>
     </div>
 
+    <!-- 3. Linux File System -->
+    <div class="card" data-icon="🗂️">
+        <h2>3. File System</h2>
+
+<pre>
+/
+├── home
+├── etc
+├── var
+├── bin
+└── usr
+</pre>
+
+        <ul>
+            <li><b>/home:</b> user files</li>
+            <li><b>/etc:</b> configs</li>
+            <li><b>/var:</b> logs</li>
+        </ul>
+    </div>
+
+    <!-- 4. Basic Commands -->
+    <div class="card" data-icon="⌨️">
+        <h2>4. Basic Commands</h2>
+
+<pre>
+pwd   → current folder
+ls    → list files
+cd    → change folder
+</pre>
+
+<pre>
+mkdir test
+rm file
+cp a b
+mv a b
+</pre>
+    </div>
+
+    <!-- 5. File Permissions -->
+    <div class="card" data-icon="🔑">
+        <h2>5. Permissions</h2>
+
+<pre>
+-rwxr-xr--
+Owner Group Others
+</pre>
+
+<pre>
+chmod 755 file
+</pre>
+
+        <p>Controls who can read, write, execute</p>
+    </div>
+
+    <!-- 6. Users & Groups -->
+    <div class="card" data-icon="👥">
+        <h2>6. Users & Groups</h2>
+
+<pre>
+adduser user1
+passwd user1
+</pre>
+
+        <ul>
+            <li>Multiple users in system</li>
+            <li>Groups manage access</li>
+        </ul>
+    </div>
+
+    <!-- 7. Package Management -->
+    <div class="card" data-icon="📦">
+        <h2>7. Package Management</h2>
+
+<pre>
+apt update
+apt install nginx
+</pre>
+
+        <p>Install software easily</p>
+    </div>
+
+    <!-- 8. Processes -->
+    <div class="card" data-icon="⚡">
+        <h2>8. Processes</h2>
+
+<pre>
+ps aux
+top
+kill PID
+</pre>
+
+        <p>Manage running programs</p>
+    </div>
+
+    <!-- 9. Networking -->
+    <div class="card" data-icon="🌐">
+        <h2>9. Networking</h2>
+
+<pre>
+ping google.com
+ifconfig
+ssh user@ip
+</pre>
+
+        <ul>
+            <li>IP Address</li>
+            <li>Ports</li>
+        </ul>
+    </div>
+
+    <!-- 10. Shell Scripting -->
+    <div class="card" data-icon="📝">
+        <h2>10. Shell Scripting</h2>
+
+<pre>
+#!/bin/bash
+echo "Hello DevOps"
+</pre>
+
+<pre>
+if [ $a -gt $b ]
+then echo "A is greater"
+fi
+</pre>
+
+        <p>Automate tasks</p>
+    </div>
+
+    <!-- 11. SSH -->
+    <div class="card" data-icon="🔐">
+        <h2>11. SSH</h2>
+
+<pre>
+ssh user@server-ip
+</pre>
+
+        <p>Secure remote access to servers</p>
+    </div>
+
+    <!-- 12. Logs -->
+    <div class="card" data-icon="📜">
+        <h2>12. Logs</h2>
+
+<pre>
+/var/log
+tail -f log.txt
+</pre>
+
+        <p>Debug issues using logs</p>
+    </div>
+
+    <!-- 13. DevOps Intro -->
+    <div class="card" data-icon="⚙️">
+        <h2>13. DevOps Introduction</h2>
+
+<pre>
+Dev + Ops = DevOps
+</pre>
+
+<pre>
+Code → Build → Test → Deploy
+</pre>
+
+        <p>Improves speed & automation</p>
+    </div>
+
+    <!-- 14. Git Basics -->
+    <div class="card" data-icon="🛠️">
+        <h2>14. Git Basics</h2>
+
+<pre>
+git init
+git add .
+git commit -m "first"
+</pre>
+
+        <p>Version control system</p>
+    </div>
+
+    <!-- 15. CI/CD -->
+    <div class="card" data-icon="🔄">
+        <h2>15. CI/CD</h2>
+
+<pre>
+Push Code → Build → Test → Deploy
+</pre>
+
+        <p>Automation pipeline</p>
+    </div>
+
+    <!-- 16. Docker Intro -->
     <div class="card" data-icon="🐳">
-        <h2>3. Advanced Docker & Container Security</h2>
-        <p>Build multi-stage Docker images, secure containers, networking, volumes, logging, and deploy production-ready containerized applications.</p>
+        <h2>16. Docker</h2>
+
+<pre>
+Container = App + Dependencies
+</pre>
+
+<pre>
+docker run nginx
+</pre>
+
     </div>
 
-    <div class="card" data-icon="☸️">
-        <h2>4. Kubernetes Advanced</h2>
-        <p>Manage namespaces, Helm charts, StatefulSets, DaemonSets, advanced networking (Calico/Flannel), resource quotas, and monitoring with Prometheus/Grafana.</p>
+    <!-- 17. Cloud Basics -->
+    <div class="card" data-icon="☁️">
+        <h2>17. Cloud Basics</h2>
+
+<pre>
+AWS / Azure / GCP
+</pre>
+
+        <p>Run servers on internet</p>
     </div>
 
-    <div class="card" data-icon="🔧">
-        <h2>5. Infrastructure as Code</h2>
-        <p>Advanced Ansible: roles, dynamic inventories, complex playbooks, and integration with Terraform for provisioning cloud infrastructure.</p>
-    </div>
+    <!-- 18. Beginner Roadmap -->
+    <div class="card" data-icon="🎯">
+        <h2>18. Roadmap</h2>
 
-    <div class="card" data-icon="💡">
-        <h2>6. Advanced CI/CD Pipelines</h2>
-        <p>Implement pipelines with branching strategies, automated testing, blue-green/rolling deployments, container orchestration integration, and pipeline optimization.</p>
-    </div>
+<pre>
+Linux → Git → Scripting
+→ Docker → CI/CD → Cloud
+</pre>
 
-    <div class="card" data-icon="📊">
-        <h2>7. Monitoring & Logging</h2>
-        <p>Deploy centralized logging (ELK Stack), system metrics, application monitoring (Prometheus, Grafana), alerting, and troubleshooting production issues.</p>
+        <p>Follow this path to become DevOps Engineer</p>
     </div>
 
 </div>
-
-<footer>
-    © 2026 Kiran Negi | Linux & DevOps Advanced Tutorials
-</footer>
-
-</body>
-</html>
