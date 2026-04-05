@@ -142,13 +142,55 @@ footer:hover {
 <!-- SECTION: Terminal Basics -->
 <div class="section">
     <h2>3. Terminal Basics</h2>
-    <p>The terminal is used to interact with Linux. Commands follow the format:</p>
+    <p>The terminal is the primary way to interact with Linux. Commands generally follow the format:</p>
     <p class="code">command [options] [arguments]</p>
+    <p>Here are essential commands every beginner should know:</p>
+    
     <ul>
-        <li><b>pwd</b> – Print current directory</li>
-        <li><b>ls</b> – List files in a directory</li>
-        <li><b>cd &lt;directory&gt;</b> – Change directory</li>
+        <!-- Navigation -->
+        <li><b>pwd</b> – Print current working directory.</li>
+        <li><b>ls</b> – List files in a directory (<code>ls -l</code> for detailed view, <code>ls -a</code> for hidden files).</li>
+        <li><b>cd &lt;directory&gt;</b> – Change directory (<code>cd ..</code> to go up one level, <code>cd ~</code> to go home).</li>
+        <li><b>mkdir &lt;directory&gt;</b> – Create a new directory.</li>
+        <li><b>rmdir &lt;directory&gt;</b> – Remove an empty directory.</li>
+        <li><b>tree</b> – Display directory structure in tree format (install with <code>sudo apt install tree</code>).</li>
+
+        <!-- File operations -->
+        <li><b>touch &lt;file&gt;</b> – Create an empty file.</li>
+        <li><b>cp &lt;source&gt; &lt;destination&gt;</b> – Copy files or directories (<code>cp -r</code> for directories).</li>
+        <li><b>mv &lt;source&gt; &lt;destination&gt;</b> – Move or rename files.</li>
+        <li><b>rm &lt;file&gt;</b> – Delete a file.</li>
+        <li><b>rm -r &lt;directory&gt;</b> – Delete a directory recursively.</li>
+
+        <!-- Viewing files -->
+        <li><b>cat &lt;file&gt;</b> – Display the content of a file.</li>
+        <li><b>less &lt;file&gt;</b> – View file content page by page.</li>
+        <li><b>head &lt;file&gt;</b> – View the first 10 lines of a file (<code>head -n 20</code> for first 20 lines).</li>
+        <li><b>tail &lt;file&gt;</b> – View the last 10 lines of a file (<code>tail -f</code> to follow updates).</li>
+
+        <!-- Searching -->
+        <li><b>grep &lt;pattern&gt; &lt;file&gt;</b> – Search for text in files.</li>
+        <li><b>find &lt;directory&gt; -name &lt;filename&gt;</b> – Search for files in a directory.</li>
+
+        <!-- System information -->
+        <li><b>uname -a</b> – Show system information.</li>
+        <li><b>df -h</b> – Display disk usage in human-readable format.</li>
+        <li><b>free -h</b> – Show memory usage.</li>
+        <li><b>top</b> – Display running processes and system resource usage.</li>
+
+        <!-- Permissions -->
+        <li><b>chmod &lt;permissions&gt; &lt;file&gt;</b> – Change file permissions.</li>
+        <li><b>chown &lt;user:group&gt; &lt;file&gt;</b> – Change file owner and group.</li>
+
+        <!-- Shortcuts -->
+        <li><b>Ctrl + C</b> – Stop a running command.</li>
+        <li><b>Ctrl + Z</b> – Pause a command and send it to background.</li>
+        <li><b>Ctrl + R</b> – Search command history.</li>
+        <li><b>Tab</b> – Auto-complete file and folder names.</li>
+        <li><b>Arrow Keys</b> – Navigate through command history.</li>
     </ul>
+
+    <p>💡 Tip: Use <code>man &lt;command&gt;</code> to see the manual page of any command (e.g., <code>man ls</code>).</p>
 </div>
 
 <!-- SECTION: File System -->
