@@ -19,10 +19,12 @@ h1{text-align:center;font-size:42px;margin-bottom:20px;color:#facc15;}
 .question{margin-bottom:20px;}
 .question h3{font-size:18px;margin-bottom:10px;}
 .options label{display:block;margin-bottom:5px;cursor:pointer;}
-button.submit-btn{padding:10px 20px;border:none;border-radius:8px;background:#22c55e;color:#111;font-weight:bold;cursor:pointer;transition:0.3s;}
+button.submit-btn{padding:10px 20px;border:none;border-radius:8px;background:#22c55e;color:#111;font-weight:bold;cursor:pointer;transition:0.3s;margin-top:20px;}
 button.submit-btn:hover{background:#16a34a;}
 .result{margin-top:20px;font-size:18px;font-weight:bold;color:#facc15;}
 .explanation{font-size:14px;color:#a5f3fc;margin-top:5px;}
+.badge{display:inline-block;margin-top:10px;padding:8px 15px;background:#22c55e;color:#111;font-weight:bold;border-radius:10px;font-size:16px;}
+.badge.fail{background:#ef4444;}
 </style>
 </head>
 <body>
@@ -52,21 +54,75 @@ button.submit-btn:hover{background:#16a34a;}
 </div>
 
 <script>
-// Questions Arrays
+// RHEL 8 Questions
 const exams = {
-    rhel8: [
-        {q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"Secures SSH access and prevents root login."},
-        {q:"Which command verifies journal logs?", options:["journalctl","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"Ensures integrity of system logs for auditing."},
-        // Add up to 40 questions here
-    ],
-    rhel9: [
-        {q:"Default firewall service in RHEL 9?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default for RHEL 9."},
-        // Add up to 40 questions
-    ],
-    mock: [
-        {q:"Which command changes file ownership?", options:["chown","chmod","ls","passwd"], answer:0, explanation:"chown changes file owner/group."},
-        // Add up to 40 questions
-    ]
+rhel8:[
+{q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"Secures SSH access and prevents root login."},
+{q:"Which command verifies journal logs?", options:["journalctl","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"Ensures integrity of system logs for auditing."},
+{q:"Which file sets password quality policies?", options:["/etc/security/pwquality.conf","/etc/login.defs","/etc/passwd","/etc/group"], answer:0, explanation:"Enforces strong passwords to reduce brute-force attacks."},
+{q:"How do you restrict root login via SSH?", options:["PermitRootLogin no","PermitRootLogin yes","PasswordAuthentication no","AllowUsers root"], answer:0, explanation:"Prevents root from logging in remotely, enhancing security."},
+{q:"Command to check SELinux status?", options:["sestatus","getenforce","systemctl status selinux","ls -Z"], answer:0, explanation:"Shows current SELinux mode."},
+{q:"Which file contains cron allow/deny settings?", options:["/etc/cron.allow & /etc/cron.deny","/etc/crontab","/etc/cron.daily","/etc/cron.hourly"], answer:0, explanation:"Controls which users can schedule cron jobs."},
+{q:"Command to change file owner?", options:["chown","chmod","chgrp","ls"], answer:0, explanation:"Changes ownership to secure files."},
+{q:"Command to change file permissions?", options:["chmod","chown","chgrp","ls"], answer:0, explanation:"Sets proper permissions to restrict access."},
+{q:"Disable unused kernel modules using?", options:["/etc/modprobe.d/*.conf","/etc/sysctl.conf","/etc/fstab","/etc/hostname"], answer:0, explanation:"Prevents unnecessary modules to reduce attack surface."},
+{q:"Command to verify disk storage dumps?", options:["ls -l /dev/disk","dumpe2fs","journalctl","systemctl status"], answer:1, explanation:"Prevents sensitive storage info leakage."},
+{q:"Which command shows system authentication logs?", options:["cat /var/log/secure","journalctl","dmesg","ls"], answer:0, explanation:"Monitors authentication events for security."},
+{q:"RHEL 8 default firewall?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default for RHEL 8."},
+{q:"How to disable empty passwords?", options:["PermitEmptyPasswords no","PermitEmptyPasswords yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Ensures accounts with empty passwords cannot login."},
+{q:"How to enforce minimum password length?", options:["minlen option in pwquality.conf","chown command","chmod command","ulimit"], answer:0, explanation:"Prevents weak passwords."},
+{q:"Command to restart SSH service?", options:["systemctl restart sshd","service sshd restart","/etc/init.d/sshd restart","All"], answer:3, explanation:"All are valid methods to restart SSH."},
+{q:"Which file controls PAM authentication?", options:["/etc/pam.d/system-auth","/etc/pam.d/login","/etc/security/limits.conf","/etc/passwd"], answer:0, explanation:"Centralized authentication control."},
+{q:"Enable auditd service using?", options:["systemctl enable auditd","auditctl start","service auditd enable","All"], answer:0, explanation:"Ensures auditing persists across reboots."},
+{q:"How to list loaded kernel modules?", options:["lsmod","modprobe -l","systemctl list-modules","uname -r"], answer:0, explanation:"lsmod lists active modules for review."},
+{q:"Command to check active users?", options:["who","w","users","All"], answer:3, explanation:"All commands show logged-in users."},
+{q:"Which file sets system limits?", options:["/etc/security/limits.conf","/etc/login.defs","/etc/passwd","/etc/group"], answer:0, explanation:"Controls resource limits for users."}
+],
+rhel9:[
+{q:"Default firewall service in RHEL 9?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default for RHEL 9."},
+{q:"Command to verify journal logs?", options:["journalctl --verify","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"Ensures integrity of system logs."},
+{q:"Disable root login in SSH?", options:["PermitRootLogin no","PermitRootLogin yes","PasswordAuthentication no","AllowUsers root"], answer:0, explanation:"Prevents remote root login."},
+{q:"Command to change file ownership?", options:["chown","chmod","ls","passwd"], answer:0, explanation:"Secures sensitive files."},
+{q:"Command to change file permissions?", options:["chmod","chown","ls","passwd"], answer:0, explanation:"Sets proper access restrictions."},
+{q:"Which file controls PAM authentication?", options:["/etc/pam.d/system-auth","/etc/pam.d/login","/etc/security/limits.conf","/etc/passwd"], answer:0, explanation:"Centralized authentication control."},
+{q:"Password quality file?", options:["/etc/security/pwquality.conf","/etc/login.defs","/etc/passwd","/etc/group"], answer:0, explanation:"Enforces strong password rules."},
+{q:"Disable empty passwords?", options:["PermitEmptyPasswords no","PermitEmptyPasswords yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Prevents login with empty passwords."},
+{q:"Enable SELinux enforcing?", options:["setenforce 1","setenforce 0","getenforce","sestatus"], answer:0, explanation:"SELinux provides mandatory access control."},
+{q:"Kernel hardening command?", options:["sysctl -w net.ipv4.ip_forward=0","sysctl -w net.ipv4.conf.all.accept_redirects=0","sysctl -w net.ipv4.conf.all.send_redirects=0","All"], answer:3, explanation:"All enhance network security."},
+{q:"Auditd service enable?", options:["systemctl enable auditd","auditctl start","service auditd enable","All"], answer:0, explanation:"Ensures auditing persists across reboots."},
+{q:"Command to disable unused kernel modules?", options:["/etc/modprobe.d/*.conf","/etc/sysctl.conf","/etc/fstab","/etc/hostname"], answer:0, explanation:"Reduces attack surface."},
+{q:"Which command checks active users?", options:["who","w","users","All"], answer:3, explanation:"All commands list logged-in users."},
+{q:"File for cron allow/deny?", options:["/etc/cron.allow & /etc/cron.deny","/etc/crontab","/etc/cron.daily","/etc/cron.hourly"], answer:0, explanation:"Restricts cron scheduling to authorized users."},
+{q:"Command to restart SSH?", options:["systemctl restart sshd","service sshd restart","/etc/init.d/sshd restart","All"], answer:3, explanation:"All are valid methods."},
+{q:"Which command shows SELinux status?", options:["sestatus","getenforce","systemctl status selinux","ls -Z"], answer:0, explanation:"Shows SELinux mode."},
+{q:"Command to verify disk storage dumps?", options:["ls -l /dev/disk","dumpe2fs","journalctl","systemctl status"], answer:1, explanation:"Prevents storage info leakage."},
+{q:"Command to list loaded kernel modules?", options:["lsmod","modprobe -l","systemctl list-modules","uname -r"], answer:0, explanation:"Lists active kernel modules."},
+{q:"Default firewall zone?", options:["public","trusted","drop","internal"], answer:0, explanation:"Public zone is default in RHEL 9."},
+{q:"Command to enable SSH service?", options:["systemctl enable sshd","systemctl start sshd","service sshd enable","All"], answer:3, explanation:"All methods work for enabling SSH."},
+{q:"Command to enforce password history?", options:["/etc/security/pwquality.conf","/etc/login.defs","chage","passwd"], answer:0, explanation:"Prevents password reuse."}
+],
+mock:[
+{q:"Which command changes file ownership?", options:["chown","chmod","ls","passwd"], answer:0, explanation:"chown changes file owner/group."},
+{q:"Command to change file permissions?", options:["chmod","chown","ls","passwd"], answer:0, explanation:"Sets proper access restrictions."},
+{q:"Which file controls SSH configurations?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"Secures SSH access."},
+{q:"Default firewall in RHEL 8?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default."},
+{q:"Default firewall in RHEL 9?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default."},
+{q:"Command to check journal logs?", options:["journalctl","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"Ensures log integrity."},
+{q:"Which file sets password complexity?", options:["/etc/security/pwquality.conf","/etc/login.defs","/etc/passwd","/etc/group"], answer:0, explanation:"Enforces strong passwords."},
+{q:"Disable root login via SSH?", options:["PermitRootLogin no","PermitRootLogin yes","PasswordAuthentication no","AllowUsers root"], answer:0, explanation:"Enhances SSH security."},
+{q:"Command to list active users?", options:["who","w","users","All"], answer:3, explanation:"All commands show logged-in users."},
+{q:"Command to verify disk storage dumps?", options:["ls -l /dev/disk","dumpe2fs","journalctl","systemctl status"], answer:1, explanation:"Prevents sensitive info leakage."},
+{q:"Enable auditd service?", options:["systemctl enable auditd","auditctl start","service auditd enable","All"], answer:0, explanation:"Ensures auditing is active."},
+{q:"Command to list kernel modules?", options:["lsmod","modprobe -l","systemctl list-modules","uname -r"], answer:0, explanation:"Lists loaded kernel modules."},
+{q:"Which file contains cron allow/deny?", options:["/etc/cron.allow & /etc/cron.deny","/etc/crontab","/etc/cron.daily","/etc/cron.hourly"], answer:0, explanation:"Restricts cron access."},
+{q:"Enable SELinux enforcing?", options:["setenforce 1","setenforce 0","getenforce","sestatus"], answer:0, explanation:"Mandatory access control."},
+{q:"Disable empty passwords?", options:["PermitEmptyPasswords no","PermitEmptyPasswords yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Prevents login with empty passwords."},
+{q:"Enforce min password length?", options:["minlen option in pwquality.conf","chown command","chmod command","ulimit"], answer:0, explanation:"Prevents weak passwords."},
+{q:"Command to restart SSH service?", options:["systemctl restart sshd","service sshd restart","/etc/init.d/sshd restart","All"], answer:3, explanation:"All methods valid."},
+{q:"Which command shows SELinux status?", options:["sestatus","getenforce","systemctl status selinux","ls -Z"], answer:0, explanation:"Shows current SELinux mode."},
+{q:"Which command disables unnecessary kernel modules?", options:["/etc/modprobe.d/*.conf","/etc/sysctl.conf","/etc/fstab","/etc/hostname"], answer:0, explanation:"Reduces attack surface."},
+{q:"Command to check active users?", options:["who","w","users","All"], answer:3, explanation:"All commands list logged-in users."}
+]
 };
 
 // Tab switching
@@ -95,16 +151,25 @@ for (let key in exams) {
     });
 }
 
-// Check Answers
+// Check Answers and show badge
 function checkAnswers(){
     let score=0;
+    let total=0;
     for(let key in exams){
+        total+=exams[key].length;
         exams[key].forEach((item,i)=>{
             const sel = document.querySelector(`input[name="${key}-${i}"]:checked`);
             if(sel && parseInt(sel.value)===item.answer) score++;
         });
     }
-    document.getElementById('exam-result').innerText = `Your Score: ${score}/${Object.values(exams).reduce((a,b)=>a+b.length,0)}`;
+    const percent = Math.round((score/total)*100);
+    let badgeText = '';
+    if(percent>=80){
+        badgeText = `<div class="badge">🏆 Passed! ${percent}%</div>`;
+    }else{
+        badgeText = `<div class="badge fail">❌ Score: ${percent}%</div>`;
+    }
+    document.getElementById('exam-result').innerHTML = `Your Score: ${score}/${total} ${badgeText}`;
 }
 </script>
 
