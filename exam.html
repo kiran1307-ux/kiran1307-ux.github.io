@@ -141,100 +141,68 @@ button.submit-btn:hover{
 </div>
 
 <script>
-// Questions Arrays (Add 20+ per section)
+// Full 20 questions per section
 const exams = {
-    rhel8: [
-        {q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"Secures SSH access and prevents root login."},
-        {q:"Which command verifies journal logs?", options:["journalctl","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"Ensures integrity of system logs for auditing."},
-        {q:"Change ownership of /etc/shadow to root", options:["chown root:root /etc/shadow","chmod 600 /etc/shadow","ls -l /etc/shadow","passwd"], answer:0, explanation:"Prevents unauthorized modification of critical files."},
-        {q:"Set secure permissions for /etc/shadow", options:["chmod 600 /etc/shadow","chmod 644 /etc/shadow","chmod 777 /etc/shadow","chmod 755 /etc/shadow"], answer:0, explanation:"Restricts access to sensitive files."},
-        {q:"Set SHA-512 password hashing", options:["authconfig --passalgo=sha512 --update","passwd","chage","pwpolicy"], answer:0, explanation:"Uses secure password hashing."},
-        {q:"Restrict kernel pointer exposure", options:["echo 1 > /proc/sys/kernel/kptr_restrict","echo 0 > /proc/sys/kernel/kptr_restrict","sysctl -w net.ipv4.ip_forward=1","sysctl -w net.ipv4.conf.all.accept_redirects=1"], answer:0, explanation:"Prevents leaking kernel addresses to unprivileged users."},
-        {q:"Password minimum length 12", options:["/etc/security/pwquality.conf","/etc/shadow","/etc/passwd","/etc/login.defs"], answer:0, explanation:"Enforces strong password complexity."},
-        {q:"Disable root login via SSH", options:["PermitRootLogin no","PermitRootLogin yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Secures SSH remote access."},
-        {q:"Disable empty passwords", options:["PermitEmptyPasswords no","PermitEmptyPasswords yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Prevents blank passwords on accounts."},
-        {q:"Disable IP forwarding", options:["sysctl -w net.ipv4.ip_forward=0","sysctl -w net.ipv4.ip_forward=1","echo 0 > /proc/sys/kernel/ptrace_scope","echo 1 > /proc/sys/kernel/ptrace_scope"], answer:0, explanation:"Prevents packet forwarding for security."},
-        {q:"Disable ICMP redirects", options:["sysctl -w net.ipv4.conf.all.accept_redirects=0","sysctl -w net.ipv4.conf.all.accept_redirects=1","echo 0 > /proc/sys/net/ipv4/conf/all/accept_redirects","iptables -F"], answer:0, explanation:"Prevents malicious route changes via ICMP redirects."},
-        {q:"Disable unused USB modules", options:["echo 'install usb-storage /bin/true' > /etc/modprobe.d/disable-usb.conf","modprobe usb-storage","lsmod | grep usb","rmmod usb-storage"], answer:0, explanation:"Reduces attack surface by disabling unused kernel modules."},
-        // Add more questions to reach 20-30
-    ],
-    rhel9: [
-        {q:"Default firewall in RHEL 9?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default for RHEL 9."},
-        {q:"Check SSH daemon status", options:["systemctl status sshd","service ssh status","journalctl -u sshd","ps aux | grep sshd"], answer:0, explanation:"Check SSH daemon using systemctl."},
-        {q:"Set ownership of /etc/passwd", options:["chown root:root /etc/passwd","chmod 644 /etc/passwd","ls -l /etc/passwd","passwd"], answer:0, explanation:"Critical file should be root-owned."},
-        {q:"Restrict kernel pointer exposure", options:["echo 1 > /proc/sys/kernel/kptr_restrict","echo 0 > /proc/sys/kernel/kptr_restrict","sysctl -w net.ipv4.ip_forward=1","sysctl -w net.ipv4.conf.all.accept_redirects=1"], answer:0, explanation:"Prevents leaking kernel addresses."},
-        {q:"Set password min length to 14", options:["/etc/security/pwquality.conf","/etc/shadow","/etc/passwd","/etc/login.defs"], answer:0, explanation:"Enforces strong password complexity."},
-        // Add more to reach 20-30 questions
-    ],
-    mock: [
-        {q:"Which command changes file ownership?", options:["chown","chmod","ls","passwd"], answer:0, explanation:"chown changes file owner/group."},
-        {q:"Check logs with journalctl?", options:["journalctl","systemctl","dmesg","cat /var/log/messages"], answer:0, explanation:"journalctl is for system logs."},
-        // Add more for mock test
-    ]
-};
-
-// Tab switching
-const tabs = document.querySelectorAll('.tab-btn');
-tabs.forEach(tab=>{
-    tab.addEventListener('click',()=>{
-        tabs.forEach(t=>t.classList.remove('active'));
-        tab.classList.add('active');
-        document.querySelectorAll('.exam-section').forEach(sec=>sec.classList.remove('active'));
-        document.getElementById(tab.dataset.tab).classList.add('active');
-        document.getElementById('exam-result').innerText = '';
-        document.getElementById('exam-badge').style.display='none';
-    });
-});
-
-// Render questions dynamically
-for(let key in exams){
-    const container=document.getElementById(key);
-    exams[key].forEach((item,i)=>{
-        const div=document.createElement('div');
-        div.className='question';
-        let opts='';
-        item.options.forEach((opt,j)=>{
-            opts+=`<label><input type="radio" name="${key}-${i}" value="${j}"> ${opt}</label>`;
-        });
-        div.innerHTML=`<h3>${i+1}. ${item.q}</h3><div class="options">${opts}</div><p class="explanation">${item.explanation}</p>`;
-        container.appendChild(div);
-    });
-}
-
-// Check Answers & Badge
-function checkAnswers(){
-    let score=0;
-    const activeTabBtn=document.querySelector('.tab-btn.active');
-    const activeTab=activeTabBtn.dataset.tab;
-    const questions=exams[activeTab];
-
-    questions.forEach((item,i)=>{
-        const sel=document.querySelector(`input[name="${activeTab}-${i}"]:checked`);
-        if(sel && parseInt(sel.value)===item.answer) score++;
-    });
-
-    const percent=Math.round((score/questions.length)*100);
-    const resultDiv=document.getElementById('exam-result');
-    const badgeDiv=document.getElementById('exam-badge');
-
-    if(percent>=80){
-        resultDiv.style.background='#22c55e';
-        resultDiv.style.color='#111';
-        resultDiv.innerText=`Excellent! You scored ${score}/${questions.length} (${percent}%)`;
-        badgeDiv.style.display='block';
-    } else if(percent>=50){
-        resultDiv.style.background='#facc15';
-        resultDiv.style.color='#111';
-        resultDiv.innerText=`Good! You scored ${score}/${questions.length} (${percent}%)`;
-        badgeDiv.style.display='none';
-    } else {
-        resultDiv.style.background='#ef4444';
-        resultDiv.style.color='#fff';
-        resultDiv.innerText=`You scored ${score}/${questions.length} (${percent}%). Keep Practicing!`;
-        badgeDiv.style.display='none';
-    }
-}
-</script>
-
-</body>
-</html>
+rhel8:[
+{q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"Secures SSH access and prevents root login."},
+{q:"Which command verifies journal logs?", options:["journalctl","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"Ensures integrity of system logs for auditing."},
+{q:"Change ownership of /etc/shadow to root", options:["chown root:root /etc/shadow","chmod 600 /etc/shadow","ls -l /etc/shadow","passwd"], answer:0, explanation:"Prevents unauthorized modification of critical files."},
+{q:"Set secure permissions for /etc/shadow", options:["chmod 600 /etc/shadow","chmod 644 /etc/shadow","chmod 777 /etc/shadow","chmod 755 /etc/shadow"], answer:0, explanation:"Restricts access to sensitive files."},
+{q:"Set SHA-512 password hashing", options:["authconfig --passalgo=sha512 --update","passwd","chage","pwpolicy"], answer:0, explanation:"Uses secure password hashing."},
+{q:"Restrict kernel pointer exposure", options:["echo 1 > /proc/sys/kernel/kptr_restrict","echo 0 > /proc/sys/kernel/kptr_restrict","sysctl -w net.ipv4.ip_forward=1","sysctl -w net.ipv4.conf.all.accept_redirects=1"], answer:0, explanation:"Prevents leaking kernel addresses to unprivileged users."},
+{q:"Password minimum length 12", options:["/etc/security/pwquality.conf","/etc/shadow","/etc/passwd","/etc/login.defs"], answer:0, explanation:"Enforces strong password complexity."},
+{q:"Disable root login via SSH", options:["PermitRootLogin no","PermitRootLogin yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Secures SSH remote access."},
+{q:"Disable empty passwords", options:["PermitEmptyPasswords no","PermitEmptyPasswords yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Prevents blank passwords on accounts."},
+{q:"Disable IP forwarding", options:["sysctl -w net.ipv4.ip_forward=0","sysctl -w net.ipv4.ip_forward=1","echo 0 > /proc/sys/kernel/ptrace_scope","echo 1 > /proc/sys/kernel/ptrace_scope"], answer:0, explanation:"Prevents packet forwarding for security."},
+{q:"Disable ICMP redirects", options:["sysctl -w net.ipv4.conf.all.accept_redirects=0","sysctl -w net.ipv4.conf.all.accept_redirects=1","echo 0 > /proc/sys/net/ipv4/conf/all/accept_redirects","iptables -F"], answer:0, explanation:"Prevents malicious route changes via ICMP redirects."},
+{q:"Disable unused USB modules", options:["echo 'install usb-storage /bin/true' > /etc/modprobe.d/disable-usb.conf","modprobe usb-storage","lsmod | grep usb","rmmod usb-storage"], answer:0, explanation:"Reduces attack surface by disabling unused kernel modules."},
+{q:"Which protocol should SSH use?", options:["Protocol 2","Protocol 1","Protocol 3","Protocol 0"], answer:0, explanation:"Protocol 2 is secure and must be used."},
+{q:"Which file controls cron access?", options:["/etc/cron.allow & /etc/cron.deny","/etc/crontab","/var/spool/cron","/etc/cron.daily"], answer:0, explanation:"Restricts cron jobs to authorized users."},
+{q:"Enable SELinux enforcing mode", options:["setenforce 1","setenforce 0","getenforce","sestatus"], answer:0, explanation:"Ensures SELinux is active and enforcing policies."},
+{q:"Check SELinux status", options:["sestatus","getenforce","setenforce 0","ls -Z /etc"], answer:0, explanation:"Displays current SELinux mode."},
+{q:"Audit authentication logs", options:["ausearch -m USER_LOGIN","journalctl","tail -f /var/log/messages","last"], answer:0, explanation:"Searches audit logs for login events."},
+{q:"Secure sudoers file", options:["chmod 440 /etc/sudoers","chmod 600 /etc/sudoers","chown user:user /etc/sudoers","chmod 777 /etc/sudoers"], answer:0, explanation:"Restricts write access to sudoers file."},
+{q:"Disable Ctrl+Alt+Del reboot", options:["systemctl mask ctrl-alt-del.target","systemctl unmask ctrl-alt-del.target","systemctl stop reboot.target","systemctl disable reboot.target"], answer:0, explanation:"Prevents accidental or unauthorized reboot via key combination."},
+{q:"Verify integrity of filesystem", options:["rpm -Va","sha256sum","md5sum","ls -l"], answer:0, explanation:"Checks package integrity using RPM verification."}
+],
+rhel9:[
+{q:"Default firewall in RHEL 9?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default for RHEL 9."},
+{q:"Check SSH daemon status", options:["systemctl status sshd","service ssh status","journalctl -u sshd","ps aux | grep sshd"], answer:0, explanation:"Check SSH daemon using systemctl."},
+{q:"Set ownership of /etc/passwd", options:["chown root:root /etc/passwd","chmod 644 /etc/passwd","ls -l /etc/passwd","passwd"], answer:0, explanation:"Critical file should be root-owned."},
+{q:"Restrict kernel pointer exposure", options:["echo 1 > /proc/sys/kernel/kptr_restrict","echo 0 > /proc/sys/kernel/kptr_restrict","sysctl -w net.ipv4.ip_forward=1","sysctl -w net.ipv4.conf.all.accept_redirects=1"], answer:0, explanation:"Prevents leaking kernel addresses."},
+{q:"Set password min length to 14", options:["/etc/security/pwquality.conf","/etc/shadow","/etc/passwd","/etc/login.defs"], answer:0, explanation:"Enforces strong password complexity."},
+{q:"Disable empty passwords", options:["PermitEmptyPasswords no","PermitEmptyPasswords yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Prevents accounts without passwords."},
+{q:"Use SHA-512 hashing", options:["authselect enable-feature with-sha512","authconfig --passalgo=sha512 --update","pwpolicy","chage"], answer:0, explanation:"Ensures secure password hashing."},
+{q:"Secure sudoers permissions", options:["chmod 440 /etc/sudoers","chmod 600 /etc/sudoers","chmod 777 /etc/sudoers","chown user:user /etc/sudoers"], answer:0, explanation:"Prevents unauthorized sudo edits."},
+{q:"Enable SELinux enforcing", options:["setenforce 1","setenforce 0","getenforce","sestatus"], answer:0, explanation:"Activates SELinux enforcing mode."},
+{q:"Check SELinux status", options:["sestatus","getenforce","setenforce 0","ls -Z /etc"], answer:0, explanation:"Displays current SELinux mode."},
+{q:"Disable root login SSH", options:["PermitRootLogin no","PermitRootLogin yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Prevents root login via SSH."},
+{q:"Disable ICMP redirects", options:["sysctl -w net.ipv4.conf.all.accept_redirects=0","sysctl -w net.ipv4.conf.all.accept_redirects=1","echo 0 > /proc/sys/net/ipv4/conf/all/accept_redirects","iptables -F"], answer:0, explanation:"Prevents route hijacking."},
+{q:"Disable IP forwarding", options:["sysctl -w net.ipv4.ip_forward=0","sysctl -w net.ipv4.ip_forward=1","echo 0 > /proc/sys/kernel/ptrace_scope","echo 1 > /proc/sys/kernel/ptrace_scope"], answer:0, explanation:"Disables packet forwarding for security."},
+{q:"Verify journal logs", options:["journalctl --verify","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"Checks integrity of system logs."},
+{q:"Audit authentication logs", options:["ausearch -m USER_LOGIN","journalctl","tail -f /var/log/messages","last"], answer:0, explanation:"Searches audit logs for login events."},
+{q:"Secure cron access", options:["/etc/cron.allow & /etc/cron.deny","/etc/crontab","/var/spool/cron","/etc/cron.daily"], answer:0, explanation:"Restricts cron jobs to authorized users."},
+{q:"Disable unused modules", options:["echo 'install usb-storage /bin/true' > /etc/modprobe.d/disable-usb.conf","modprobe usb-storage","lsmod | grep usb","rmmod usb-storage"], answer:0, explanation:"Reduces attack surface."},
+{q:"Check firewall status", options:["firewall-cmd --state","systemctl status firewalld","iptables -L","ufw status"], answer:0, explanation:"Confirms firewalld is active."},
+{q:"Set strong password policy", options:["/etc/security/pwquality.conf","/etc/shadow","/etc/login.defs","/etc/passwd"], answer:0, explanation:"Defines min length, complexity and history."}
+],
+mock:[
+{q:"Which command changes file ownership?", options:["chown","chmod","ls","passwd"], answer:0, explanation:"chown changes file owner/group."},
+{q:"Check logs with journalctl?", options:["journalctl","systemctl","dmesg","cat /var/log/messages"], answer:0, explanation:"journalctl is for system logs."},
+{q:"Set file permissions", options:["chmod 600 /etc/shadow","chmod 644 /etc/shadow","chmod 777 /etc/shadow","chmod 755 /etc/shadow"], answer:0, explanation:"Restricts access to sensitive files."},
+{q:"Enable SELinux enforcing", options:["setenforce 1","setenforce 0","getenforce","sestatus"], answer:0, explanation:"Activates SELinux enforcing mode."},
+{q:"Disable root SSH login", options:["PermitRootLogin no","PermitRootLogin yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Prevents root login via SSH."},
+{q:"Password hashing algorithm", options:["SHA-512","MD5","DES","SHA-1"], answer:0, explanation:"SHA-512 is secure for password storage."},
+{q:"Disable empty passwords", options:["PermitEmptyPasswords no","PermitEmptyPasswords yes","PasswordAuthentication yes","PasswordAuthentication no"], answer:0, explanation:"Prevents blank passwords."},
+{q:"Audit authentication logs", options:["ausearch -m USER_LOGIN","journalctl","tail -f /var/log/messages","last"], answer:0, explanation:"Searches audit logs for login events."},
+{q:"Disable ICMP redirects", options:["sysctl -w net.ipv4.conf.all.accept_redirects=0","sysctl -w net.ipv4.conf.all.accept_redirects=1","echo 0 > /proc/sys/net/ipv4/conf/all/accept_redirects","iptables -F"], answer:0, explanation:"Prevents route hijacking."},
+{q:"Disable IP forwarding", options:["sysctl -w net.ipv4.ip_forward=0","sysctl -w net.ipv4.ip_forward=1","echo 0 > /proc/sys/kernel/ptrace_scope","echo 1 > /proc/sys/kernel/ptrace_scope"], answer:0, explanation:"Disables packet forwarding for security."},
+{q:"Check SSH daemon", options:["systemctl status sshd","service ssh status","journalctl -u sshd","ps aux | grep sshd"], answer:0, explanation:"Check SSH daemon using systemctl."},
+{q:"Check firewall status", options:["firewall-cmd --state","systemctl status firewalld","iptables -L","ufw status"], answer:0, explanation:"Ensures firewall is running."},
+{q:"Verify journal logs", options:["journalctl --verify","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"Ensures integrity of logs."},
+{q:"Secure sudoers file", options:["chmod 440 /etc/sudoers","chmod 600 /etc/sudoers","chmod 777 /etc/sudoers","chown user:user /etc/sudoers"], answer:0, explanation:"Restricts write access to sudoers file."},
+{q:"Secure cron access", options:["/etc/cron.allow & /etc/cron.deny","/etc/crontab","/var/spool/cron","/etc/cron.daily"], answer:0, explanation:"Restricts cron jobs to authorized users."},
+{q:"Disable unused modules", options:["echo 'install usb-storage /bin/true' > /etc/modprobe.d/disable-usb.conf","modprobe usb-storage","lsmod | grep usb","rmmod usb-storage"], answer:0, explanation:"Reduces attack surface."},
+{q:"Password min length", options:["12 or more","8","6","10"], answer:0, explanation:"Strong passwords prevent brute force."},
+{q:"SSH Protocol version", options:["Protocol 2","Protocol 1","Protocol 3","Protocol 0"], answer:0, explanation:"Protocol 2 is secure."},
+{q:"Check SELinux status", options:["sestatus","getenforce","setenforce 0","ls -Z /etc"], answer
