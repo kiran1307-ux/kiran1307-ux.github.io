@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux & DevOps Intermediate Tutorials</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color: #fff;
+}
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color:white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    transition: 0.3s, transform 0.3s;
+    font-weight: bold;
+}
+.nav-btn:hover {
+    background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.15));
+    transform: translateY(-2px);
+}
+.header-title {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: #facc15;
+    margin-top: 40px;
+}
+.header-subtitle {
+    text-align: center;
+    font-size: 18px;
+    opacity: 0.85;
+    margin-bottom: 50px;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    width: 90%;
+    padding: 25px 20px;
+    border-radius: 20px;
+    transition: transform 0.4s, box-shadow 0.4s, background 0.4s;
+    position: relative;
+}
+.card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    background: rgba(255,255,255,0.1);
+}
+.card h2 {
+    color: #22c55e;
+    margin-bottom: 15px;
+}
+.card p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+.card::before {
+    content: attr(data-icon);
+    font-size: 40px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    opacity: 0.2;
+}
+footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 25px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #facc15;
+    background: linear-gradient(90deg,#0f2027,#203a43,#2c5364);
+    border-top: 3px solid #38bdf8;
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html" class="nav-btn">🏠 Home</a>
+    <a href="linuxandevops.html" class="nav-btn">💻 Linux & DevOps</a>
+    <a href="beginner.html" class="nav-btn">🟢 Beginner</a>
+    <a href="intermediate.html" class="nav-btn">🟡 Intermediate</a>
+    <a href="advanced.html" class="nav-btn">🔴 Advanced</a>
+    <a href="interview.html" class="nav-btn">📝 Interview Prep</a>
+</div>
+
+<div class="header-title">Linux & DevOps Intermediate Tutorials</div>
+<div class="header-subtitle">Deepen your understanding with practical workflows, system administration, and DevOps pipelines</div>
+
+<div class="container">
+
+    <div class="card" data-icon="🖥️">
+        <h2>1. Linux System Administration</h2>
+        <p>Manage services, daemons, processes, and system logs. Configure cron jobs, system timers, package management (yum, apt), and troubleshooting techniques.</p>
+    </div>
+
+    <div class="card" data-icon="🔒">
+        <h2>2. Security & Hardening</h2>
+        <p>Learn firewall management (iptables, firewalld), SELinux basics, SSH hardening, user policies, and basic system auditing for intermediate-level security practices.</p>
+    </div>
+
+    <div class="card" data-icon="📝">
+        <h2>3. Advanced Shell Scripting</h2>
+        <p>Create modular scripts with functions, handle arguments, error handling, logging, and automate system tasks efficiently. Integrate scripts into DevOps workflows.</p>
+    </div>
+
+    <div class="card" data-icon="⚙️">
+        <h2>4. Git Branching & Collaboration</h2>
+        <p>Intermediate Git: branching, merging, rebasing, resolving conflicts, pull requests, and collaborative workflows with GitHub or GitLab.</p>
+    </div>
+
+    <div class="card" data-icon="🐳">
+        <h2>5. Docker Compose & Multi-Container Apps</h2>
+        <p>Learn Docker Compose, networking between containers, creating multi-container applications, and handling persistent storage for intermediate containerized applications.</p>
+    </div>
+
+    <div class="card" data-icon="☸️">
+        <h2>6. Kubernetes Basics for Deployment</h2>
+        <p>Deploy applications on Kubernetes with Deployments, Services, ConfigMaps, Secrets, and Ingress. Understand rolling updates, scaling, and monitoring pods.</p>
+    </div>
+
+    <div class="card" data-icon="🔧">
+        <h2>7. Infrastructure Automation</h2>
+        <p>Use Ansible to automate multi-server deployments, configure roles and playbooks, and integrate automation into a CI/CD pipeline for real-world projects.</p>
+    </div>
+
+    <div class="card" data-icon="💡">
+        <h2>8. CI/CD Pipelines</h2>
+        <p>Set up Jenkins or GitHub Actions pipelines to automate testing, building, and deployment. Learn intermediate pipeline scripting and integration with container platforms.</p>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 Kiran Negi | Linux & DevOps Intermediate Tutorials
+</footer>
+
+</body>
+</html>
