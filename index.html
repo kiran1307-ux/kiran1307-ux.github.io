@@ -2,19 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Learning Guide</title>
+    <title>Linux Server Hardening Guide</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #0078D4, #232F3E);
-            color: white;
+            background: linear-gradient(to right, #1f4037, #99f2c8);
+            color: #fff;
             text-align: center;
             padding: 50px;
         }
 
         h1 {
-            font-size: 40px;
-            margin-bottom: 10px;
+            font-size: 38px;
         }
 
         p {
@@ -25,49 +24,47 @@
         .btn {
             display: inline-block;
             padding: 15px 30px;
-            margin: 10px;
+            margin: 15px;
             font-size: 18px;
-            border: none;
             border-radius: 8px;
-            cursor: pointer;
             text-decoration: none;
             color: white;
             transition: 0.3s;
         }
 
-        .azure {
-            background-color: #0078D4;
+        .rhel8 {
+            background-color: #c0392b;
         }
 
-        .azure:hover {
-            background-color: #005a9e;
+        .rhel8:hover {
+            background-color: #922b21;
         }
 
-        .linux {
-            background-color: #f39c12;
+        .rhel9 {
+            background-color: #8e44ad;
         }
 
-        .linux:hover {
-            background-color: #d68910;
+        .rhel9:hover {
+            background-color: #5b2c6f;
         }
 
         footer {
-            margin-top: 50px;
+            margin-top: 60px;
             font-size: 16px;
-            opacity: 0.8;
+            opacity: 0.9;
         }
     </style>
 </head>
 <body>
 
-    <h1>Learning Guide</h1>
-    <p>Select a topic to start learning</p>
+    <h1>Linux Server Hardening</h1>
+    <p>Select your Red Hat Enterprise Linux version</p>
 
-    <a href="#" class="btn azure">Azure</a>
-    <a href="#" class="btn linux">Linux</a>
+    <a href="rhel8.html" class="btn rhel8">RHEL 8 Hardening</a>
+    <a href="rhel9.html" class="btn rhel9">RHEL 9 Hardening</a>
 
     <footer>
-        Author: Kiran Negi
+        Repo Author: Kiran Negi
     </footer>
 
 </body>
