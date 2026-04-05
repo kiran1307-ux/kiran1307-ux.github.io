@@ -1,175 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>RHEL 8 Enterprise Hardening</title>
-
-<style>
-body {
-    font-family: 'Segoe UI';
-    margin: 0;
-    background: #0f172a;
-    color: #e2e8f0;
-}
-header {
-    background: #dc2626;
-    padding: 20px;
-    text-align: center;
-    font-size: 26px;
-    font-weight: bold;
-}
-.container {
-    padding: 30px;
-    max-width: 1000px;
-    margin: auto;
-}
-.section-title {
-    margin-top: 40px;
-    color: #f87171;
-    border-bottom: 1px solid #334155;
-    padding-bottom: 8px;
-}
-.card {
-    background: #1e293b;
-    padding: 20px;
-    margin-top: 15px;
-    border-radius: 10px;
-    border-left: 4px solid #dc2626;
-}
-code {
-    display: block;
-    background: #020617;
-    padding: 8px;
-    margin-top: 8px;
-    border-radius: 5px;
-    color: #22c55e;
-}
-.copy-btn {
-    margin-top: 5px;
-    padding: 4px 10px;
-    background: #dc2626;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 5px;
-}
-a { color: #38bdf8; }
-</style>
-</head>
-
-<body>
-
-<header>🔐 RHEL 8 Enterprise Hardening Guide</header>
-
-<div class="container">
-
-<!-- SSHD -->
-<h2 class="section-title">🔐 SSHD Configuration</h2>
+<div class="card">
+    <h3>SSH Hardening</h3>
+    <p><strong>File:</strong> /etc/ssh/sshd_config</p>
+    <p><strong>Settings:</strong> Disable root login, Use Protocol 2, Disable empty passwords</p>
+    <p class="explanation">
+        <strong>Why:</strong> Secures SSH access, prevents unauthorized root access, and protects against brute-force attacks.
+    </p>
+</div>
 
 <div class="card">
-<h3>Secure SSH Parameters</h3>
-<code>PermitRootLogin no</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
-<code>PasswordAuthentication no</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
-<code>X11Forwarding no</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
-<code>MaxAuthTries 4</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
-<code>ClientAliveInterval 300</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
-<code>ClientAliveCountMax 0</code><button class="copy-btn" onclick="copyCode(this)">Copy</button>
+    <h3>Journal Logs</h3>
+    <p><strong>Command:</strong> journalctl --verify</p>
+    <p class="explanation">
+        <strong>Why:</strong> Ensures logging integrity and allows auditing of system events, helping detect suspicious activity.
+    </p>
 </div>
-
-<!-- JOURNAL -->
-<h2 class="section-title">📊 Journald Logging</h2>
 
 <div class="card">
-<code>Storage=persistent</code><button class="copy-btn">Copy</button>
-<code>Compress=yes</code><button class="copy-btn">Copy</button>
-<code>SystemMaxUse=500M</code><button class="copy-btn">Copy</button>
+    <h3>modprobe Hardening</h3>
+    <p><strong>File:</strong> /etc/modprobe.d/disable-modules.conf</p>
+    <p><strong>Settings:</strong> Disable unused kernel modules</p>
+    <p class="explanation">
+        <strong>Why:</strong> Reduces attack surface by preventing unnecessary kernel modules from being loaded.
+    </p>
 </div>
-
-<!-- MODPROBE -->
-<h2 class="section-title">⚙️ Kernel Module Hardening</h2>
 
 <div class="card">
-<code>install usb-storage /bin/true</code><button class="copy-btn">Copy</button>
-<code>install cramfs /bin/true</code><button class="copy-btn">Copy</button>
-<code>install freevxfs /bin/true</code><button class="copy-btn">Copy</button>
+    <h3>Password Quality</h3>
+    <p><strong>File:</strong> /etc/security/pwquality.conf</p>
+    <p><strong>Settings:</strong> Minimum length, complexity, and history enforcement</p>
+    <p class="explanation">
+        <strong>Why:</strong> Enforces strong passwords, reducing risk of brute-force attacks and compromised accounts.
+    </p>
 </div>
-
-<!-- CORE DUMP -->
-<h2 class="section-title">💾 Core Dump Restriction</h2>
 
 <div class="card">
-<code>* hard core 0</code><button class="copy-btn">Copy</button>
-<code>fs.suid_dumpable = 0</code><button class="copy-btn">Copy</button>
+    <h3>Cron Security</h3>
+    <p><strong>File:</strong> /etc/cron.allow & /etc/cron.deny</p>
+    <p class="Explanation">
+        <strong>Why:</strong> Restricts cron job scheduling to authorized users only, preventing unauthorized task execution.
+    </p>
 </div>
 
-<!-- PWQUALITY -->
-<h2 class="section-title">🔑 Password Quality</h2>
-
-<div class="card">
-<code>minlen = 12</code><button class="copy-btn">Copy</button>
-<code>dcredit = -1</code><button class="copy-btn">Copy</button>
-<code>ucredit = -1</code><button class="copy-btn">Copy</button>
-<code>lcredit = -1</code><button class="copy-btn">Copy</button>
-<code>ocredit = -1</code><button class="copy-btn">Copy</button>
-</div>
-
-<!-- AUTH -->
-<h2 class="section-title">🔐 Authentication (PAM)</h2>
-
-<div class="card">
-<code>auth required pam_faillock.so deny=5 unlock_time=900</code><button class="copy-btn">Copy</button>
-<code>account required pam_faillock.so</code><button class="copy-btn">Copy</button>
-</div>
-
-<!-- CRON -->
-<h2 class="section-title">⏰ Cron Security</h2>
-
-<div class="card">
-<code>chmod 600 /etc/crontab</code><button class="copy-btn">Copy</button>
-<code>chmod 700 /etc/cron.d</code><button class="copy-btn">Copy</button>
-</div>
-
-<!-- PERMISSIONS -->
-<h2 class="section-title">📁 File Permissions</h2>
-
-<div class="card">
-<code>chmod 600 /etc/passwd</code><button class="copy-btn">Copy</button>
-<code>chmod 600 /etc/shadow</code><button class="copy-btn">Copy</button>
-</div>
-
-<!-- OWNERSHIP -->
-<h2 class="section-title">👤 File Ownership</h2>
-
-<div class="card">
-<code>chown root:root /etc/passwd</code><button class="copy-btn">Copy</button>
-<code>chown root:root /etc/shadow</code><button class="copy-btn">Copy</button>
-</div>
-
-<!-- NETWORK -->
-<h2 class="section-title">🌐 Network Kernel Parameters</h2>
-
-<div class="card">
-<code>net.ipv4.ip_forward = 0</code><button class="copy-btn">Copy</button>
-<code>net.ipv4.conf.all.accept_redirects = 0</code><button class="copy-btn">Copy</button>
-<code>net.ipv4.conf.all.secure_redirects = 0</code><button class="copy-btn">Copy</button>
-</div>
-
-<br>
-<a href="index.html">⬅ Back</a>
-
-</div>
-
-<footer style="text-align:center; padding:20px;">
-Repo Author: Kiran Negi
-</footer>
-
-<script>
-function copyCode(btn) {
-    let code = btn.previousElementSibling.innerText;
-    navigator.clipboard.writeText(code);
-    btn.innerText = "Copied!";
-}
-</script>
-
-</body>
-</html>
+<!-- Similarly add storagedump, auth, permissions, ownership, SELinux, etc. -->
