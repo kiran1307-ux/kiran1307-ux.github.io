@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RHEL 9 Hardening</title>
+
+<style>
+    body {
+        font-family: 'Segoe UI';
+        margin: 0;
+        background: #0c1b1e;
+        color: #eee;
+    }
+
+    header {
+        background: #00c6ff;
+        padding: 20px;
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .container {
+        padding: 40px;
+        max-width: 900px;
+        margin: auto;
+    }
+
+    .card {
+        background: #132f33;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        border-left: 5px solid #00c6ff;
+    }
+
+    code {
+        display: block;
+        background: #000;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        color: #00ffcc;
+    }
+
+    .back {
+        display: inline-block;
+        margin-top: 20px;
+        color: #00c6ff;
+        text-decoration: none;
+    }
+</style>
+</head>
+
+<body>
+
+<header>RHEL 9 Hardening Guide</header>
+
+<div class="container">
+
+<div class="card">
+<h3>🔐 SSH Key Authentication</h3>
+<p><b>Control:</b> Disable password login</p>
+<code>PasswordAuthentication no</code>
+</div>
+
+<div class="card">
+<h3>🚫 Fail2Ban</h3>
+<p><b>Control:</b> Prevent brute-force</p>
+<code>dnf install fail2ban</code>
+</div>
+
+<div class="card">
+<h3>📊 Audit Logs</h3>
+<p><b>Control:</b> Monitor activity</p>
+<code>systemctl enable auditd</code>
+</div>
+
+<div class="card">
+<h3>💻 Updates</h3>
+<p><b>Control:</b> Patch vulnerabilities</p>
+<code>dnf update -y</code>
+</div>
+
+<a href="index.html" class="back">⬅ Back</a>
+
+</div>
+
+<footer style="text-align:center; padding:20px;">Repo Author: Kiran Negi</footer>
+
+</body>
+</html>
