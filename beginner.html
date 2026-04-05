@@ -24,19 +24,15 @@
         </ul>
     </div>
 
-    <!-- 2. Commands -->
+    <!-- 2. Linux Commands -->
     <div class="card" data-icon="📂">
         <h2>2. Linux Commands</h2>
-
-        <p>Basic navigation commands:</p>
 
 <pre>
 pwd   → show current directory
 ls    → list files
 cd    → change directory
 </pre>
-
-        <p>File operations:</p>
 
 <pre>
 cp file1 file2
@@ -45,65 +41,90 @@ rm file
 mkdir folder
 </pre>
 
-        <p><b>Permissions Diagram:</b></p>
 <pre>
 -rwxr-xr--
- | | | |
- | | | └── Others
- | | └──── Group
- | └────── Owner
- └──────── File type
+Owner Group Others
 </pre>
     </div>
 
-    <!-- 3. Shell Scripting -->
-    <div class="card" data-icon="📝">
-        <h2>3. Shell Scripting</h2>
+    <!-- 3. File System -->
+    <div class="card" data-icon="🗂️">
+        <h2>3. Linux File System</h2>
 
-        <p>Automate tasks using Bash scripts.</p>
+<pre>
+/
+├── home
+├── etc
+├── var
+├── bin
+└── usr
+</pre>
+
+        <ul>
+            <li><b>/home:</b> User files</li>
+            <li><b>/etc:</b> Config files</li>
+            <li><b>/var:</b> Logs</li>
+        </ul>
+    </div>
+
+    <!-- 4. Shell Scripting -->
+    <div class="card" data-icon="📝">
+        <h2>4. Shell Scripting</h2>
 
 <pre>
 #!/bin/bash
 echo "Hello World"
 </pre>
 
-        <p><b>Flow:</b></p>
 <pre>
-Input → Script → Execution → Output
+Input → Script → Output
 </pre>
 
         <ul>
             <li>Variables</li>
-            <li>Loops (for, while)</li>
-            <li>Conditions (if-else)</li>
+            <li>Loops</li>
+            <li>If-else</li>
         </ul>
     </div>
 
-    <!-- 4. DevOps -->
-    <div class="card" data-icon="⚙️">
-        <h2>4. DevOps Basics</h2>
+    <!-- 5. Networking -->
+    <div class="card" data-icon="🌐">
+        <h2>5. Networking Basics</h2>
 
-        <p>DevOps connects development and operations.</p>
+<pre>
+IP Address → 192.168.1.1
+DNS → google.com
+Port → 80 (HTTP)
+</pre>
+
+<pre>
+ping google.com
+ifconfig
+netstat
+</pre>
+    </div>
+
+    <!-- 6. DevOps -->
+    <div class="card" data-icon="⚙️">
+        <h2>6. DevOps Basics</h2>
 
 <pre>
 Code → Build → Test → Deploy → Monitor
 </pre>
 
         <ul>
-            <li>CI/CD pipelines</li>
             <li>Automation</li>
-            <li>Faster delivery</li>
+            <li>CI/CD</li>
+            <li>Collaboration</li>
         </ul>
     </div>
 
-    <!-- 5. Git -->
+    <!-- 7. Git -->
     <div class="card" data-icon="🛠️">
-        <h2>5. Git Basics</h2>
+        <h2>7. Git Basics</h2>
 
 <pre>
 Working → Staging → Repository
-   |         |          |
- edit     git add   git commit
 </pre>
 
 <pre>
@@ -112,65 +133,109 @@ git add .
 git commit -m "msg"
 git push
 </pre>
-
     </div>
 
-    <!-- 6. Docker -->
-    <div class="card" data-icon="🐳">
-        <h2>6. Docker</h2>
-
-        <p>Docker uses containers for lightweight apps.</p>
+    <!-- 8. CI/CD -->
+    <div class="card" data-icon="🔄">
+        <h2>8. CI/CD Pipeline</h2>
 
 <pre>
-+----------------------+
-|   Container          |
-|  App + Dependencies  |
-+----------------------+
+Developer → Git → Jenkins → Deploy
+</pre>
+
+        <ul>
+            <li>Continuous Integration</li>
+            <li>Continuous Deployment</li>
+        </ul>
+    </div>
+
+    <!-- 9. Docker -->
+    <div class="card" data-icon="🐳">
+        <h2>9. Docker</h2>
+
+<pre>
+Container = App + Dependencies
 </pre>
 
 <pre>
 docker pull nginx
 docker run -d nginx
 </pre>
-
     </div>
 
-    <!-- 7. Kubernetes -->
+    <!-- 10. Kubernetes -->
     <div class="card" data-icon="☸️">
-        <h2>7. Kubernetes</h2>
+        <h2>10. Kubernetes</h2>
 
 <pre>
-Cluster
- ├── Node
- │    └── Pod
- │         └── Container
+Cluster → Node → Pod → Container
 </pre>
 
         <p>Manages containers at scale.</p>
     </div>
 
-    <!-- 8. Ansible -->
+    <!-- 11. Cloud -->
+    <div class="card" data-icon="☁️">
+        <h2>11. Cloud Computing</h2>
+
+<pre>
+IaaS → Infrastructure
+PaaS → Platform
+SaaS → Software
+</pre>
+
+        <ul>
+            <li>AWS</li>
+            <li>Azure</li>
+            <li>GCP</li>
+        </ul>
+    </div>
+
+    <!-- 12. Monitoring -->
+    <div class="card" data-icon="📊">
+        <h2>12. Monitoring</h2>
+
+<pre>
+Metrics → Logs → Alerts
+</pre>
+
+        <ul>
+            <li>Prometheus</li>
+            <li>Grafana</li>
+        </ul>
+    </div>
+
+    <!-- 13. Ansible -->
     <div class="card" data-icon="🔧">
-        <h2>8. Ansible</h2>
+        <h2>13. Ansible</h2>
 
 <pre>
 Control Node → Managed Nodes
-        |
-     Playbooks
 </pre>
 
-        <p>Used for automation & configuration management.</p>
+        <p>Automation tool</p>
     </div>
 
-    <!-- 9. Best Practices -->
-    <div class="card" data-icon="💡">
-        <h2>9. Best Practices</h2>
+    <!-- 14. Security -->
+    <div class="card" data-icon="🔐">
+        <h2>14. Security Basics</h2>
 
         <ul>
-            <li>Use SSH keys instead of passwords</li>
-            <li>Keep backups</li>
-            <li>Write clean scripts</li>
+            <li>SSH Keys</li>
+            <li>Firewalls</li>
+            <li>Least Privilege</li>
+        </ul>
+    </div>
+
+    <!-- 15. Best Practices -->
+    <div class="card" data-icon="💡">
+        <h2>15. Best Practices</h2>
+
+        <ul>
             <li>Use version control</li>
+            <li>Automate tasks</li>
+            <li>Monitor systems</li>
+            <li>Backup regularly</li>
         </ul>
     </div>
 
