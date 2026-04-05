@@ -1,55 +1,43 @@
 <div class="container">
 
-    <!-- 1. Linux Intro -->
+    <!-- 1. What is Linux -->
     <div class="card" data-icon="🖥️">
         <h2>1. What is Linux?</h2>
-        <p><strong>Linux</strong> is an open-source operating system used in servers, cloud, and DevOps.</p>
+
+        <p>Linux is an <b>open-source operating system</b> used in servers, cloud, and DevOps.</p>
 
 <pre>
-+----------------------+
-|   Applications       |
-+----------------------+
-|       Shell          |
-+----------------------+
-|       Kernel         |
-+----------------------+
-|      Hardware        |
-+----------------------+
+User → Shell → Kernel → Hardware
 </pre>
 
         <ul>
-            <li><b>Kernel:</b> Core of OS</li>
-            <li><b>Shell:</b> Interface to interact</li>
+            <li><b>Kernel:</b> Brain of OS</li>
+            <li><b>Shell:</b> Command interface</li>
             <li><b>Distros:</b> Ubuntu, CentOS, RHEL</li>
         </ul>
     </div>
 
-    <!-- 2. Linux Commands -->
-    <div class="card" data-icon="📂">
-        <h2>2. Linux Commands</h2>
+    <!-- 2. Install Linux -->
+    <div class="card" data-icon="💿">
+        <h2>2. How to Install Linux</h2>
 
 <pre>
-pwd   → show current directory
-ls    → list files
-cd    → change directory
+Options:
+✔ VirtualBox (Recommended)
+✔ Dual Boot
+✔ Cloud VM (AWS)
 </pre>
 
-<pre>
-cp file1 file2
-mv file1 file2
-rm file
-mkdir folder
-</pre>
-
-<pre>
--rwxr-xr--
-Owner Group Others
-</pre>
+        <ul>
+            <li>Download Ubuntu ISO</li>
+            <li>Create VM</li>
+            <li>Start learning safely</li>
+        </ul>
     </div>
 
-    <!-- 3. File System -->
+    <!-- 3. Linux File System -->
     <div class="card" data-icon="🗂️">
-        <h2>3. Linux File System</h2>
+        <h2>3. File System</h2>
 
 <pre>
 /
@@ -61,182 +49,217 @@ Owner Group Others
 </pre>
 
         <ul>
-            <li><b>/home:</b> User files</li>
-            <li><b>/etc:</b> Config files</li>
-            <li><b>/var:</b> Logs</li>
+            <li><b>/home:</b> user files</li>
+            <li><b>/etc:</b> configs</li>
+            <li><b>/var:</b> logs</li>
         </ul>
     </div>
 
-    <!-- 4. Shell Scripting -->
-    <div class="card" data-icon="📝">
-        <h2>4. Shell Scripting</h2>
+    <!-- 4. Basic Commands -->
+    <div class="card" data-icon="⌨️">
+        <h2>4. Basic Commands</h2>
 
 <pre>
-#!/bin/bash
-echo "Hello World"
+pwd   → current folder
+ls    → list files
+cd    → change folder
 </pre>
 
 <pre>
-Input → Script → Output
+mkdir test
+rm file
+cp a b
+mv a b
+</pre>
+    </div>
+
+    <!-- 5. File Permissions -->
+    <div class="card" data-icon="🔑">
+        <h2>5. Permissions</h2>
+
+<pre>
+-rwxr-xr--
+Owner Group Others
+</pre>
+
+<pre>
+chmod 755 file
+</pre>
+
+        <p>Controls who can read, write, execute</p>
+    </div>
+
+    <!-- 6. Users & Groups -->
+    <div class="card" data-icon="👥">
+        <h2>6. Users & Groups</h2>
+
+<pre>
+adduser user1
+passwd user1
 </pre>
 
         <ul>
-            <li>Variables</li>
-            <li>Loops</li>
-            <li>If-else</li>
+            <li>Multiple users in system</li>
+            <li>Groups manage access</li>
         </ul>
     </div>
 
-    <!-- 5. Networking -->
-    <div class="card" data-icon="🌐">
-        <h2>5. Networking Basics</h2>
+    <!-- 7. Package Management -->
+    <div class="card" data-icon="📦">
+        <h2>7. Package Management</h2>
 
 <pre>
-IP Address → 192.168.1.1
-DNS → google.com
-Port → 80 (HTTP)
+apt update
+apt install nginx
 </pre>
+
+        <p>Install software easily</p>
+    </div>
+
+    <!-- 8. Processes -->
+    <div class="card" data-icon="⚡">
+        <h2>8. Processes</h2>
+
+<pre>
+ps aux
+top
+kill PID
+</pre>
+
+        <p>Manage running programs</p>
+    </div>
+
+    <!-- 9. Networking -->
+    <div class="card" data-icon="🌐">
+        <h2>9. Networking</h2>
 
 <pre>
 ping google.com
 ifconfig
-netstat
-</pre>
-    </div>
-
-    <!-- 6. DevOps -->
-    <div class="card" data-icon="⚙️">
-        <h2>6. DevOps Basics</h2>
-
-<pre>
-Code → Build → Test → Deploy → Monitor
+ssh user@ip
 </pre>
 
         <ul>
-            <li>Automation</li>
-            <li>CI/CD</li>
-            <li>Collaboration</li>
+            <li>IP Address</li>
+            <li>Ports</li>
         </ul>
     </div>
 
-    <!-- 7. Git -->
-    <div class="card" data-icon="🛠️">
-        <h2>7. Git Basics</h2>
+    <!-- 10. Shell Scripting -->
+    <div class="card" data-icon="📝">
+        <h2>10. Shell Scripting</h2>
 
 <pre>
-Working → Staging → Repository
+#!/bin/bash
+echo "Hello DevOps"
 </pre>
+
+<pre>
+if [ $a -gt $b ]
+then echo "A is greater"
+fi
+</pre>
+
+        <p>Automate tasks</p>
+    </div>
+
+    <!-- 11. SSH -->
+    <div class="card" data-icon="🔐">
+        <h2>11. SSH</h2>
+
+<pre>
+ssh user@server-ip
+</pre>
+
+        <p>Secure remote access to servers</p>
+    </div>
+
+    <!-- 12. Logs -->
+    <div class="card" data-icon="📜">
+        <h2>12. Logs</h2>
+
+<pre>
+/var/log
+tail -f log.txt
+</pre>
+
+        <p>Debug issues using logs</p>
+    </div>
+
+    <!-- 13. DevOps Intro -->
+    <div class="card" data-icon="⚙️">
+        <h2>13. DevOps Introduction</h2>
+
+<pre>
+Dev + Ops = DevOps
+</pre>
+
+<pre>
+Code → Build → Test → Deploy
+</pre>
+
+        <p>Improves speed & automation</p>
+    </div>
+
+    <!-- 14. Git Basics -->
+    <div class="card" data-icon="🛠️">
+        <h2>14. Git Basics</h2>
 
 <pre>
 git init
 git add .
-git commit -m "msg"
-git push
+git commit -m "first"
 </pre>
+
+        <p>Version control system</p>
     </div>
 
-    <!-- 8. CI/CD -->
+    <!-- 15. CI/CD -->
     <div class="card" data-icon="🔄">
-        <h2>8. CI/CD Pipeline</h2>
+        <h2>15. CI/CD</h2>
 
 <pre>
-Developer → Git → Jenkins → Deploy
+Push Code → Build → Test → Deploy
 </pre>
 
-        <ul>
-            <li>Continuous Integration</li>
-            <li>Continuous Deployment</li>
-        </ul>
+        <p>Automation pipeline</p>
     </div>
 
-    <!-- 9. Docker -->
+    <!-- 16. Docker Intro -->
     <div class="card" data-icon="🐳">
-        <h2>9. Docker</h2>
+        <h2>16. Docker</h2>
 
 <pre>
 Container = App + Dependencies
 </pre>
 
 <pre>
-docker pull nginx
-docker run -d nginx
-</pre>
-    </div>
-
-    <!-- 10. Kubernetes -->
-    <div class="card" data-icon="☸️">
-        <h2>10. Kubernetes</h2>
-
-<pre>
-Cluster → Node → Pod → Container
+docker run nginx
 </pre>
 
-        <p>Manages containers at scale.</p>
     </div>
 
-    <!-- 11. Cloud -->
+    <!-- 17. Cloud Basics -->
     <div class="card" data-icon="☁️">
-        <h2>11. Cloud Computing</h2>
+        <h2>17. Cloud Basics</h2>
 
 <pre>
-IaaS → Infrastructure
-PaaS → Platform
-SaaS → Software
+AWS / Azure / GCP
 </pre>
 
-        <ul>
-            <li>AWS</li>
-            <li>Azure</li>
-            <li>GCP</li>
-        </ul>
+        <p>Run servers on internet</p>
     </div>
 
-    <!-- 12. Monitoring -->
-    <div class="card" data-icon="📊">
-        <h2>12. Monitoring</h2>
+    <!-- 18. Beginner Roadmap -->
+    <div class="card" data-icon="🎯">
+        <h2>18. Roadmap</h2>
 
 <pre>
-Metrics → Logs → Alerts
+Linux → Git → Scripting
+→ Docker → CI/CD → Cloud
 </pre>
 
-        <ul>
-            <li>Prometheus</li>
-            <li>Grafana</li>
-        </ul>
-    </div>
-
-    <!-- 13. Ansible -->
-    <div class="card" data-icon="🔧">
-        <h2>13. Ansible</h2>
-
-<pre>
-Control Node → Managed Nodes
-</pre>
-
-        <p>Automation tool</p>
-    </div>
-
-    <!-- 14. Security -->
-    <div class="card" data-icon="🔐">
-        <h2>14. Security Basics</h2>
-
-        <ul>
-            <li>SSH Keys</li>
-            <li>Firewalls</li>
-            <li>Least Privilege</li>
-        </ul>
-    </div>
-
-    <!-- 15. Best Practices -->
-    <div class="card" data-icon="💡">
-        <h2>15. Best Practices</h2>
-
-        <ul>
-            <li>Use version control</li>
-            <li>Automate tasks</li>
-            <li>Monitor systems</li>
-            <li>Backup regularly</li>
-        </ul>
+        <p>Follow this path to become DevOps Engineer</p>
     </div>
 
 </div>
