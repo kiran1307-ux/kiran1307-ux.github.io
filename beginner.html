@@ -115,31 +115,132 @@ footer:hover {
     <a href="tutorials.html" class="nav-btn">💻 Tutorials</a>
 </div>
 
-<!-- HEADER -->
-<div class="header-author">
-    Beginner Linux & DevOps Tutorials – Learn all essential commands & concepts step by step
-</div>
-
 <!-- MAIN CONTENT -->
 <div class="container">
 
 <h1>Beginner Tutorials</h1>
 <p class="subtitle">Start your Linux & DevOps journey with structured tutorials covering commands, file systems, shell scripting, and foundational DevOps concepts.</p>
 
-<!-- SECTION: Linux Basics -->
+<!-- SECTION: Introduction -->
 <div class="section">
-    <h2>1. Linux Basics</h2>
-    <p>Learn what Linux is, its distributions, basic commands, and navigation of the file system.</p>
+    <h2>1. Introduction to Linux</h2>
+    <p>Linux is an open-source, Unix-like operating system used in servers, desktops, and embedded systems. Known for its stability, security, and flexibility, Linux is widely used in IT and DevOps environments.</p>
+</div>
+
+<!-- SECTION: Distributions -->
+<div class="section">
+    <h2>2. Linux Distributions</h2>
+    <p>Different distributions (distros) serve different purposes:</p>
     <ul>
-        <li>Understanding Linux distributions (Ubuntu, CentOS, Fedora)</li>
-        <li>Terminal basics and shell commands</li>
-        <li>File system structure: /home, /etc, /var, /usr</li>
-        <li>File operations: <code>ls, cd, cp, mv, rm, mkdir</code></li>
-        <li>Permissions: <code>chmod, chown, chgrp</code></li>
+        <li><b>Ubuntu</b> – Beginner-friendly desktop and server.</li>
+        <li><b>CentOS / Rocky Linux</b> – Server-focused, stable environment.</li>
+        <li><b>Fedora</b> – Cutting-edge features and development environment.</li>
+        <li><b>Debian</b> – Extremely stable, foundation for other distros.</li>
+    </ul>
+</div>
+
+<!-- SECTION: Terminal Basics -->
+<div class="section">
+    <h2>3. Terminal Basics</h2>
+    <p>The terminal is used to interact with Linux. Commands follow the format:</p>
+    <p class="code">command [options] [arguments]</p>
+    <ul>
+        <li><b>pwd</b> – Print current directory</li>
+        <li><b>ls</b> – List files in a directory</li>
+        <li><b>cd &lt;directory&gt;</b> – Change directory</li>
+    </ul>
+</div>
+
+<!-- SECTION: File System -->
+<div class="section">
+    <h2>4. Linux File System Structure</h2>
+    <p>Linux uses a hierarchical file system:</p>
+    <ul>
+        <li><b>/</b> – Root directory</li>
+        <li><b>/home</b> – User directories</li>
+        <li><b>/etc</b> – Configuration files</li>
+        <li><b>/var</b> – Variable data (logs, cache)</li>
+        <li><b>/usr</b> – Installed programs & libraries</li>
+        <li><b>/bin</b> – Essential binaries</li>
+        <li><b>/tmp</b> – Temporary files</li>
     </ul>
     <div class="diagram">
         <img src="images/linux-filesystem.png" alt="Linux File System Diagram">
     </div>
+</div>
+
+<!-- SECTION: File Operations -->
+<div class="section">
+    <h2>5. File & Directory Operations</h2>
+    <ul>
+        <li><b>ls</b> – List files (<span class="code">ls -l</span> for details, <span class="code">ls -a</span> for hidden files)</li>
+        <li><b>cd &lt;directory&gt;</b> – Change directory</li>
+        <li><b>mkdir &lt;directory&gt;</b> – Create directory</li>
+        <li><b>touch &lt;file&gt;</b> – Create empty file</li>
+        <li><b>cp &lt;source&gt; &lt;destination&gt;</b> – Copy files/directories</li>
+        <li><b>mv &lt;source&gt; &lt;destination&gt;</b> – Move/rename files</li>
+        <li><b>rm &lt;file&gt;</b> – Remove file</li>
+        <li><b>rm -r &lt;directory&gt;</b> – Remove directory recursively</li>
+    </ul>
+</div>
+
+<!-- SECTION: Permissions -->
+<div class="section">
+    <h2>6. File Permissions</h2>
+    <p>Linux permissions control who can read, write, or execute files.</p>
+    <ul>
+        <li><b>chmod 755 &lt;file&gt;</b> – Change permissions</li>
+        <li><b>chown user:group &lt;file&gt;</b> – Change owner/group</li>
+        <li><b>ls -l</b> – View permissions</li>
+    </ul>
+</div>
+
+<!-- SECTION: File Viewing & Editing -->
+<div class="section">
+    <h2>7. Viewing & Editing Files</h2>
+    <ul>
+        <li><b>cat &lt;file&gt;</b> – Display file contents</li>
+        <li><b>less &lt;file&gt;</b> – Scroll through file</li>
+        <li><b>head &lt;file&gt;</b> – Show first 10 lines</li>
+        <li><b>tail &lt;file&gt;</b> – Show last 10 lines (<span class="code">tail -f</span> for real-time)</li>
+        <li><b>nano &lt;file&gt;</b> – Terminal editor</li>
+        <li><b>vim &lt;file&gt;</b> – Advanced editor</li>
+    </ul>
+</div>
+
+<!-- SECTION: Package Management -->
+<div class="section">
+    <h2>8. Package Management</h2>
+    <ul>
+        <li>Debian/Ubuntu: <span class="code">sudo apt update</span>, <span class="code">sudo apt install &lt;package&gt;</span></li>
+        <li>RedHat/CentOS: <span class="code">sudo yum install &lt;package&gt;</span></li>
+    </ul>
+</div>
+
+<!-- SECTION: System Info & Networking -->
+<div class="section">
+    <h2>9. System Info & Networking</h2>
+    <ul>
+        <li><b>uname -a</b> – System info</li>
+        <li><b>df -h</b> – Disk usage</li>
+        <li><b>free -h</b> – Memory usage</li>
+        <li><b>top</b> – Running processes</li>
+        <li><b>ping &lt;hostname&gt;</b> – Test network</li>
+        <li><b>ifconfig / ip addr</b> – Network interfaces</li>
+    </ul>
+</div>
+
+<!-- SECTION: Shortcuts -->
+<div class="section">
+    <h2>10. Useful Shortcuts</h2>
+    <ul>
+        <li><b>Ctrl + C</b> – Stop command</li>
+        <li><b>Ctrl + Z</b> – Pause command</li>
+        <li><b>Tab</b> – Autocomplete</li>
+        <li><b>Arrow Keys</b> – Scroll through history</li>
+    </ul>
+</div>
+
 </div>
 
 <!-- SECTION: Shell Scripting -->
