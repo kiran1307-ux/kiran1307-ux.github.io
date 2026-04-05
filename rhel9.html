@@ -1,32 +1,216 @@
-<div class="card">
-    <h3>SSH Hardening</h3>
-    <p><strong>File:</strong> /etc/ssh/sshd_config</p>
-    <p><strong>Settings:</strong> Disable root login, PermitRootLogin no, Use Protocol 2</p>
-    <p class="explanation">
-        <strong>Why:</strong> Protects against remote attacks and ensures encrypted SSH connections.
-    </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHEL 9 Hardening Guide</title>
+<style>
+body {
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:#fff;
+}
+.navbar {
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    padding:15px;
+    background: rgba(0,0,0,0.3);
+}
+.nav-btn {
+    text-decoration:none;
+    color:white;
+    padding:8px 15px;
+    border-radius:6px;
+    background: rgba(255,255,255,0.1);
+    transition:0.3s;
+    font-weight:bold;
+}
+.nav-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
+.container {
+    max-width:1000px;
+    margin:auto;
+    padding:40px 20px;
+    text-align:center;
+}
+h1 {
+    margin-bottom:30px;
+    font-size:36px;
+    color:#38bdf8;
+}
+.card {
+    background: rgba(255,255,255,0.05);
+    border-radius:15px;
+    padding:20px;
+    margin-bottom:20px;
+    cursor:pointer;
+    transition:0.3s;
+    text-align:left;
+    position:relative;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+.card h3 {
+    margin:0;
+    font-size:20px;
+}
+.card p {
+    margin:5px 0;
+}
+.explanation {
+    background: rgba(255,255,255,0.1);
+    padding:10px 15px;
+    border-radius:8px;
+    margin-top:10px;
+    display:none;
+}
+.toggle-btn {
+    position:absolute;
+    right:20px;
+    top:20px;
+    background:#38bdf8;
+    color:#111;
+    border:none;
+    padding:5px 10px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+}
+.toggle-btn:hover {
+    background:#0ea5e9;
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="about.html" class="nav-btn">About</a>
+    <a href="author.html" class="nav-btn">Author</a>
+    <a href="exam.html" class="nav-btn">Exam</a>
 </div>
 
-<div class="card">
-    <h3>journald Hardening</h3>
-    <p><strong>Command:</strong> journalctl --verify</p>
-    <p class="explanation">
-        <strong>Why:</strong> Maintains secure and reliable logging, essential for auditing and forensic analysis.
-    </p>
+<div class="container">
+    <h1>RHEL 9 Hardening Controls</h1>
+
+    <!-- SSH Hardening -->
+    <div class="card">
+        <h3>SSH Hardening</h3>
+        <p><strong>File:</strong> /etc/ssh/sshd_config</p>
+        <p><strong>Settings:</strong> Disable root login, Use Protocol 2, Disable empty passwords, Use strong ciphers</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Protects remote access with modern encryption, prevents root login attacks, and secures SSH communications.
+        </p>
+    </div>
+
+    <!-- FirewallD -->
+    <div class="card">
+        <h3>FirewallD Configuration</h3>
+        <p><strong>Command:</strong> firewall-cmd --permanent --zone=public --add-service=ssh</p>
+        <p><strong>Settings:</strong> Enable default zone, allow necessary services, block unused ports</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Reduces attack surface by allowing only necessary network traffic and securing open ports.
+        </p>
+    </div>
+
+    <!-- SELinux -->
+    <div class="card">
+        <h3>SELinux Enforcement</h3>
+        <p><strong>Command:</strong> setenforce 1</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Enables mandatory access controls to prevent unauthorized access and privilege escalation.
+        </p>
+    </div>
+
+    <!-- Password Quality -->
+    <div class="card">
+        <h3>Password Quality</h3>
+        <p><strong>File:</strong> /etc/security/pwquality.conf</p>
+        <p><strong>Settings:</strong> Minimum length, complexity, enforce history, account lockout</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Ensures strong passwords and prevents brute-force attacks.
+        </p>
+    </div>
+
+    <!-- AuditD -->
+    <div class="card">
+        <h3>AuditD Configuration</h3>
+        <p><strong>File:</strong> /etc/audit/audit.rules</p>
+        <p><strong>Settings:</strong> Monitor sensitive directories and commands</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Tracks changes to critical files and detects suspicious activity.
+        </p>
+    </div>
+
+    <!-- Cron Security -->
+    <div class="card">
+        <h3>Cron Security</h3>
+        <p><strong>Files:</strong> /etc/cron.allow & /etc/cron.deny</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Ensures only authorized users can schedule tasks, preventing misuse.
+        </p>
+    </div>
+
+    <!-- Permissions -->
+    <div class="card">
+        <h3>File Permissions</h3>
+        <p><strong>Command:</strong> chmod 600 /etc/shadow</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Protects sensitive files from unauthorized access.
+        </p>
+    </div>
+
+    <!-- Ownership -->
+    <div class="card">
+        <h3>File Ownership</h3>
+        <p><strong>Command:</strong> chown root:root /etc/shadow</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Ensures critical files are owned by root, preventing tampering.
+        </p>
+    </div>
+
+    <!-- Journald -->
+    <div class="card">
+        <h3>Journal Logs</h3>
+        <p><strong>Command:</strong> journalctl --verify</p>
+        <button class="toggle-btn">Show Explanation</button>
+        <p class="explanation">
+            <strong>Why:</strong> Verifies logs for tampering and ensures accurate auditing.
+        </p>
+    </div>
+
 </div>
 
-<div class="card">
-    <h3>File Permissions & Ownership</h3>
-    <p><strong>Command:</strong> chmod, chown for critical files</p>
-    <p class="explanation">
-        <strong>Why:</strong> Ensures only authorized users can read/write system files, preventing privilege escalation.
-    </p>
-</div>
+<script>
+// Toggle explanation
+const toggleButtons = document.querySelectorAll('.toggle-btn');
+toggleButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const explanation = btn.nextElementSibling;
+        if(explanation.style.display === "block"){
+            explanation.style.display = "none";
+            btn.textContent = "Show Explanation";
+        } else {
+            explanation.style.display = "block";
+            btn.textContent = "Hide Explanation";
+        }
+    });
+});
+</script>
 
-<div class="card">
-    <h3>SELinux</h3>
-    <p><strong>Command:</strong> setenforce 1 / getenforce</p>
-    <p class="explanation">
-        <strong>Why:</strong> Enforces mandatory access control, isolating processes and preventing unauthorized access.
-    </p>
-</div>
+</body>
+</html>
