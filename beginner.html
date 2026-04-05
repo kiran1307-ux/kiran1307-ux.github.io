@@ -154,19 +154,76 @@ footer:hover {
 <!-- SECTION: File System -->
 <div class="section">
     <h2>4. Linux File System Structure</h2>
-    <p>Linux uses a hierarchical file system:</p>
-    <ul>
-        <li><b>/</b> – Root directory</li>
-        <li><b>/home</b> – User directories</li>
-        <li><b>/etc</b> – Configuration files</li>
-        <li><b>/var</b> – Variable data (logs, cache)</li>
-        <li><b>/usr</b> – Installed programs & libraries</li>
-        <li><b>/bin</b> – Essential binaries</li>
-        <li><b>/tmp</b> – Temporary files</li>
-    </ul>
+    <p>Linux uses a single-rooted hierarchical file system starting from <code>/</code>. Understanding this structure is crucial for navigating, managing files, and system administration.</p>
+
+    <!-- File System Hierarchy Diagram -->
     <div class="diagram">
-        <img src="images/linux-filesystem.png" alt="Linux File System Diagram">
+        <img src="images/linux-filesystem.png" alt="Linux File System Hierarchy Diagram">
     </div>
+
+    <!-- Directory Explanations -->
+    <ul>
+        <li><b>/</b> – Root directory, top of the hierarchy, contains all other directories.</li>
+        <li><b>/bin</b> – Essential user binaries like <code>ls</code>, <code>cp</code>, <code>mv</code>.</li>
+        <li><b>/sbin</b> – System binaries for administration, e.g., <code>shutdown</code>, <code>fsck</code>.</li>
+        <li><b>/etc</b> – System-wide configuration files, e.g., <code>passwd</code>, <code>hosts</code>, <code>fstab</code>.</li>
+        <li><b>/home</b> – User directories for personal files. Example: <code>/home/kiran</code>.</li>
+        <li><b>/root</b> – Home directory for the root user (superuser).</li>
+        <li><b>/var</b> – Variable data like logs, caches, mail. Subdirectories include <code>/var/log</code>, <code>/var/tmp</code>.</li>
+        <li><b>/usr</b> – User-installed programs and libraries, divided into <code>/usr/bin</code>, <code>/usr/lib</code>, <code>/usr/share</code>.</li>
+        <li><b>/lib</b> – Shared libraries for binaries in <code>/bin</code> and <code>/sbin</code>.</li>
+        <li><b>/tmp</b> – Temporary files used by users and applications.</li>
+        <li><b>/dev</b> – Device files representing hardware, e.g., <code>/dev/sda</code>, <code>/dev/tty</code>.</li>
+        <li><b>/mnt</b> & <b>/media</b> – Mount points for disks, USB drives, and removable media.</li>
+        <li><b>/opt</b> – Optional third-party software installations, e.g., <code>/opt/google</code>.</li>
+        <li><b>/proc</b> – Virtual filesystem for kernel and process information, e.g., <code>/proc/cpuinfo</code>.</li>
+        <li><b>/boot</b> – Bootloader and kernel files, e.g., <code>vmlinuz</code>, <code>initrd.img</code>.</li>
+        <li><b>/srv</b> – Data for services provided by the system, e.g., <code>/srv/www</code> for web files.</li>
+        <li><b>/run</b> – Runtime data for system processes, PID files, and sockets.</li>
+    </ul>
+
+    <!-- File Types -->
+    <h3>Linux File Types</h3>
+    <p>Linux treats almost everything as a file. Key file types:</p>
+    <ul>
+        <li><b>Regular File (-)</b> – Text, data, or programs (e.g., <code>document.txt</code>).</li>
+        <li><b>Directory (d)</b> – Contains files and subdirectories (e.g., <code>/home/user</code>).</li>
+        <li><b>Symbolic Link (l)</b> – Shortcut to another file/directory (<code>ln -s /path/to/file linkname</code>).</li>
+        <li><b>Character Device File (c)</b> – Devices transferring data character by character (e.g., <code>/dev/tty</code>).</li>
+        <li><b>Block Device File (b)</b> – Devices transferring data in blocks (e.g., <code>/dev/sda1</code>).</li>
+        <li><b>FIFO / Named Pipe (p)</b> – For process communication (<code>mkfifo mypipe</code>).</li>
+        <li><b>Socket (s)</b> – Inter-process network communication (e.g., <code>/var/run/docker.sock</code>).</li>
+    </ul>
+
+    <!-- ASCII-style Hierarchy -->
+    <h3>Linux Directory Tree</h3>
+    <pre class="code">
+/
+├── bin
+├── sbin
+├── etc
+├── home
+│   ├── user1
+│   └── user2
+├── root
+├── var
+│   ├── log
+│   └── tmp
+├── usr
+│   ├── bin
+│   ├── lib
+│   └── share
+├── lib
+├── tmp
+├── dev
+├── mnt
+├── media
+├── opt
+├── proc
+├── boot
+├── srv
+└── run
+    </pre>
 </div>
 
 <!-- SECTION: File Operations -->
