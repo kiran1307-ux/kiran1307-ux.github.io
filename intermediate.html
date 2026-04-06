@@ -12,12 +12,33 @@ body {
     background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
     color: #fff;
 }
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 10px;
+}
+.nav-btn {
+    text-decoration: none;
+    color:white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    transition: 0.3s;
+    font-weight: bold;
+}
+.nav-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
 .container {
     padding: 40px 20px;
     max-width: 1000px;
     margin: auto;
 }
 h1 {
+    font-size: 42px;
     text-align: center;
     color: #facc15;
 }
@@ -31,6 +52,7 @@ h1 {
 }
 .section p {
     line-height: 1.6;
+    opacity: 0.9;
 }
 .code {
     background: rgba(0,0,0,0.5);
@@ -40,277 +62,82 @@ h1 {
     margin-top: 10px;
     white-space: pre-wrap;
 }
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #facc15;
+}
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 <div class="navbar">
     <a href="index.html" class="nav-btn">🏠 Home</a>
     <a href="beginner.html" class="nav-btn">📘 Beginner</a>
     <a href="intermediate.html" class="nav-btn">📗 Intermediate</a>
     <a href="advanced.html" class="nav-btn">📕 Advanced</a>
-    <a href="tutorials.html" class="nav-btn">💻 Tutorials</a>
 </div>
-    
+
 <div class="container">
-
-<h1>Intermediate Linux & DevOps Tutorials</h1>
+<h1>Intermediate Linux & DevOps</h1>
 
 <div class="section">
-<h2>1. Linux System Administration</h2>
-<p>System administration involves managing services, monitoring processes, and troubleshooting issues in real time.</p>
-
+<h2>1. System Administration Deep Dive</h2>
+<p>At intermediate level, you must understand how services run internally, dependencies, logs, and troubleshooting approach.</p>
 <pre class="code">
-systemctl status nginx
-journalctl -u nginx
-top
+systemctl restart nginx
+journalctl -xe
+ps -ef | grep nginx
 </pre>
-
-<p><b>Scenario:</b> Website is down.</p>
-<ul>
-<li>Check service: <code>systemctl status nginx</code></li>
-<li>Check logs: <code>journalctl -u nginx</code></li>
-<li>Restart service: <code>systemctl restart nginx</code></li>
-</ul>
+<p><b>Scenario:</b> Service not starting → Check logs, dependency failure, port conflict.</p>
 </div>
 
 <div class="section">
-<h2>2. Security & Hardening</h2>
-<p>Security ensures system protection using firewalls, SELinux, and SSH configurations.</p>
-
-<pre class="code">
-firewall-cmd --add-port=80/tcp --permanent
-firewall-cmd --reload
-setenforce 1
-</pre>
-
-<p><b>Scenario:</b> Application is running but not accessible.</p>
-<ul>
-<li>Check firewall rules</li>
-<li>Allow required port (80/443)</li>
-<li>Verify SELinux status</li>
-</ul>
-</div>
-
-<div class="section">
-<h2>3. Advanced Shell Scripting</h2>
-<p>Used to automate tasks with logic, error handling, and logging.</p>
-
-<pre class="code">
-#!/bin/bash
-LOGFILE="script.log"
-
-if [ $? -ne 0 ]; then
-  echo "Error occurred" >> $LOGFILE
-fi
-</pre>
-
-<p><b>Scenario:</b> Automate log cleanup daily.</p>
-<ul>
-<li>Create script to delete old logs</li>
-<li>Schedule using cron</li>
-</ul>
-</div>
-
-<div class="section">
-<h2>4. Git Branching & Collaboration</h2>
-<p>Allows teams to work on features independently.</p>
-
-<pre class="code">
-git checkout -b feature-login
-git add .
-git commit -m "Added login feature"
-git push origin feature-login
-</pre>
-
-<p><b>Scenario:</b> Multiple developers working on same project.</p>
-<ul>
-<li>Create feature branch</li>
-<li>Merge into main after testing</li>
-<li>Resolve conflicts if any</li>
-</ul>
-</div>
-
-<div class="section">
-<h2>5. Docker Compose & Multi-Container Apps</h2>
-<p>Run multiple containers (web + DB) together.</p>
-
-<pre class="code">
-version: '3'
-services:
-  web:
-    image: nginx
-  db:
-    image: mysql
-</pre>
-
-<p><b>Scenario:</b> Deploy web app with database.</p>
-<ul>
-<li>Use docker-compose</li>
-<li>Link containers via network</li>
-</ul>
-</div>
-
-<div class="section">
-<h2>6. Kubernetes Deployment</h2>
-<p>Deploy and manage applications at scale.</p>
-
-<pre class="code">
-kubectl apply -f deployment.yaml
-kubectl get pods
-kubectl scale deployment app --replicas=3
-</pre>
-
-<p><b>Scenario:</b> Traffic increased suddenly.</p>
-<ul>
-<li>Scale pods from 2 → 5</li>
-<li>Monitor using <code>kubectl get pods</code></li>
-</ul>
-</div>
-
-<div class="section">
-<h2>7. Infrastructure Automation (Ansible)</h2>
-<p>Automate configuration across multiple servers.</p>
-
-<pre class="code">
-- hosts: web
-  tasks:
-    - name: Install nginx
-      apt:
-        name: nginx
-        state: present
-</pre>
-
-<p><b>Scenario:</b> Install nginx on 50 servers.</p>
-<ul>
-<li>Write playbook</li>
-<li>Run once instead of manual install</li>
-</ul>
-</div>
-
-<div class="section">
-<h2>8. CI/CD Pipelines</h2>
-<p>Automate build, test, and deployment.</p>
-
-<pre class="code">
-pipeline {
-  stages {
-    stage('Build') {
-      steps { echo 'Building...' }
-    }
-  }
-}
-</pre>
-
-<p><b>Scenario:</b> Developer pushes code.</p>
-<ul>
-<li>Pipeline triggers automatically</li>
-<li>Build → Test → Deploy</li>
-</ul>
-</div>
-
-<div class="section">
-<h2>9. Disk & LVM Management</h2>
-<p>Manage and extend storage dynamically.</p>
-
-<pre class="code">
-lvextend -L +5G /dev/vg/lv
-resize2fs /dev/vg/lv
-</pre>
-
-<p><b>Scenario:</b> /var is full.</p>
-<ul>
-<li>Extend logical volume</li>
-<li>Resize filesystem</li>
-</ul>
-</div>
-
-<div class="section">
-<h2>10. Networking Troubleshooting</h2>
-<p>Diagnose connectivity and port issues.</p>
-
-<pre class="code">
-ping google.com
-ss -tulnp
-curl http://localhost
-</pre>
-
-<p><b>Scenario:</b> Application not reachable.</p>
-<ul>
-<li>Check port listening</li>
-<li>Test connectivity</li>
-</ul>
-</div>
-
-<div class="section">
-<h2>11. Log Analysis</h2>
-<p>Logs help identify root cause of issues.</p>
-
-<pre class="code">
-tail -f /var/log/messages
-grep ERROR /var/log/syslog
-</pre>
-
-<p><b>Scenario:</b> Service failed unexpectedly.</p>
-<ul>
-<li>Check logs for errors</li>
-<li>Identify root cause</li>
-</ul>
-</div>
-
-<div class="section">
-<h2>12. Performance Monitoring</h2>
-<p>Monitor system resources.</p>
-
+<h2>2. Process & Resource Management</h2>
+<p>Monitor CPU, memory, and processes to identify bottlenecks.</p>
 <pre class="code">
 top
 htop
-iostat
-vmstat
+kill -9 PID
+nice -n 10 process
 </pre>
-
-<p><b>Scenario:</b> Server is slow.</p>
-<ul>
-<li>Check CPU usage</li>
-<li>Identify high process</li>
-</ul>
+<p><b>Scenario:</b> High CPU → Identify process → Kill or renice.</p>
 </div>
 
 <div class="section">
-<h2>13. Backup & Restore</h2>
-<p>Ensure data safety.</p>
-
+<h2>3. Advanced Networking</h2>
+<p>Understand ports, routing, DNS, and connectivity debugging.</p>
 <pre class="code">
-tar -cvf backup.tar /data
-rsync -av /source /backup
+ip a
+ss -tulnp
+netstat -tulnp
+traceroute google.com
 </pre>
-
-<p><b>Scenario:</b> Before patching server.</p>
-<ul>
-<li>Take backup</li>
-<li>Restore if failure occurs</li>
-</ul>
+<p><b>Scenario:</b> App not reachable → Check port, firewall, DNS.</p>
 </div>
 
 <div class="section">
-<h2>14. User & Access Management</h2>
-<p>Manage users and permissions securely.</p>
-
+<h2>4. Disk & LVM Management</h2>
+<p>Expand storage dynamically using LVM.</p>
 <pre class="code">
-useradd devops
-passwd devops
-usermod -aG sudo devops
+pvcreate /dev/sdb
+vgextend vg /dev/sdb
+lvextend -L +5G /dev/vg/lv
+resize2fs /dev/vg/lv
 </pre>
-
-<p><b>Scenario:</b> New team member joins.</p>
-<ul>
-<li>Create user</li>
-<li>Assign sudo access</li>
-</ul>
+<p><b>Scenario:</b> Disk full → Extend volume without downtime.</p>
 </div>
 
+<div class="section">
+<h2>5. Security & Hardening</h2>
+<p>Secure servers using SSH, firewall, and SELinux.</p>
+<pre class="code">
+firewall-cmd --add-service=http
+setenforce 1
+vi /etc/ssh/sshd_config
+</pre>
+<p><b>Scenario:</b> SSH attack → Disable root login, use key auth.</p>
 </div>
-</body>
-</html>
+
+<div cla
