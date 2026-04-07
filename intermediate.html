@@ -282,4 +282,205 @@ vi /etc/ssh/sshd_config
 <p><b>Scenario:</b> SSH attack → Disable root login, use key auth.</p>
 </div>
 
-<div cla
+<div class="section">
+<h2>18. Docker Deep Dive</h2>
+<p>Docker allows you to package applications with all dependencies into containers, ensuring consistency across environments.</p>
+
+<pre class="code">
+docker build -t myapp .
+docker run -d -p 8080:80 myapp
+docker exec -it container_id bash
+docker logs container_id
+</pre>
+
+<p><b>Best Practices:</b></p>
+<ul>
+<li>Use lightweight base images (alpine)</li>
+<li>Write small, optimized Dockerfiles</li>
+<li>Use .dockerignore to reduce image size</li>
+<li>Avoid running containers as root</li>
+</ul>
+
+<p><b>Scenario:</b> Application works locally but fails in server → Use Docker image to ensure consistency.</p>
+</div>
+
+
+<div class="section">
+<h2>19. Docker Compose (Multi-Container Apps)</h2>
+<p>Docker Compose helps manage multi-container applications like web + database.</p>
+
+<pre class="code">
+version: '3'
+services:
+  web:
+    image: nginx
+    ports:
+      - "80:80"
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+</pre>
+
+<pre class="code">
+docker-compose up -d
+docker-compose down
+</pre>
+
+<p><b>Scenario:</b> App requires DB + backend + frontend → Use docker-compose to manage all services.</p>
+</div>
+
+
+<div class="section">
+<h2>20. Kubernetes Basics</h2>
+<p>Kubernetes (K8s) is used to orchestrate containers at scale.</p>
+
+<pre class="code">
+kubectl get pods
+kubectl get nodes
+kubectl describe pod pod-name
+kubectl logs pod-name
+</pre>
+
+<p><b>Core Concepts:</b></p>
+<ul>
+<li>Pod → Smallest deployable unit</li>
+<li>Deployment → Manages replicas</li>
+<li>Service → Exposes application</li>
+</ul>
+
+<p><b>Scenario:</b> Application needs auto-scaling → Deploy using Kubernetes.</p>
+</div>
+
+
+<div class="section">
+<h2>21. Kubernetes Deployment Example</h2>
+
+<pre class="code">
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+</pre>
+
+<pre class="code">
+kubectl apply -f deployment.yaml
+kubectl scale deployment nginx-deployment --replicas=5
+</pre>
+
+<p><b>Scenario:</b> High traffic → Scale replicas to handle load.</p>
+</div>
+
+
+<div class="section">
+<h2>22. Kubernetes Troubleshooting</h2>
+
+<pre class="code">
+kubectl describe pod pod-name
+kubectl logs pod-name
+kubectl get events
+</pre>
+
+<p><b>Common Issues:</b></p>
+<ul>
+<li>CrashLoopBackOff → App crash</li>
+<li>ImagePullBackOff → Wrong image</li>
+<li>Pending → Resource issue</li>
+</ul>
+
+<p><b>Scenario:</b> Pod not starting → Check logs → Check events → Fix image/config.</p>
+</div>
+
+
+<div class="section">
+<h2>23. CI/CD Pipeline Basics</h2>
+<p>Automate build, test, and deployment using CI/CD pipelines.</p>
+
+<pre class="code">
+Git → Build → Test → Deploy
+</pre>
+
+<pre class="code">
+# Example Jenkins pipeline
+pipeline {
+  stages {
+    stage('Build') {
+      steps {
+        sh 'docker build -t myapp .'
+      }
+    }
+  }
+}
+</pre>
+
+<p><b>Scenario:</b> Manual deployment errors → Automate using CI/CD.</p>
+</div>
+
+
+<div class="section">
+<h2>24. DevOps Best Practices</h2>
+
+<ul>
+<li>Use Infrastructure as Code (Terraform, Ansible)</li>
+<li>Automate everything (CI/CD pipelines)</li>
+<li>Monitor systems (Prometheus, Grafana)</li>
+<li>Implement logging (ELK Stack)</li>
+<li>Follow security best practices</li>
+</ul>
+
+<p><b>Scenario:</b> Production outage → Monitoring alert → Quick rollback using CI/CD.</p>
+</div>
+
+
+<div class="section">
+<h2>25. Real DevOps Scenarios (Interview Level)</h2>
+
+<p><b>1. Website Down</b></p>
+<pre class="code">
+Check:
+systemctl status nginx
+kubectl get pods
+kubectl logs pod
+</pre>
+
+<p><b>2. High CPU Usage</b></p>
+<pre class="code">
+top
+kubectl top pod
+</pre>
+
+<p><b>3. Deployment Failed</b></p>
+<pre class="code">
+kubectl rollout status deployment
+kubectl describe pod
+</pre>
+
+<p><b>4. Disk Full</b></p>
+<pre class="code">
+df -h
+du -sh *
+</pre>
+
+<p><b>5. Container Not Starting</b></p>
+<pre class="code">
+docker logs container_id
+kubectl logs pod-name
+</pre>
+
+<p><b>Key Tip:</b> Always follow → Logs → Metrics → Configuration → Fix</p>
+</div>
