@@ -109,13 +109,84 @@ kubectl get events
 </div>
 
 <div class="section">
-<h2>4. High Load System (Performance Tuning)</h2>
+<h2>4. High Load System (Performance Tuning - Advanced)</h2>
+
+<p>When a system is under high load, identify whether the issue is CPU, Memory, Disk I/O, or Network.</p>
+
 <pre class="code">
+# Load & CPU
+uptime
 top
+htop
+mpstat -P ALL 1
+
+# Process-level analysis
+ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu | head
+pidstat 1
+
+# Memory analysis
+free -m
 vmstat 1
-iostat -x
+sar -r 1 5
+
+# Disk I/O
+iostat -x 1
+iotop
+df -h
+
+# Network
+netstat -i
+ss -s
+sar -n DEV 1 5
+
+# System-wide tracing
+dstat
+atop
 </pre>
-<p><b>Fix:</b> Optimize app / scale infra / tune kernel params</p>
+
+<p><b>Step-by-Step Troubleshooting:</b></p>
+<pre class="code">
+1. Check Load Average
+   uptime
+
+2. Identify CPU bottleneck
+   top / mpstat
+
+3. Identify Memory issue
+   free -m / vmstat
+
+4. Check Disk I/O wait
+   iostat -x 1 (look for %wa)
+
+5. Check Network saturation
+   sar -n DEV
+
+6. Drill down to process level
+   ps / pidstat
+
+7. Take action (kill / optimize / scale)
+</pre>
+
+<p><b>Common Root Causes:</b></p>
+<ul>
+<li>High CPU → Infinite loop / bad code / heavy traffic</li>
+<li>High Memory → Memory leak</li>
+<li>High I/O wait → Slow disk / DB overload</li>
+<li>High Load Avg but low CPU → I/O bottleneck</li>
+</ul>
+
+<p><b>Fix Strategies:</b></p>
+<ul>
+<li>Restart or kill problematic process</li>
+<li>Optimize application queries/code</li>
+<li>Scale horizontally (add servers / pods)</li>
+<li>Upgrade hardware (CPU / RAM / SSD)</li>
+<li>Use caching (Redis, CDN)</li>
+</ul>
+
+<p><b>Interview Scenario:</b></p>
+<p>“Server load is 20 but CPU is idle” → Likely Disk I/O issue → Check <b>iostat</b> → High wait → Move to SSD or optimize DB queries.</p>
+
 </div>
 
 <div class="section">
