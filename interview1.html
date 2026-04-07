@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Linux & DevOps Interview</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color: #fff;
+}
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(0,0,0,0.4);
+}
+.nav-btn {
+    text-decoration: none;
+    color:white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    font-weight: bold;
+}
+.container {
+    padding: 40px 20px;
+    max-width: 1100px;
+    margin: auto;
+}
+h1 {
+    text-align: center;
+    color: #facc15;
+}
+.qa {
+    margin-bottom: 20px;
+    border-left: 5px solid #22c55e;
+    padding: 15px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 10px;
+}
+.question {
+    font-weight: bold;
+}
+.answer {
+    display: none;
+    margin-top: 10px;
+}
+.show-btn {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.code {
+    background: rgba(0,0,0,0.6);
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 5px;
+    white-space: pre-wrap;
+}
+</style>
+
+<script>
+function toggleAnswer(id) {
+  var x = document.getElementById(id);
+  x.style.display = x.style.display === "block" ? "none" : "block";
+}
+</script>
+
+</head>
+<body>
+
+<div class="navbar">
+<a href="index.html" class="nav-btn">🏠 Home</a>
+<a href="advanced.html" class="nav-btn">📕 Tutorials</a>
+</div>
+
+<div class="container">
+<h1>Advanced Linux & DevOps Interview (Product-Based Companies)</h1>
+
+<!-- QUESTIONS -->
+
+<div class="qa">
+<div class="question">1. How do you handle a complete production outage?</div>
+<button class="show-btn" onclick="toggleAnswer('adv1')">Show Answer</button>
+<div id="adv1" class="answer">Follow incident response:<div class="code">Check alerts
+Check logs
+Check services
+Check infra (CPU, memory, disk)
+Rollback if needed</div></div>
+</div>
+
+<div class="qa">
+<div class="question">2. Explain how Kubernetes handles scaling?</div>
+<button class="show-btn" onclick="toggleAnswer('adv2')">Show Answer</button>
+<div id="adv2" class="answer">Uses HPA (Horizontal Pod Autoscaler) based on CPU/memory metrics.</div>
+</div>
+
+<div class="qa">
+<div class="question">3. How do you debug memory leak in production?</div>
+<button class="show-btn" onclick="toggleAnswer('adv3')">Show Answer</button>
+<div id="adv3" class="answer"><div class="code">top
+ps aux --sort=-%mem
+pmap PID</div>Check logs + heap usage.</div>
+</div>
+
+<div class="qa">
+<div class="question">4. Explain blue-green deployment in real scenario?</div>
+<button class="show-btn" onclick="toggleAnswer('adv4')">Show Answer</button>
+<div id="adv4" class="answer">Two environments → switch traffic → rollback instantly if failure.</div>
+</div>
+
+<div class="qa">
+<div class="question">5. How do you secure a production server?</div>
+<button class="show-btn" onclick="toggleAnswer('adv5')">Show Answer</button>
+<div id="adv5" class="answer">Disable root login, use SSH keys, firewall, patching, monitoring.</div>
+</div>
+
+<div class="qa">
+<div class="question">6. Kubernetes pod stuck in Pending?</div>
+<button class="show-btn" onclick="toggleAnswer('adv6')">Show Answer</button>
+<div id="adv6" class="answer"><div class="code">kubectl describe pod</div>Check resources, node selector, taints.</div>
+</div>
+
+<div class="qa">
+<div class="question">7. How do you design a CI/CD pipeline?</div>
+<button class="show-btn" onclick="toggleAnswer('adv7')">Show Answer</button>
+<div id="adv7" class="answer">Git → Build → Test → Docker → Deploy → Monitor</div>
+</div>
+
+<div class="qa">
+<div class="question">8. How do you monitor production systems?</div>
+<button class="show-btn" onclick="toggleAnswer('adv8')">Show Answer</button>
+<div id="adv8" class="answer">Prometheus + Grafana + alerts.</div>
+</div>
+
+<div class="qa">
+<div class="question">9. Explain container orchestration?</div>
+<button class="show-btn" onclick="toggleAnswer('adv9')">Show Answer</button>
+<div id="adv9" class="answer">Managing containers at scale using Kubernetes.</div>
+</div>
+
+<div class="qa">
+<div class="question">10. How do you troubleshoot high latency?</div>
+<button class="show-btn" onclick="toggleAnswer('adv10')">Show Answer</button>
+<div id="adv10" class="answer"><div class="code">ping
+traceroute
+iostat</div>Check network, disk, backend.</div>
+</div>
+
+<div class="qa">
+<div class="question">11. Explain Infrastructure as Code with example?</div>
+<button class="show-btn" onclick="toggleAnswer('adv11')">Show Answer</button>
+<div id="adv11" class="answer">Using tools like Terraform to create infra via code.</div>
+</div>
+
+<div class="qa">
+<div class="question">12. What happens inside docker run?</div>
+<button class="show-btn" onclick="toggleAnswer('adv12')">Show Answer</button>
+<div id="adv12" class="answer">Pull image → create container → setup namespaces → run process.</div>
+</div>
+
+<div class="qa">
+<div class="question">13. How do you debug DNS issues?</div>
+<button class="show-btn" onclick="toggleAnswer('adv13')">Show Answer</button>
+<div id="adv13" class="answer"><div class="code">dig
+nslookup
+cat /etc/resolv.conf</div></div>
+</div>
+
+<div class="qa">
+<div class="question">14. How do you handle zero downtime deployments?</div>
+<button class="show-btn" onclick="toggleAnswer('adv14')">Show Answer</button>
+<div id="adv14" class="answer">Rolling updates, blue-green deployment.</div>
+</div>
+
+<div class="qa">
+<div class="question">15. Explain logging strategy in production?</div>
+<button class="show-btn" onclick="toggleAnswer('adv15')">Show Answer</button>
+<div id="adv15" class="answer">Centralized logging using ELK stack.</div>
+</div>
+
+</div>
+
+</body>
+</html>
