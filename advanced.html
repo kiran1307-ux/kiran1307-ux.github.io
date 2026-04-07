@@ -190,12 +190,120 @@ atop
 </div>
 
 <div class="section">
-<h2>5. Disk I/O Bottleneck</h2>
+<h2>5. Disk I/O Bottleneck (Advanced Troubleshooting)</h2>
+
+<p>Disk I/O bottlenecks occur when read/write operations are slow, causing high latency and system slowdown.</p>
+
+<p><b>Step 1: Identify I/O Wait</b></p>
+<pre class="code">
+top        # Check %wa (I/O wait)
+vmstat 1   # Check 'wa' column
+uptime     # High load with low CPU → likely I/O issue
+</pre>
+
+<p><b>Step 2: Analyze Disk Performance</b></p>
 <pre class="code">
 iostat -x 1
-df -h
+
+# Key metrics:
+# %util → If near 100%, disk is fully utilized
+# await → High value means slow disk response
+# svctm → Service time per request
 </pre>
-<p><b>Fix:</b> Move workload / use SSD / optimize DB queries</p>
+
+<p><b>Step 3: Identify High I/O Processes</b></p>
+<pre class="code">
+iotop
+pidstat -d 1
+lsof | grep deleted
+</pre>
+
+<p><b>Step 4: Check Disk Usage</b></p>
+<pre class="code">
+df -h
+du -sh /* | sort -h
+</pre>
+
+<p><b>Step 5: Check Filesystem Health</b></p>
+<pre class="code">
+dmesg | grep -i error
+smartctl -a /dev/sda
+</pre>
+
+<p><b>Step 6: Check Mount Options</b></p>
+<pre class="code">
+mount | column -t
+cat /etc/fstab
+</pre>
+
+<p><b>Advanced Debugging Tools:</b></p>
+<pre class="code">
+# Real-time disk stats
+dstat -dny
+
+# Per-process I/O
+atop
+
+# Block-level tracing
+blktrace /dev/sda
+</pre>
+
+<p><b>Common Root Causes:</b></p>
+<ul>
+<li>Heavy database queries</li>
+<li>Too many read/write operations</li>
+<li>Slow disks (HDD vs SSD)</li>
+<li>Log files growing continuously</li>
+<li>Swap usage due to low memory</li>
+</ul>
+
+<p><b>Fix Strategies:</b></p>
+<ul>
+<li>Move to SSD/NVMe storage</li>
+<li>Optimize database queries (indexing)</li>
+<li>Enable caching (Redis, Memcached)</li>
+<li>Rotate and clean logs</li>
+<li>Increase RAM to reduce swap usage</li>
+<li>Separate disks for OS, logs, and DB</li>
+</ul>
+
+<p><b>Scenario 1: High Load but CPU Idle</b></p>
+<pre class="code">
+uptime
+iostat -x 1
+</pre>
+<p><b>Observation:</b> %util = 100%, await high → Disk bottleneck</p>
+<p><b>Fix:</b> Move workload to faster disk or optimize queries</p>
+
+<p><b>Scenario 2: Application Slow (DB Issue)</b></p>
+<pre class="code">
+iotop
+mysql slow query log
+</pre>
+<p><b>Fix:</b> Optimize queries, add indexes</p>
+
+<p><b>Scenario 3: Deleted Files Still Consuming Space</b></p>
+<pre class="code">
+lsof | grep deleted
+</pre>
+<p><b>Fix:</b> Restart process holding file</p>
+
+<p><b>Scenario 4: Swap Causing Disk I/O</b></p>
+<pre class="code">
+free -m
+vmstat 1
+</pre>
+<p><b>Fix:</b> Increase RAM or reduce memory usage</p>
+
+<p><b>Scenario 5: Log File Explosion</b></p>
+<pre class="code">
+du -sh /var/log/*
+</pre>
+<p><b>Fix:</b> Configure logrotate</p>
+
+<p><b>Interview Scenario:</b></p>
+<p>“System is slow, CPU is idle, load is high” → Check <b>iostat</b> → High await → Disk issue → Optimize DB or upgrade disk.</p>
+
 </div>
 
 <div class="section">
@@ -463,12 +571,155 @@ kubectl rollout status deployment
 </div>
 
 <div class="section">
-<h2>11. Load Balancer Issue</h2>
+<h2>11. Load Balancer Issue (Advanced Troubleshooting)</h2>
+
+<p>Load balancers distribute traffic across multiple servers. Issues can cause downtime, uneven traffic, or slow response.</p>
+
+<p><b>Step 1: Check Load Balancer Reachability</b></p>
 <pre class="code">
 curl -I http://lb-ip
-kubectl get svc
+ping lb-ip
+traceroute lb-ip
 </pre>
-<p><b>Fix:</b> Check backend health</p>
+
+<p><b>Step 2: Check Backend Server Health</b></p>
+<pre class="code">
+curl http://backend-ip:port
+systemctl status nginx
+</pre>
+
+<p><b>Step 3: Verify Load Balancer Configuration</b></p>
+<pre class="code">
+# Nginx LB config example
+upstream backend {
+    server 10.0.0.1:80;
+    server 10.0.0.2:80;
+}
+
+# Reload config
+nginx -t
+systemctl reload nginx
+</pre>
+
+<p><b>Step 4: Check Open Ports & Connectivity</b></p>
+<pre class="code">
+ss -tulnp
+telnet backend-ip 80
+nc -zv backend-ip 80
+</pre>
+
+<p><b>Step 5: Check Logs</b></p>
+<pre class="code">
+tail -f /var/log/nginx/access.log
+tail -f /var/log/nginx/error.log
+</pre>
+
+<p><b>Step 6: Check Load Distribution</b></p>
+<pre class="code">
+# Check which backend is responding
+curl http://lb-ip
+</pre>
+
+<p><b>Step 7: Check Health Checks</b></p>
+<p>If health checks fail, LB will stop sending traffic.</p>
+<pre class="code">
+# Example: check endpoint
+curl http://backend-ip/health
+</pre>
+
+<p><b>Step 8: DNS Issues</b></p>
+<pre class="code">
+nslookup domain.com
+dig domain.com
+</pre>
+
+<p><b>Step 9: SSL/TLS Issues</b></p>
+<pre class="code">
+openssl s_client -connect domain.com:443
+</pre>
+
+<p><b>Advanced Debugging:</b></p>
+<pre class="code">
+# Check connections
+netstat -ant | grep :80
+
+# Monitor traffic
+tcpdump -i eth0 port 80
+
+# Check system limits
+ulimit -n
+</pre>
+
+<p><b>Common Root Causes:</b></p>
+<ul>
+<li>Backend server down</li>
+<li>Health check failure</li>
+<li>Wrong configuration</li>
+<li>Port/firewall blocked</li>
+<li>SSL misconfiguration</li>
+<li>Uneven load distribution</li>
+</ul>
+
+<p><b>Fix Strategies:</b></p>
+<ul>
+<li>Restart backend services</li>
+<li>Fix health check endpoints</li>
+<li>Correct LB configuration</li>
+<li>Open required ports</li>
+<li>Renew SSL certificates</li>
+<li>Enable sticky sessions if needed</li>
+</ul>
+
+<p><b>Scenario 1: Website Accessible via Backend but Not LB</b></p>
+<pre class="code">
+curl backend-ip
+curl lb-ip
+</pre>
+<p><b>Root Cause:</b> LB misconfiguration or health check failure</p>
+
+<p><b>Scenario 2: One Server Getting All Traffic</b></p>
+<p><b>Root Cause:</b> Load balancing algorithm issue or unhealthy nodes</p>
+
+<p><b>Scenario 3: 502 Bad Gateway</b></p>
+<pre class="code">
+tail -f /var/log/nginx/error.log
+</pre>
+<p><b>Root Cause:</b> Backend down or wrong upstream config</p>
+
+<p><b>Scenario 4: Slow Response via LB</b></p>
+<pre class="code">
+iostat -x 1
+top
+</pre>
+<p><b>Root Cause:</b> Backend performance issue</p>
+
+<p><b>Scenario 5: SSL Handshake Failure</b></p>
+<pre class="code">
+openssl s_client -connect domain.com:443
+</pre>
+<p><b>Root Cause:</b> Expired or misconfigured certificate</p>
+
+<p><b>Kubernetes Load Balancer Debugging:</b></p>
+<pre class="code">
+kubectl get svc
+kubectl describe svc service-name
+kubectl get endpoints
+kubectl get ingress
+</pre>
+
+<p><b>Golden Troubleshooting Flow:</b></p>
+<pre class="code">
+1. Check LB accessibility
+2. Check backend health
+3. Verify config
+4. Check logs
+5. Check network/DNS/SSL
+6. Fix & validate
+</pre>
+
+<p><b>Interview Scenario:</b></p>
+<p>“Users report intermittent failures” → Check LB logs → Identify unhealthy backend → Remove node → Restore service.</p>
+
 </div>
 
 <div class="section">
