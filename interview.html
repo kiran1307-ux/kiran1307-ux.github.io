@@ -464,7 +464,19 @@ resize2fs /dev/my_vg/home_lv</div></div>
 <div class="qa">
 <div class="question">LVM Q6: Reduce LVM size?</div>
 <button class="show-btn" onclick="toggleAnswer('l6')">Show Answer</button>
-<div id="l6" class="answer">Unmount → e2fsck → resize2fs → lvreduce → mount</div>
+<div id="l6" class="answer">1. Unmount filesystem
+umount /dev/vg_data/lv_data
+2. Check filesystem
+e2fsck -f /dev/vg_data/lv_data
+3. Shrink filesystem
+resize2fs /dev/vg_data/lv_data 5G
+4. Reduce logical volume
+lvreduce -L 5G /dev/vg_data/lv_data
+5. Mount back
+mount /dev/vg_data/lv_data /mnt
+6. Verify
+df -h
+lsblk</div>
 </div>
 
 <div class="qa">
