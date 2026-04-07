@@ -257,6 +257,144 @@ Check backend, logs, config.
 </div>
 </div>
 
+
+<!-- Additional Scenario-Based Questions (31-50) -->
+
+<div class="qa">
+<div class="question">31. Server suddenly rebooted – what will you check?</div>
+<button class="show-btn" onclick="toggleAnswer('a31')">Show Answer</button>
+<div id="a31" class="answer">Check logs<div class="code">last reboot
+journalctl -xb -1
+dmesg | less</div>Root cause: OOM / kernel panic / hardware.</div>
+</div>
+
+<div class="qa">
+<div class="question">32. Application slow at specific time?</div>
+<button class="show-btn" onclick="toggleAnswer('a32')">Show Answer</button>
+<div id="a32" class="answer">Check cron<div class="code">crontab -l
+ls /etc/cron*</div>Likely scheduled job causing load.</div>
+</div>
+
+<div class="qa">
+<div class="question">33. CPU 100% but no obvious process?</div>
+<button class="show-btn" onclick="toggleAnswer('a33')">Show Answer</button>
+<div id="a33" class="answer"><div class="code">top -o %CPU
+ps -eo pid,cmd,%cpu --sort=-%cpu | head</div>Check hidden/background processes.</div>
+</div>
+
+<div class="qa">
+<div class="question">34. Disk full but no large files?</div>
+<button class="show-btn" onclick="toggleAnswer('a34')">Show Answer</button>
+<div id="a34" class="answer"><div class="code">lsof | grep deleted</div>Deleted files held by process → restart it.</div>
+</div>
+
+<div class="qa">
+<div class="question">35. App works locally but not externally?</div>
+<button class="show-btn" onclick="toggleAnswer('a35')">Show Answer</button>
+<div id="a35" class="answer"><div class="code">ss -tulnp
+firewall-cmd --list-all</div>Check firewall & binding (0.0.0.0).</div>
+</div>
+
+<div class="qa">
+<div class="question">36. K8s pod running but app not accessible?</div>
+<button class="show-btn" onclick="toggleAnswer('a36')">Show Answer</button>
+<div id="a36" class="answer"><div class="code">kubectl get svc
+kubectl get endpoints</div>Service/label mismatch.</div>
+</div>
+
+<div class="qa">
+<div class="question">37. One pod getting all traffic?</div>
+<button class="show-btn" onclick="toggleAnswer('a37')">Show Answer</button>
+<div id="a37" class="answer">Check service/ingress config → load balancing or stickiness issue.</div>
+</div>
+
+<div class="qa">
+<div class="question">38. Jenkins build slow?</div>
+<button class="show-btn" onclick="toggleAnswer('a38')">Show Answer</button>
+<div id="a38" class="answer"><div class="code">top
+df -h</div>Check CPU/disk/workspace cleanup.</div>
+</div>
+
+<div class="qa">
+<div class="question">39. Docker container exits immediately?</div>
+<button class="show-btn" onclick="toggleAnswer('a39')">Show Answer</button>
+<div id="a39" class="answer"><div class="code">docker logs container_id</div>Wrong CMD or app crash.</div>
+</div>
+
+<div class="qa">
+<div class="question">40. High memory but no process?</div>
+<button class="show-btn" onclick="toggleAnswer('a40')">Show Answer</button>
+<div id="a40" class="answer"><div class="code">free -m
+slabtop</div>Kernel/cache usage.</div>
+</div>
+
+<div class="qa">
+<div class="question">41. SSH login slow?</div>
+<button class="show-btn" onclick="toggleAnswer('a41')">Show Answer</button>
+<div id="a41" class="answer">DNS delay → disable UseDNS<div class="code">cat /etc/resolv.conf</div></div>
+</div>
+
+<div class="qa">
+<div class="question">42. LB giving 502 error?</div>
+<button class="show-btn" onclick="toggleAnswer('a42')">Show Answer</button>
+<div id="a42" class="answer"><div class="code">tail -f /var/log/nginx/error.log</div>Backend down/misconfig.</div>
+</div>
+
+<div class="qa">
+<div class="question">43. Logs not generating?</div>
+<button class="show-btn" onclick="toggleAnswer('a43')">Show Answer</button>
+<div id="a43" class="answer"><div class="code">df -h
+ls -l /var/log</div>Disk full/permission issue.</div>
+</div>
+
+<div class="qa">
+<div class="question">44. K8s node NotReady?</div>
+<button class="show-btn" onclick="toggleAnswer('a44')">Show Answer</button>
+<div id="a44" class="answer"><div class="code">kubectl describe node
+systemctl status kubelet</div>Kubelet/resource issue.</div>
+</div>
+
+<div class="qa">
+<div class="question">45. Network latency issue?</div>
+<button class="show-btn" onclick="toggleAnswer('a45')">Show Answer</button>
+<div id="a45" class="answer"><div class="code">ping
+traceroute
+mtr</div>Network congestion/path issue.</div>
+</div>
+
+<div class="qa">
+<div class="question">46. DB connection timeout?</div>
+<button class="show-btn" onclick="toggleAnswer('a46')">Show Answer</button>
+<div id="a46" class="answer"><div class="code">telnet db_ip 3306
+systemctl status mysql</div>DB down/firewall.</div>
+</div>
+
+<div class="qa">
+<div class="question">47. Swap usage high?</div>
+<button class="show-btn" onclick="toggleAnswer('a47')">Show Answer</button>
+<div id="a47" class="answer"><div class="code">free -m
+vmstat 1</div>Low RAM/memory leak.</div>
+</div>
+
+<div class="qa">
+<div class="question">48. Logs growing fast?</div>
+<button class="show-btn" onclick="toggleAnswer('a48')">Show Answer</button>
+<div id="a48" class="answer"><div class="code">du -sh /var/log/*</div>Use logrotate.</div>
+</div>
+
+<div class="qa">
+<div class="question">49. K8s deployment failed?</div>
+<button class="show-btn" onclick="toggleAnswer('a49')">Show Answer</button>
+<div id="a49" class="answer"><div class="code">kubectl rollout status deployment
+kubectl describe pod</div>Image/config issue.</div>
+</div>
+
+<div class="qa">
+<div class="question">50. SSL not working?</div>
+<button class="show-btn" onclick="toggleAnswer('a50')">Show Answer</button>
+<div id="a50" class="answer"><div class="code">openssl s_client -connect domain:443</div>Expired/misconfigured cert.</div>
+</div>
+
 </div>
 </body>
 </html>
