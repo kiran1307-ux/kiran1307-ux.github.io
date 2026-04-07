@@ -112,6 +112,8 @@ vmstat</div>
 <button class="show-btn" onclick="toggleAnswer('a2')">Show Answer</button>
 <div id="a2" class="answer">
 Soft link points to file path, hard link points to inode.
+Hard link points to the same inode, so even if the original file is deleted, data remains. 
+Soft link is a pointer to the file path, so it breaks if the original file is removed
 </div>
 </div>
 
@@ -144,7 +146,8 @@ System may crash, logs stop, services fail.
 <div class="question">6. What is load average?</div>
 <button class="show-btn" onclick="toggleAnswer('a6')">Show Answer</button>
 <div id="a6" class="answer">
-Number of processes waiting for CPU.
+Load average shows the number of processes waiting for CPU or in runnable state.
+load average: 0.50, 1.20, 2.00
 </div>
 </div>
 
@@ -162,7 +165,12 @@ journalctl -xe</div>
 <div class="question">8. What is Docker?</div>
 <button class="show-btn" onclick="toggleAnswer('a8')">Show Answer</button>
 <div id="a8" class="answer">
-Containerization platform to run apps.
+Docker is a containerization platform used to build, package, and run applications in containers.
+# Pull image
+docker pull nginx
+
+# Run container
+docker run -d -p 80:80 nginx
 </div>
 </div>
 
@@ -171,7 +179,15 @@ Containerization platform to run apps.
 <button class="show-btn" onclick="toggleAnswer('a9')">Show Answer</button>
 <div id="a9" class="answer">
 <div class="code">kubectl logs
-kubectl describe pod</div>
+kubectl describe pod
+🔹 Common Causes
+❌ Application crash (bug)
+❌ Wrong command in container
+❌ Missing environment variables
+❌ ConfigMap/Secret issue
+❌ Port already in use
+❌ Dependency (DB/API) not reachable
+</div>
 </div>
 </div>
 
@@ -187,7 +203,11 @@ Check server → service → port → logs → network
 <div class="question" onclick="toggleAnswer('a11')">11. High load but CPU idle?</div>
 <div id="a11" class="answer">
 Disk I/O issue
-<div class="code">iostat -x 1</div>
+<div class="code">iostat -x 1 Steps:
+Check top → see high %wa
+Run iostat → disk busy
+Run iotop → find process
+Fix root cause</div>
 </div>
 </div>
 
