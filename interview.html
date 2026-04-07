@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Linux & DevOps Interview Prep</title>
+<title>Linux & DevOps Interview Q&A</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
 body {
@@ -18,145 +18,245 @@ body {
     gap: 15px;
     padding: 15px;
     background: rgba(0,0,0,0.4);
-    border-radius: 10px;
-    flex-wrap: wrap;
 }
 .nav-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
     text-decoration: none;
     color:white;
     padding: 10px 20px;
     border-radius: 8px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-    transition: 0.3s, transform 0.3s;
+    background: rgba(255,255,255,0.1);
     font-weight: bold;
 }
 .nav-btn:hover {
-    background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.15));
-    transform: translateY(-2px);
-}
-.header-title {
-    text-align: center;
-    font-size: 40px;
-    font-weight: bold;
-    color: #38bdf8;
-    margin-top: 40px;
-}
-.header-subtitle {
-    text-align: center;
-    font-size: 18px;
-    opacity: 0.85;
-    margin-bottom: 50px;
+    background: rgba(255,255,255,0.3);
 }
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    padding: 20px;
+    padding: 40px 20px;
     max-width: 1000px;
-    margin: 0 auto;
+    margin: auto;
 }
-.card {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    width: 90%;
-    padding: 25px 20px;
-    border-radius: 20px;
-    transition: transform 0.4s, box-shadow 0.4s, background 0.4s;
-    position: relative;
-}
-.card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    background: rgba(255,255,255,0.1);
-}
-.card h2 {
-    color: #38bdf8;
-    margin-bottom: 15px;
-}
-.card p {
-    font-size: 16px;
-    line-height: 1.6;
-}
-.card::before {
-    content: attr(data-icon);
-    font-size: 40px;
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    opacity: 0.2;
-}
-footer {
+h1 {
     text-align: center;
-    margin-top: 60px;
-    padding: 25px 0;
-    font-size: 16px;
-    font-weight: bold;
     color: #facc15;
-    background: linear-gradient(90deg,#0f2027,#203a43,#2c5364);
-    border-top: 3px solid #38bdf8;
+}
+.qa {
+    margin-bottom: 20px;
+    border-left: 5px solid #22c55e;
+    padding: 15px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 10px;
+}
+.question {
+    font-weight: bold;
+}
+.show-btn {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.show-btn:hover {
+    background: rgba(255,255,255,0.4);
+}
+.answer {
+    display: none;
+    margin-top: 10px;
+    color: #e5e7eb;
+}
+.code {
+    background: rgba(0,0,0,0.6);
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 5px;
+    white-space: pre-wrap;
 }
 </style>
 </head>
 <body>
 
 <div class="navbar">
-    <a href="index.html" class="nav-btn">🏠 Home</a>
-    <a href="linuxandevops.html" class="nav-btn">💻 Linux & DevOps</a>
-    <a href="beginner.html" class="nav-btn">🟢 Beginner</a>
-    <a href="intermediate.html" class="nav-btn">🟡 Intermediate</a>
-    <a href="advanced.html" class="nav-btn">🔴 Advanced</a>
-    <a href="interview.html" class="nav-btn">📝 Interview Prep</a>
+<a href="index.html" class="nav-btn">🏠 Home</a>
+<a href="beginner.html" class="nav-btn">📘 Beginner</a>
+<a href="intermediate.html" class="nav-btn">📗 Intermediate</a>
+<a href="advanced.html" class="nav-btn">📕 Advanced</a>
 </div>
-
-<div class="header-title">Linux & DevOps Interview Preparation</div>
-<div class="header-subtitle">Practice questions, command references, and scenario-based problems to ace interviews</div>
 
 <div class="container">
+<h1>Linux & DevOps Interview Questions (L2 & L3)</h1>
 
-    <div class="card" data-icon="💻">
-        <h2>1. Linux Command Questions</h2>
-        <p>Understand core commands like `ls`, `grep`, `awk`, `sed`, `find`, `tar`, `chmod`, `chown`, and system management commands.</p>
-    </div>
+<script>
+function toggleAnswer(id) {
+  var x = document.getElementById(id);
+  x.style.display = x.style.display === "block" ? "none" : "block";
+}
+</script>
 
-    <div class="card" data-icon="⚙️">
-        <h2>2. System Administration Scenarios</h2>
-        <p>Practice troubleshooting CPU, memory, disk, and networking issues. Prepare for questions about services, process management, logging, and package management.</p>
-    </div>
+<!-- Questions -->
 
-    <div class="card" data-icon="🐳">
-        <h2>3. Docker & Container Questions</h2>
-        <p>Be ready to explain container concepts, Dockerfiles, image optimization, networking, volumes, and deploying multi-container applications.</p>
-    </div>
-
-    <div class="card" data-icon="☸️">
-        <h2>4. Kubernetes & Orchestration</h2>
-        <p>Understand pods, deployments, services, configmaps, secrets, helm charts, and resource scaling strategies in Kubernetes.</p>
-    </div>
-
-    <div class="card" data-icon="🔧">
-        <h2>5. DevOps Tools & Pipelines</h2>
-        <p>Prepare for questions on CI/CD pipelines using Jenkins/GitLab, version control (Git), automated testing, monitoring tools, and configuration management with Ansible.</p>
-    </div>
-
-    <div class="card" data-icon="📝">
-        <h2>6. Scenario-Based Questions</h2>
-        <p>Practice real-world problem scenarios like: “Service failure in production,” “Rolling back a deployment,” or “Debugging Kubernetes pods issues.”</p>
-    </div>
-
-    <div class="card" data-icon="📚">
-        <h2>7. Tips & Resources</h2>
-        <p>Keep cheat sheets for Linux commands, DevOps best practices, Docker/Kubernetes commands, and regularly practice hands-on labs.</p>
-    </div>
-
+<div class="qa">
+<div class="question">1. What will you do if a server is slow?</div>
+<button class="show-btn" onclick="toggleAnswer('a1')">Show Answer</button>
+<div id="a1" class="answer">
+Check CPU, memory, disk, network.<div class="code">top
+free -m
+iostat
+vmstat</div>
+</div>
 </div>
 
-<footer>
-    © 2026 Kiran Negi | Linux & DevOps Interview Preparation
-</footer>
+<div class="qa">
+<div class="question">2. Difference between soft link and hard link?</div>
+<button class="show-btn" onclick="toggleAnswer('a2')">Show Answer</button>
+<div id="a2" class="answer">
+Soft link points to file path, hard link points to inode.
+</div>
+</div>
 
+<div class="qa">
+<div class="question">3. How to check which process is using a port?</div>
+<button class="show-btn" onclick="toggleAnswer('a3')">Show Answer</button>
+<div id="a3" class="answer">
+<div class="code">ss -tulnp
+lsof -i :80</div>
+</div>
+</div>
+
+<div class="qa">
+<div class="question">4. What happens when disk is full?</div>
+<button class="show-btn" onclick="toggleAnswer('a4')">Show Answer</button>
+<div id="a4" class="answer">
+System may crash, logs stop, services fail.
+</div>
+</div>
+
+<div class="qa">
+<div class="question">5. How to find large files?</div>
+<button class="show-btn" onclick="toggleAnswer('a5')">Show Answer</button>
+<div id="a5" class="answer">
+<div class="code">find / -type f -size +1G</div>
+</div>
+</div>
+
+<div class="qa">
+<div class="question">6. What is load average?</div>
+<button class="show-btn" onclick="toggleAnswer('a6')">Show Answer</button>
+<div id="a6" class="answer">
+Number of processes waiting for CPU.
+</div>
+</div>
+
+<div class="qa">
+<div class="question">7. Service not starting?</div>
+<button class="show-btn" onclick="toggleAnswer('a7')">Show Answer</button>
+<div id="a7" class="answer">
+Check status, logs, config.
+<div class="code">systemctl status
+journalctl -xe</div>
+</div>
+</div>
+
+<div class="qa">
+<div class="question">8. What is Docker?</div>
+<button class="show-btn" onclick="toggleAnswer('a8')">Show Answer</button>
+<div id="a8" class="answer">
+Containerization platform to run apps.
+</div>
+</div>
+
+<div class="qa">
+<div class="question">9. Pod CrashLoopBackOff?</div>
+<button class="show-btn" onclick="toggleAnswer('a9')">Show Answer</button>
+<div id="a9" class="answer">
+<div class="code">kubectl logs
+kubectl describe pod</div>
+</div>
+</div>
+
+<div class="qa">
+<div class="question">10. Website is down?</div>
+<button class="show-btn" onclick="toggleAnswer('a10')">Show Answer</button>
+<div id="a10" class="answer">
+Check server → service → port → logs → network
+</div>
+</div>
+
+<div class="qa">
+<div class="question" onclick="toggleAnswer('a11')">11. High load but CPU idle?</div>
+<div id="a11" class="answer">
+Disk I/O issue
+<div class="code">iostat -x 1</div>
+</div>
+</div>
+
+<div class="qa">
+<div class="question" onclick="toggleAnswer('a12')">12. Docker container not starting?</div>
+<div id="a12" class="answer">
+<div class="code">docker logs
+docker inspect</div>
+</div>
+</div>
+
+<div class="qa">
+<div class="question" onclick="toggleAnswer('a13')">13. CI/CD pipeline failed?</div>
+<div id="a13" class="answer">
+Check pipeline logs and failed stage.
+</div>
+</div>
+
+<div class="qa">
+<div class="question" onclick="toggleAnswer('a14')">14. Disk I/O high?</div>
+<div id="a14" class="answer">
+<div class="code">iostat
+iotop</div>
+</div>
+</div>
+
+<div class="qa">
+<div class="question" onclick="toggleAnswer('a15')">15. Unauthorized access?</div>
+<div id="a15" class="answer">
+Check logs, block IP, secure SSH.
+</div>
+</div>
+
+<div class="qa">
+<div class="question" onclick="toggleAnswer('a16')">16. Pod not scheduling?</div>
+<div id="a16" class="answer">
+Resource issue or node selector.
+</div>
+</div>
+
+<div class="qa">
+<div class="question" onclick="toggleAnswer('a17')">17. Rolling deployment?</div>
+<div id="a17" class="answer">
+Gradual update without downtime.
+</div>
+</div>
+
+<div class="qa">
+<div class="question" onclick="toggleAnswer('a18')">18. Blue-green deployment?</div>
+<div id="a18" class="answer">
+Two environments switch traffic.
+</div>
+</div>
+
+<div class="qa">
+<div class="question" onclick="toggleAnswer('a19')">19. Memory leak debug?</div>
+<div id="a19" class="answer">
+<div class="code">top
+ps aux --sort=-%mem</div>
+</div>
+</div>
+
+<div class="qa">
+<div class="question" onclick="toggleAnswer('a20')">20. Load balancer issue?</div>
+<div id="a20" class="answer">
+Check backend, logs, config.
+</div>
+</div>
+
+</div>
 </body>
 </html>
