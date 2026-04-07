@@ -203,80 +203,132 @@ Check server → service → port → logs → network
 </div>
 
 <div class="qa">
-<div class="question" onclick="toggleAnswer('a11')">11. High load but CPU idle?</div>
-<div id="a11" class="answer">
-Disk I/O issue
-<div class="code">iostat -x 1 Steps:
-Check top → see high %wa
-Run iostat → disk busy
-Run iotop → find process
-Fix root cause</div>
+<div class="question">11. Service not starting — how do you troubleshoot?</div>
+<button class="show-btn" onclick="toggleAnswer('q11')">Show Answer</button>
+<div id="q11" class="answer">
+Check service status and logs:
+<div class="code">
+systemctl status nginx
+journalctl -xe
+</div>
+<b>Example:</b> Port already in use → change port or stop conflicting service.
 </div>
 </div>
 
 <div class="qa">
-<div class="question" onclick="toggleAnswer('a12')">12. Docker container not starting?</div>
-<div id="a12" class="answer">
-<div class="code">docker logs
-docker inspect</div>
+<div class="question">12. Disk full — what will you do?</div>
+<button class="show-btn" onclick="toggleAnswer('q12')">Show Answer</button>
+<div id="q12" class="answer">
+Check disk usage:
+<div class="code">
+df -h
+du -sh *
+</div>
+<b>Example:</b> Logs consuming space → delete or rotate logs.
 </div>
 </div>
 
 <div class="qa">
-<div class="question" onclick="toggleAnswer('a13')">13. CI/CD pipeline failed?</div>
-<div id="a13" class="answer">
-Check pipeline logs and failed stage.
+<div class="question">13. High CPU usage — how to find the cause?</div>
+<button class="show-btn" onclick="toggleAnswer('q13')">Show Answer</button>
+<div id="q13" class="answer">
+Identify process:
+<div class="code">
+top
+ps aux --sort=-%cpu
+</div>
+<b>Example:</b> Java process high CPU → restart or optimize application.
 </div>
 </div>
 
 <div class="qa">
-<div class="question" onclick="toggleAnswer('a14')">14. Disk I/O high?</div>
-<div id="a14" class="answer">
-<div class="code">iostat
-iotop</div>
+<div class="question">14. SSH not working — what will you check?</div>
+<button class="show-btn" onclick="toggleAnswer('q14')">Show Answer</button>
+<div id="q14" class="answer">
+Check service and port:
+<div class="code">
+systemctl status sshd
+ss -tulnp | grep 22
+</div>
+<b>Example:</b> Firewall blocking → allow port 22.
 </div>
 </div>
 
 <div class="qa">
-<div class="question" onclick="toggleAnswer('a15')">15. Unauthorized access?</div>
-<div id="a15" class="answer">
-Check logs, block IP, secure SSH.
+<div class="question">15. Website not accessible — troubleshooting steps?</div>
+<button class="show-btn" onclick="toggleAnswer('q15')">Show Answer</button>
+<div id="q15" class="answer">
+Check service and connectivity:
+<div class="code">
+systemctl status nginx
+curl localhost
+ss -tulnp
+</div>
+<b>Example:</b> Service down → start service.
 </div>
 </div>
 
 <div class="qa">
-<div class="question" onclick="toggleAnswer('a16')">16. Pod not scheduling?</div>
-<div id="a16" class="answer">
-Resource issue or node selector.
+<div class="question">16. File deleted accidentally — how to recover?</div>
+<button class="show-btn" onclick="toggleAnswer('q16')">Show Answer</button>
+<div id="q16" class="answer">
+Check backups or restore snapshot.<br>
+<b>Example:</b> Restore from backup or LVM snapshot.
 </div>
 </div>
 
 <div class="qa">
-<div class="question" onclick="toggleAnswer('a17')">17. Rolling deployment?</div>
-<div id="a17" class="answer">
-Gradual update without downtime.
+<div class="question">17. User cannot login — what will you check?</div>
+<button class="show-btn" onclick="toggleAnswer('q17')">Show Answer</button>
+<div id="q17" class="answer">
+Check user status:
+<div class="code">
+id username
+passwd -S username
+cat /etc/passwd
+</div>
+<b>Example:</b> Account locked → unlock user.
 </div>
 </div>
 
 <div class="qa">
-<div class="question" onclick="toggleAnswer('a18')">18. Blue-green deployment?</div>
-<div id="a18" class="answer">
-Two environments switch traffic.
+<div class="question">18. Memory high usage — how to troubleshoot?</div>
+<button class="show-btn" onclick="toggleAnswer('q18')">Show Answer</button>
+<div id="q18" class="answer">
+Check memory usage:
+<div class="code">
+free -m
+top
+</div>
+<b>Example:</b> Process consuming memory → restart or optimize.
 </div>
 </div>
 
 <div class="qa">
-<div class="question" onclick="toggleAnswer('a19')">19. Memory leak debug?</div>
-<div id="a19" class="answer">
-<div class="code">top
-ps aux --sort=-%mem</div>
+<div class="question">19. Cron job not running — debug steps?</div>
+<button class="show-btn" onclick="toggleAnswer('q19')">Show Answer</button>
+<div id="q19" class="answer">
+Check cron service and logs:
+<div class="code">
+crontab -l
+systemctl status crond
+tail -f /var/log/cron
+</div>
+<b>Example:</b> Wrong schedule → fix cron timing.
 </div>
 </div>
 
 <div class="qa">
-<div class="question" onclick="toggleAnswer('a20')">20. Load balancer issue?</div>
-<div id="a20" class="answer">
-Check backend, logs, config.
+<div class="question">20. Permission denied error — how to fix?</div>
+<button class="show-btn" onclick="toggleAnswer('q20')">Show Answer</button>
+<div id="q20" class="answer">
+Check permissions:
+<div class="code">
+ls -l
+chmod 755 file
+chown user:user file
+</div>
+<b>Example:</b> Incorrect ownership → fix using chown.
 </div>
 </div>
 <h1>Advanced L3 Scenario Questions (21–30)</h1>
