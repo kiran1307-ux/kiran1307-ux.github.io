@@ -340,5 +340,198 @@ docker logs container_id
 kubectl logs pod-name
 </pre>
 
+<div class="section">
+<h2>26. Advanced DevOps Troubleshooting Scenarios</h2>
+
+<p><b>Scenario 1: Website is Down (Production Issue)</b></p>
+<pre class="code">
+Step 1: Check server
+uptime
+
+Step 2: Check service
+systemctl status nginx
+
+Step 3: Check port
+ss -tulnp | grep 80
+
+Step 4: Check logs
+journalctl -u nginx
+tail -f /var/log/nginx/error.log
+
+Step 5: Check firewall
+firewall-cmd --list-all
+</pre>
+<p><b>Root Cause Examples:</b> Service stopped / Port blocked / Config error</p>
+
+
+<p><b>Scenario 2: Kubernetes Pod in CrashLoopBackOff</b></p>
+<pre class="code">
+kubectl get pods
+kubectl describe pod pod-name
+kubectl logs pod-name
+</pre>
+<p><b>Troubleshooting:</b></p>
+<ul>
+<li>Check application error in logs</li>
+<li>Verify environment variables</li>
+<li>Check resource limits (CPU/Memory)</li>
+</ul>
+<p><b>Root Cause:</b> App crash / Missing config / Dependency failure</p>
+
+
+<p><b>Scenario 3: Docker Container Not Starting</b></p>
+<pre class="code">
+docker ps -a
+docker logs container_id
+docker inspect container_id
+</pre>
+<p><b>Troubleshooting:</b></p>
+<ul>
+<li>Check entrypoint/command</li>
+<li>Verify port conflicts</li>
+<li>Check missing dependencies</li>
+</ul>
+<p><b>Root Cause:</b> Wrong CMD / Port already used / App failure</p>
+
+
+<p><b>Scenario 4: High CPU Usage in Server</b></p>
+<pre class="code">
+top
+ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu | head
+</pre>
+<p><b>Troubleshooting:</b></p>
+<ul>
+<li>Identify process</li>
+<li>Restart service or optimize code</li>
+<li>Use nice/renice</li>
+</ul>
+<p><b>Root Cause:</b> Infinite loop / Memory leak / Heavy traffic</p>
+
+
+<p><b>Scenario 5: Disk Full Issue</b></p>
+<pre class="code">
+df -h
+du -sh /var/log/*
+</pre>
+<p><b>Troubleshooting:</b></p>
+<ul>
+<li>Clean logs</li>
+<li>Remove old backups</li>
+<li>Extend LVM</li>
+</ul>
+<p><b>Root Cause:</b> Logs growing / Backup accumulation</p>
+
+
+<p><b>Scenario 6: CI/CD Pipeline Failed</b></p>
+<pre class="code">
+Check Jenkins logs
+Check build stage logs
+Check Docker build errors
+</pre>
+<p><b>Troubleshooting:</b></p>
+<ul>
+<li>Syntax error in pipeline</li>
+<li>Dependency failure</li>
+<li>Permission issue</li>
+</ul>
+<p><b>Root Cause:</b> Code issue / Config error / Missing credentials</p>
+
+
+<p><b>Scenario 7: Application Not Accessible (Network Issue)</b></p>
+<pre class="code">
+ping server_ip
+curl http://server_ip:port
+telnet server_ip port
+</pre>
+<p><b>Troubleshooting:</b></p>
+<ul>
+<li>Check firewall</li>
+<li>Check service binding (0.0.0.0)</li>
+<li>Check DNS resolution</li>
+</ul>
+<p><b>Root Cause:</b> Firewall / Wrong bind IP / DNS issue</p>
+
+
+<p><b>Scenario 8: Kubernetes Service Not Working</b></p>
+<pre class="code">
+kubectl get svc
+kubectl describe svc service-name
+kubectl get endpoints
+</pre>
+<p><b>Troubleshooting:</b></p>
+<ul>
+<li>Check selector labels</li>
+<li>Verify pod is running</li>
+<li>Check port mapping</li>
+</ul>
+<p><b>Root Cause:</b> Label mismatch / No endpoints</p>
+
+
+<p><b>Scenario 9: Memory Leak Issue</b></p>
+<pre class="code">
+free -m
+top
+ps aux --sort=-%mem
+</pre>
+<p><b>Troubleshooting:</b></p>
+<ul>
+<li>Identify process consuming memory</li>
+<li>Restart service</li>
+<li>Analyze application logs</li>
+</ul>
+<p><b>Root Cause:</b> Poor code / Unreleased memory</p>
+
+
+<p><b>Scenario 10: Deployment Rollback</b></p>
+<pre class="code">
+kubectl rollout history deployment
+kubectl rollout undo deployment
+</pre>
+<p><b>Troubleshooting:</b></p>
+<ul>
+<li>Identify faulty release</li>
+<li>Rollback quickly</li>
+</ul>
+<p><b>Root Cause:</b> Bad deployment</p>
+
+
+<p><b>Scenario 11: SSL Certificate Expired</b></p>
+<pre class="code">
+openssl x509 -in cert.pem -text -noout
+</pre>
+<p><b>Troubleshooting:</b></p>
+<ul>
+<li>Renew certificate</li>
+<li>Restart service</li>
+</ul>
+<p><b>Root Cause:</b> Certificate expiration</p>
+
+
+<p><b>Scenario 12: Database Connection Failed</b></p>
+<pre class="code">
+netstat -tulnp | grep 3306
+systemctl status mysql
+</pre>
+<p><b>Troubleshooting:</b></p>
+<ul>
+<li>Check DB service</li>
+<li>Verify credentials</li>
+<li>Check network access</li>
+</ul>
+<p><b>Root Cause:</b> DB down / Wrong config / Firewall</p>
+
+
+<p><b>Golden Troubleshooting Approach:</b></p>
+<pre class="code">
+1. Check Logs
+2. Check Service
+3. Check Resource (CPU/MEM/Disk)
+4. Check Network
+5. Check Configuration
+6. Apply Fix
+7. Validate
+</pre>
+
+</div>
 <p><b>Key Tip:</b> Always follow → Logs → Metrics → Configuration → Fix</p>
 </div>
