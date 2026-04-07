@@ -100,13 +100,29 @@ function toggleAnswer(id) {
 Check logs
 Check services
 Check infra (CPU, memory, disk)
-Rollback if needed</div></div>
+Rollback if needed
+During a complete production outage, I follow a structured approach: first I assess impact
+check system health using uptime, top, free -m, df -h, and iostat -x 1 to identify CPU, memory,
+or disk issues; then I verify services with systemctl status <service>, docker ps, or kubectl get pods, and analyze logs 
+using journalctl -xe, tail -f /var/log/messages, or kubectl logs <pod> to find the root cause; 
+next I check dependencies like database or external services using telnet db_ip 3306 or curl <service-url>
+and if the issue is due to a recent deployment, I quickly rollback using kubectl rollout undo deployment;
+also validate network and DNS using ping, traceroute, and nslookup; once identified, I fix the issue or restart services, restore traffic, and ensure stability
+followed by performing RCA (root cause analysis) and implementing monitoring or preventive measures to avoid recurrence.
+</div></div>
 </div>
 
 <div class="qa">
 <div class="question">2. Explain how Kubernetes handles scaling?</div>
 <button class="show-btn" onclick="toggleAnswer('adv2')">Show Answer</button>
-<div id="adv2" class="answer">Uses HPA (Horizontal Pod Autoscaler) based on CPU/memory metrics.</div>
+<div id="adv2" class="answer">Uses HPA (Horizontal Pod Autoscaler) based on CPU/memory metrics.Kubernetes handles scaling mainly 
+through Horizontal Pod Autoscaler (HPA), which automatically increases or decreases the number of pods based on metrics like CPU or 
+memory usage; it continuously monitors metrics via the Metrics Server and adjusts replicas defined in a deployment. For example, 
+you can configure autoscaling using kubectl autoscale deployment my-app --cpu-percent=70 --min=2 --max=10, which ensures that if 
+CPU usage exceeds 70%, new pods are created, and when usage drops, pods are terminated. Kubernetes can also scale manually using 
+kubectl scale deployment my-app --replicas=5, and for cluster-level scaling, Cluster Autoscaler adds or removes nodes based on 
+resource demand. Overall,Kubernetes ensures high availability and efficient resource utilization by dynamically adjusting 
+application capacity based on load.</div>
 </div>
 
 <div class="qa">
@@ -114,19 +130,41 @@ Rollback if needed</div></div>
 <button class="show-btn" onclick="toggleAnswer('adv3')">Show Answer</button>
 <div id="adv3" class="answer"><div class="code">top
 ps aux --sort=-%mem
-pmap PID</div>Check logs + heap usage.</div>
+pmap PID</div>Check logs + heap usage.To debug a memory leak in production, I start by identifying high memory usage using top,
+htop, or free -m, then pinpoint the process consuming memory with ps aux --sort=-%mem | head; once identified, I inspect the 
+process in detail using pmap -x <PID> or cat /proc/<PID>/status to check memory growth over time. I monitor trends using 
+watch -n 1 "ps -eo pid,cmd,%mem --sort=-%mem | head" and check logs for abnormal behavior. If it’s a Java or application-level issue,
+I take a heap dump (e.g., jmap -dump:live,format=b,file=heap.hprof <PID>) and analyze it using tools. I also verify system-level 
+causes like cache or slab usage with slabtop and vmstat 1. In containers/Kubernetes, I use kubectl top pod and kubectl describe pod
+to check for OOMKilled events. Finally, I mitigate by restarting the service (temporary fix), then work with developers to fix the leak in code, and add monitoring/alerts to prevent recurrence</div>
 </div>
 
 <div class="qa">
 <div class="question">4. Explain blue-green deployment in real scenario?</div>
 <button class="show-btn" onclick="toggleAnswer('adv4')">Show Answer</button>
-<div id="adv4" class="answer">Two environments → switch traffic → rollback instantly if failure.</div>
+<div id="adv4" class="answer">Two environments → switch traffic → rollback instantly if failure.
+Blue-green deployment is a strategy where we maintain two identical environments—Blue (current live) and Green (new version)—to 
+achieve zero downtime and safe releases. In a real scenario, suppose version v1 of an application is running in the Blue environment 
+and serving all traffic; we deploy the new version v2 to the Green environment and test it internally using kubectl get pods and 
+kubectl port-forward or health checks via curl. Once verified, we switch traffic from Blue to Green using a load balancer or 
+Kubernetes service update (e.g., updating service selector labels or using kubectl apply -f service.yaml), making Green live instantly. 
+If any issue occurs, we quickly rollback by redirecting traffic back to Blue. This approach ensures minimal risk, zero downtime, 
+and fast recovery during deployments.</div>
 </div>
 
 <div class="qa">
 <div class="question">5. How do you secure a production server?</div>
 <button class="show-btn" onclick="toggleAnswer('adv5')">Show Answer</button>
-<div id="adv5" class="answer">Disable root login, use SSH keys, firewall, patching, monitoring.</div>
+<div id="adv5" class="answer">Disable root login, use SSH keys, firewall, patching, monitoring.To secure a production server, 
+I follow a layered approach: first I harden SSH by disabling root login and password authentication in /etc/ssh/sshd_config 
+(PermitRootLogin no, PasswordAuthentication no) and use key-based access, then restart with systemctl restart sshd; 
+I enforce firewall rules using firewall-cmd --add-service=ssh --permanent and firewall-cmd --reload (or iptables) to allow 
+only required ports, and keep the system updated with yum update -y or apt update && apt upgrade -y. I manage users with least 
+privilege (useradd, usermod -aG sudo user) and remove unused accounts, monitor logs using journalctl -xe and /var/log/secure, 
+and enable intrusion protection tools like Fail2Ban. I also enforce proper file permissions (chmod, chown), enable SELinux 
+(getenforce, setenforce 1) or AppArmor, and regularly scan for vulnerabilities. Additionally, I disable unused services 
+(systemctl disable <service>), configure auditing (auditd), and ensure backups and monitoring are in place to detect and 
+respond to threats proactively.</div>
 </div>
 
 <div class="qa">
@@ -138,19 +176,41 @@ pmap PID</div>Check logs + heap usage.</div>
 <div class="qa">
 <div class="question">7. How do you design a CI/CD pipeline?</div>
 <button class="show-btn" onclick="toggleAnswer('adv7')">Show Answer</button>
-<div id="adv7" class="answer">Git → Build → Test → Docker → Deploy → Monitor</div>
+<div id="adv7" class="answer">Git → Build → Test → Docker → Deploy → MonitorTo design a CI/CD pipeline, I follow an 
+automated flow from code commit to production: developers push code to a Git repository, which triggers the pipeline 
+(e.g., Jenkins/GitHub Actions); in the CI stage, I build the application (mvn clean package or npm install), run unit tests, 
+and perform code quality checks, then create a Docker image (docker build -t my-app .) and push it to a registry 
+(docker push my-app); in the CD stage, I deploy the image to a staging environment using Kubernetes (kubectl apply -f deployment.yaml), 
+run integration tests, and if everything passes, promote it to production using strategies like rolling or blue-green deployment 
+(kubectl rollout status deployment); I also include rollback mechanisms (kubectl rollout undo deployment), environment-based 
+configurations, and secrets management. Finally, I integrate monitoring and alerts (Prometheus/Grafana) to ensure continuous 
+feedback, making the pipeline reliable, automated, and production-ready.</div>
 </div>
 
 <div class="qa">
 <div class="question">8. How do you monitor production systems?</div>
 <button class="show-btn" onclick="toggleAnswer('adv8')">Show Answer</button>
-<div id="adv8" class="answer">Prometheus + Grafana + alerts.</div>
+<div id="adv8" class="answer">Prometheus + Grafana + alerts.To monitor production systems, I use a combination of metrics, 
+logs, and alerts: I collect system and application metrics (CPU, memory, disk, latency) using tools like 
+Prometheus with node exporters, and visualize them in Grafana dashboards; I continuously check system health using commands 
+like top, free -m, df -h, and iostat, while for Kubernetes I use kubectl top pod and kubectl get nodes to monitor resource usage. 
+For logging, I centralize logs using ELK/EFK stack (Elasticsearch, Logstash/Fluentd, Kibana) and analyze them for errors using 
+journalctl -xe or tail -f /var/log/messages. I set up alerting rules in Prometheus Alertmanager (e.g., high CPU, pod restarts, disk full) 
+to notify via email/Slack. Additionally, I monitor uptime and endpoints using tools like blackbox exporter or simple curl checks. 
+This ensures real-time visibility, quick detection of issues, and proactive response to maintain system reliability.</div>
 </div>
 
 <div class="qa">
 <div class="question">9. Explain container orchestration?</div>
 <button class="show-btn" onclick="toggleAnswer('adv9')">Show Answer</button>
-<div id="adv9" class="answer">Managing containers at scale using Kubernetes.</div>
+<div id="adv9" class="answer">Managing containers at scale using Kubernetes,Container orchestration is the automated management 
+of containerized applications at scale, handling tasks like deployment, scaling, networking, and availability. Instead of 
+manually managing individual containers, orchestration tools like Kubernetes ensure the desired state of the system—for example, 
+if a container crashes, it is automatically restarted, and if load increases, new instances are created. In practice, 
+you define the desired configuration in YAML files (e.g., deployments and services), and apply them using kubectl apply -f deployment.yaml;
+Kubernetes then schedules containers on nodes, manages networking and load balancing, and performs scaling using commands like kubectl 
+scale deployment my-app --replicas=5 or autoscaling with HPA. It also supports rolling updates and self-healing, making it 
+essential for running reliable, scalable microservices in production environments.</div>
 </div>
 
 <div class="qa">
@@ -158,13 +218,39 @@ pmap PID</div>Check logs + heap usage.</div>
 <button class="show-btn" onclick="toggleAnswer('adv10')">Show Answer</button>
 <div id="adv10" class="answer"><div class="code">ping
 traceroute
-iostat</div>Check network, disk, backend.</div>
+iostat</div>Check network, disk, backend,To troubleshoot high latency, I follow a layered approach starting from system to 
+application: first I verify if the issue is network-related using ping, traceroute, or mtr to check delays and packet loss; 
+then I check system performance using top, free -m, and iostat -x 1 to identify CPU, memory, or disk I/O bottlenecks. Next, I 
+inspect application and service health using systemctl status <service>, kubectl get pods, and analyze logs with journalctl -xe or 
+kubectl logs <pod> to detect slow queries or errors. I also validate backend dependencies like databases or APIs using curl or 
+telnet <ip> <port> to check response time. If needed, I analyze open connections with ss -s or netstat -ant and check load balancer 
+behavior. Once the root cause is identified—whether network delay, resource contention, or backend slowness—I optimize accordingly 
+(e.g., scaling services, tuning queries, or fixing network issues) and ensure monitoring/alerts are in place to prevent recurrence.</div>
 </div>
 
 <div class="qa">
 <div class="question">11. Explain Infrastructure as Code with example?</div>
 <button class="show-btn" onclick="toggleAnswer('adv11')">Show Answer</button>
-<div id="adv11" class="answer">Using tools like Terraform to create infra via code.</div>
+<div id="adv11" class="answer">Using tools like Terraform to create infra via code,Infrastructure as Code (IaC) is the practice of 
+managing and provisioning infrastructure (servers, networks, storage) using code instead of manual processes, 
+making deployments consistent, repeatable, and version-controlled. For example, using Terraform, you can define 
+infrastructure in a .tf file and create resources automatically:
+
+terraform init
+terraform apply
+
+Example configuration:
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_instance" "web" {
+  ami           = "ami-123456"
+  instance_type = "t2.micro"
+}
+
+This code will automatically create an EC2 instance in AWS. Instead of manually setting up servers, IaC ensures the same environment can be recreated anytime, supports version control (Git), and reduces human errors. In real scenarios, it is used to provision complete environments (dev, staging, prod) and integrates with CI/CD pipelines for automated deployments.</div>
 </div>
 
 <div class="qa">
@@ -178,19 +264,41 @@ iostat</div>Check network, disk, backend.</div>
 <button class="show-btn" onclick="toggleAnswer('adv13')">Show Answer</button>
 <div id="adv13" class="answer"><div class="code">dig
 nslookup
-cat /etc/resolv.conf</div></div>
+cat /etc/resolv.conf
+To debug DNS issues, I follow a step-by-step approach starting from resolution to connectivity: first I check 
+DNS resolution using nslookup domain.com or dig domain.com to verify if the domain resolves to the correct IP; 
+then I inspect the system DNS configuration using cat /etc/resolv.conf to ensure correct nameservers are set. 
+I test connectivity to the DNS server using ping <dns-server-ip> and verify if the issue is local or global 
+by querying a specific DNS server like dig @8.8.8.8 domain.com. I also check for DNS caching issues 
+(systemd-resolve --status or restart nscd), and validate reverse lookup if needed using dig -x <IP>. In case of application issues, 
+I test using curl to confirm service reachability. If the domain doesn’t resolve, I verify DNS records (A, CNAME, MX) and propagation 
+status. Finally, I identify whether the problem is due to misconfigured DNS, network issues, or incorrect records, and fix accordingly.</div></div>
 </div>
 
 <div class="qa">
 <div class="question">14. How do you handle zero downtime deployments?</div>
 <button class="show-btn" onclick="toggleAnswer('adv14')">Show Answer</button>
-<div id="adv14" class="answer">Rolling updates, blue-green deployment.</div>
+<div id="adv14" class="answer">Rolling updates, blue-green deployment,To handle zero downtime deployments, I use strategies that ensure 
+traffic is always served while new versions are rolled out: commonly I use rolling updates in Kubernetes where new pods are gradually
+created and old ones terminated using kubectl rollout restart deployment and monitored via kubectl rollout status deployment, ensuring a 
+minimum number of pods are always available; alternatively, I use blue-green deployment, where a new version is deployed in a separate 
+environment and traffic is switched using a load balancer or service update once validated; for safer releases, I may use canary 
+deployments, sending a small percentage of traffic to the new version before full rollout. I also configure readiness and liveness 
+probes so only healthy pods receive traffic, and ensure proper health checks via kubectl describe pod. If any issue occurs, 
+I quickly rollback using kubectl rollout undo deployment. This approach guarantees continuous availability with no service interruption.</div>
 </div>
 
 <div class="qa">
 <div class="question">15. Explain logging strategy in production?</div>
 <button class="show-btn" onclick="toggleAnswer('adv15')">Show Answer</button>
-<div id="adv15" class="answer">Centralized logging using ELK stack.</div>
+<div id="adv15" class="answer">To implement an effective logging strategy in production, I follow a centralized and structured approach: 
+applications generate logs in a structured format (preferably JSON) with levels like INFO, WARN, ERROR, and DEBUG, and logs are written 
+to standard output or files; these logs are collected using agents like Fluentd or Logstash and shipped to a centralized system such as 
+Elasticsearch, where they can be searched and visualized using Kibana (ELK/EFK stack). I also monitor system logs using journalctl -xe 
+and tail -f /var/log/messages for real-time debugging. Log rotation is configured using logrotate to prevent disk space issues. 
+Additionally, I implement correlation IDs to trace requests across microservices, set retention policies, and integrate alerting 
+(via tools like Elasticsearch alerts or Prometheus) for critical errors. This ensures efficient troubleshooting, observability, 
+and proactive issue detection in production environments.</div>
 </div>
 
 </div>
