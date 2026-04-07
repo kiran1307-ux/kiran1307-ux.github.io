@@ -199,12 +199,108 @@ df -h
 </div>
 
 <div class="section">
-<h2>6. Docker Image Optimization</h2>
+<h2>6. Docker Image Optimization (Advanced)</h2>
+
+<p>Optimizing Docker images reduces size, improves security, and speeds up deployment.</p>
+
 <pre class="code">
-FROM alpine
-RUN apk add --no-cache nginx
+# Check image size
+docker images
+
+# Analyze layers
+docker history image_name
+
+# Remove unused images
+docker image prune -a
+
+# Remove dangling images
+docker image prune
+
+# Remove unused containers, volumes, networks
+docker system prune -a
+
+# Inspect image details
+docker inspect image_name
 </pre>
-<p><b>Best Practice:</b> Small images, multi-stage builds</p>
+
+<p><b>Multi-Stage Build Example:</b></p>
+<pre class="code">
+# Stage 1 - Build
+FROM node:18 AS builder
+WORKDIR /app
+COPY . .
+RUN npm install && npm run build
+
+# Stage 2 - Production
+FROM nginx:alpine
+COPY --from=builder /app/build /usr/share/nginx/html
+</pre>
+
+<p><b>Layer Optimization:</b></p>
+<pre class="code">
+# Bad (creates multiple layers)
+RUN apt update
+RUN apt install -y nginx
+
+# Good (single layer)
+RUN apt update && apt install -y nginx && rm -rf /var/lib/apt/lists/*
+</pre>
+
+<p><b>Use .dockerignore:</b></p>
+<pre class="code">
+node_modules
+.git
+*.log
+</pre>
+
+<p><b>Best Practices:</b></p>
+<ul>
+<li>Use minimal base images (alpine, distroless)</li>
+<li>Avoid installing unnecessary packages</li>
+<li>Combine RUN commands to reduce layers</li>
+<li>Use multi-stage builds for smaller images</li>
+<li>Do not store secrets inside images</li>
+<li>Run containers as non-root user</li>
+</ul>
+
+<p><b>Security Best Practice:</b></p>
+<pre class="code">
+# Create non-root user
+RUN useradd -m appuser
+USER appuser
+</pre>
+
+<p><b>Troubleshooting Scenario 1: Large Image Size</b></p>
+<pre class="code">
+docker images
+docker history image_name
+</pre>
+<p><b>Fix:</b> Remove unnecessary files, use alpine, multi-stage build</p>
+
+<p><b>Troubleshooting Scenario 2: Slow Build Time</b></p>
+<pre class="code">
+# Use caching effectively
+COPY package.json .
+RUN npm install
+COPY . .
+</pre>
+<p><b>Fix:</b> Optimize Dockerfile order to leverage cache</p>
+
+<p><b>Troubleshooting Scenario 3: Container Vulnerabilities</b></p>
+<pre class="code">
+docker scan image_name
+</pre>
+<p><b>Fix:</b> Update base image, remove unused packages</p>
+
+<p><b>Troubleshooting Scenario 4: Container Running as Root</b></p>
+<pre class="code">
+docker exec -it container_id id
+</pre>
+<p><b>Fix:</b> Use USER directive</p>
+
+<p><b>Interview Scenario:</b></p>
+<p>“Docker image size is 1GB” → Check layers → Remove unnecessary packages → Use multi-stage → Reduce to ~100MB.</p>
+
 </div>
 
 <div class="section">
@@ -218,12 +314,134 @@ Verify credentials
 </div>
 
 <div class="section">
-<h2>8. Security Incident (Unauthorized Access)</h2>
+<h2>8. Security Incident (Unauthorized Access - Advanced)</h2>
+
+<p>This scenario covers detecting, investigating, and responding to unauthorized access on a Linux server.</p>
+
+<p><b>Step 1: Check Login Activity</b></p>
 <pre class="code">
 last
-cat /var/log/secure
+lastb
+who
+w
 </pre>
-<p><b>Fix:</b> Disable root login, use SSH keys</p>
+
+<p><b>Step 2: Check Authentication Logs</b></p>
+<pre class="code">
+cat /var/log/secure
+grep "Failed password" /var/log/secure
+grep "Accepted password" /var/log/secure
+journalctl -u sshd
+</pre>
+
+<p><b>Step 3: Identify Suspicious IPs</b></p>
+<pre class="code">
+grep "Failed password" /var/log/secure | awk '{print $11}' | sort | uniq -c | sort -nr
+</pre>
+
+<p><b>Step 4: Check Running Sessions</b></p>
+<pre class="code">
+who
+w
+ps -ef --forest
+</pre>
+
+<p><b>Step 5: Check Open Ports & Connections</b></p>
+<pre class="code">
+ss -tulnp
+netstat -antp
+lsof -i
+</pre>
+
+<p><b>Step 6: Check New or Suspicious Users</b></p>
+<pre class="code">
+cat /etc/passwd
+cat /etc/shadow
+lastlog
+</pre>
+
+<p><b>Step 7: Check File Changes (Backdoors)</b></p>
+<pre class="code">
+find / -mtime -1
+find / -perm -4000
+</pre>
+
+<p><b>Step 8: Check Cron Jobs (Persistence)</b></p>
+<pre class="code">
+crontab -l
+ls -la /etc/cron*
+</pre>
+
+<p><b>Step 9: Immediate Containment</b></p>
+<pre class="code">
+# Block attacker IP
+firewall-cmd --add-rich-rule='rule family=\"ipv4\" source address=\"ATTACKER_IP\" reject' --permanent
+firewall-cmd --reload
+
+# Kill suspicious session
+pkill -u username
+
+# Disable compromised user
+usermod -L username
+</pre>
+
+<p><b>Step 10: Secure SSH</b></p>
+<pre class="code">
+vi /etc/ssh/sshd_config
+
+# Recommended changes:
+PermitRootLogin no
+PasswordAuthentication no
+AllowUsers trusted_user
+
+systemctl restart sshd
+</pre>
+
+<p><b>Advanced Security Checks:</b></p>
+<pre class="code">
+# Check listening services
+ss -plnt
+
+# Check hidden processes
+ps auxf
+
+# Check system integrity (RPM-based)
+rpm -Va
+
+# Check for rootkits
+chkrootkit
+rkhunter --check
+</pre>
+
+<p><b>Recovery & Hardening:</b></p>
+<ul>
+<li>Rotate all passwords and SSH keys</li>
+<li>Apply security patches (yum update)</li>
+<li>Enable firewall and restrict ports</li>
+<li>Install Fail2Ban to block brute force attacks</li>
+<li>Enable audit logging (auditd)</li>
+</ul>
+
+<p><b>Fail2Ban Setup Example:</b></p>
+<pre class="code">
+yum install fail2ban
+systemctl start fail2ban
+systemctl enable fail2ban
+</pre>
+
+<p><b>Real-World Scenario:</b></p>
+<p>Multiple failed SSH attempts detected → Identify attacker IP → Block via firewall → Disable password login → Enable SSH key authentication → Install Fail2Ban.</p>
+
+<p><b>Golden Incident Response Flow:</b></p>
+<pre class="code">
+1. Detect (logs, alerts)
+2. Analyze (who, when, how)
+3. Contain (block IP, disable user)
+4. Eradicate (remove malware/backdoor)
+5. Recover (restore system)
+6. Harden (prevent future attacks)
+</pre>
+
 </div>
 
 <div class="section">
