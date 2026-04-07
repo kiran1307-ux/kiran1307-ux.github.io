@@ -395,6 +395,82 @@ kubectl describe pod</div>Image/config issue.</div>
 <div id="a50" class="answer"><div class="code">openssl s_client -connect domain:443</div>Expired/misconfigured cert.</div>
 </div>
 
+
+<!-- LVM Interview Questions Section -->
+<h1>LVM Interview Questions & Scenarios</h1>
+
+<div class="qa">
+<div class="question">LVM Q1: What is LVM and why use it?</div>
+<button class="show-btn" onclick="toggleAnswer('l1')">Show Answer</button>
+<div id="l1" class="answer">LVM allows flexible disk management, resizing, snapshots, and combining multiple disks.</div>
+</div>
+
+<div class="qa">
+<div class="question">LVM Q2: Main components of LVM?</div>
+<button class="show-btn" onclick="toggleAnswer('l2')">Show Answer</button>
+<div id="l2" class="answer">
+PV → Physical disk<br>
+VG → Storage pool<br>
+LV → Logical partition
+</div>
+</div>
+
+<div class="qa">
+<div class="question">LVM Q3: Create and mount LVM?</div>
+<button class="show-btn" onclick="toggleAnswer('l3')">Show Answer</button>
+<div id="l3" class="answer"><div class="code">pvcreate /dev/sdb
+vgcreate vg_data /dev/sdb
+lvcreate -L 10G -n lv_data vg_data
+mkfs.ext4 /dev/vg_data/lv_data
+mount /dev/vg_data/lv_data /mnt</div></div>
+</div>
+
+<div class="qa">
+<div class="question">LVM Q4: Extend logical volume?</div>
+<button class="show-btn" onclick="toggleAnswer('l4')">Show Answer</button>
+<div id="l4" class="answer"><div class="code">lvextend -L +5G /dev/vg_data/lv_data
+resize2fs /dev/vg_data/lv_data</div>Use xfs_growfs for XFS.</div>
+</div>
+
+<div class="qa">
+<div class="question">LVM Q5: /home running out of space?</div>
+<button class="show-btn" onclick="toggleAnswer('l5')">Show Answer</button>
+<div id="l5" class="answer"><div class="code">pvcreate /dev/sdc
+vgextend my_vg /dev/sdc
+lvextend -L +10G /dev/my_vg/home_lv
+resize2fs /dev/my_vg/home_lv</div></div>
+</div>
+
+<div class="qa">
+<div class="question">LVM Q6: Reduce LVM size?</div>
+<button class="show-btn" onclick="toggleAnswer('l6')">Show Answer</button>
+<div id="l6" class="answer">Unmount → e2fsck → resize2fs → lvreduce → mount</div>
+</div>
+
+<div class="qa">
+<div class="question">LVM Q7: Snapshots?</div>
+<button class="show-btn" onclick="toggleAnswer('l7')">Show Answer</button>
+<div id="l7" class="answer"><div class="code">lvcreate -s -L 1G -n lv_snap /dev/vg/lv</div>Used for backup/testing.</div>
+</div>
+
+<div class="qa">
+<div class="question">LVM Q8: Linear vs Striped?</div>
+<button class="show-btn" onclick="toggleAnswer('l8')">Show Answer</button>
+<div id="l8" class="answer">Linear = sequential, Striped = parallel (faster)</div>
+</div>
+
+<div class="qa">
+<div class="question">LVM Q9: Thin provisioning?</div>
+<button class="show-btn" onclick="toggleAnswer('l9')">Show Answer</button>
+<div id="l9" class="answer">Allocate storage on demand, not upfront.</div>
+</div>
+
+<div class="qa">
+<div class="question">LVM Q10: Backup & restore config?</div>
+<button class="show-btn" onclick="toggleAnswer('l10')">Show Answer</button>
+<div id="l10" class="answer">Configs stored in /etc/lvm/archive and /etc/lvm/backup</div>
+</div>
+
 </div>
 </body>
 </html>
