@@ -279,9 +279,147 @@ ps aux --sort=-%mem</div>
 Check backend, logs, config.
 </div>
 </div>
+<h1>Advanced L3 Scenario Questions (21–30)</h1>
 
+<div class="qa">
+<div class="question">21. Database suddenly slow in production — how do you troubleshoot?</div>
+<button class="show-btn" onclick="toggleAnswer('q21')">Show Answer</button>
+<div id="q21" class="answer">
+Check DB and system bottlenecks:
+<div class="code">
+top
+iostat -x 1
+netstat -ant | grep 3306
+</div>
+Then analyze slow queries in DB logs.<br>
+<b>Example:</b> High disk latency → slow DB queries → move to SSD or optimize queries.
+</div>
+</div>
 
-<!-- Additional Scenario-Based Questions (31-50) -->
+<div class="qa">
+<div class="question">22. Kubernetes node NotReady — what will you check?</div>
+<button class="show-btn" onclick="toggleAnswer('q22')">Show Answer</button>
+<div id="q22" class="answer">
+Check node and kubelet status:
+<div class="code">
+kubectl describe node
+systemctl status kubelet
+journalctl -u kubelet
+</div>
+<b>Example:</b> Kubelet stopped → restart kubelet → node becomes Ready.
+</div>
+</div>
+
+<div class="qa">
+<div class="question">23. Application working locally but failing in server — why?</div>
+<button class="show-btn" onclick="toggleAnswer('q23')">Show Answer</button>
+<div id="q23" class="answer">
+Check environment differences:
+<div class="code">
+env
+printenv
+ldd binary
+</div>
+<b>Example:</b> Missing dependency or wrong ENV variable.
+</div>
+</div>
+
+<div class="qa">
+<div class="question">24. Too many open files error — how to fix?</div>
+<button class="show-btn" onclick="toggleAnswer('q24')">Show Answer</button>
+<div id="q24" class="answer">
+Check limits:
+<div class="code">
+ulimit -n
+lsof | wc -l
+</div>
+Increase limit in /etc/security/limits.conf.<br>
+<b>Example:</b> Increase from 1024 → 65535 for high traffic apps.
+</div>
+</div>
+
+<div class="qa">
+<div class="question">25. Kubernetes service not accessible externally — debug steps?</div>
+<button class="show-btn" onclick="toggleAnswer('q25')">Show Answer</button>
+<div id="q25" class="answer">
+Check service type and endpoints:
+<div class="code">
+kubectl get svc
+kubectl get endpoints
+kubectl describe svc
+</div>
+<b>Example:</b> Wrong selector → no endpoints → fix labels.
+</div>
+</div>
+
+<div class="qa">
+<div class="question">26. High swap usage — what does it indicate?</div>
+<button class="show-btn" onclick="toggleAnswer('q26')">Show Answer</button>
+<div id="q26" class="answer">
+Check memory pressure:
+<div class="code">
+free -m
+vmstat 1
+</div>
+<b>Example:</b> Low RAM → system using swap → add RAM or optimize memory usage.
+</div>
+</div>
+
+<div class="qa">
+<div class="question">27. SSL certificate expired — impact and fix?</div>
+<button class="show-btn" onclick="toggleAnswer('q27')">Show Answer</button>
+<div id="q27" class="answer">
+Check certificate:
+<div class="code">
+openssl x509 -in cert.pem -noout -dates
+</div>
+Renew and reload service.<br>
+<b>Example:</b> Expired cert → users see HTTPS error → renew via certbot.
+</div>
+</div>
+
+<div class="qa">
+<div class="question">28. Container exits immediately after start — why?</div>
+<button class="show-btn" onclick="toggleAnswer('q28')">Show Answer</button>
+<div id="q28" class="answer">
+Check logs and entrypoint:
+<div class="code">
+docker logs container_id
+kubectl logs pod
+</div>
+<b>Example:</b> Wrong CMD → container exits → fix Dockerfile.
+</div>
+</div>
+
+<div class="qa">
+<div class="question">29. Network connectivity issue between servers — debug?</div>
+<button class="show-btn" onclick="toggleAnswer('q29')">Show Answer</button>
+<div id="q29" class="answer">
+Check connectivity path:
+<div class="code">
+ping
+traceroute
+telnet ip port
+</div>
+<b>Example:</b> Firewall blocking port → open port → connectivity restored.
+</div>
+</div>
+
+<div class="qa">
+<div class="question">30. Logs consuming huge disk space — what will you do?</div>
+<button class="show-btn" onclick="toggleAnswer('q30')">Show Answer</button>
+<div id="q30" class="answer">
+Identify large logs:
+<div class="code">
+du -sh /var/log/*
+</div>
+Apply log rotation:
+<div class="code">
+logrotate -f /etc/logrotate.conf
+</div>
+<b>Example:</b> Large logs → rotate and compress → free space.
+</div>
+</div>
 
 <div class="qa">
 <div class="question">31. Server suddenly rebooted – what will you check?</div>
