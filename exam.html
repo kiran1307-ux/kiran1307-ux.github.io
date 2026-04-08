@@ -133,9 +133,9 @@ button.reset-btn:hover{background:#dc2626;}
 <script>
 const exams = {
 rhel8:[
-{q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"SSH configs are in sshd_config"},
+{q:"Which file logs authentication and security events?", options:["/var/log/secure","/var/log/messages","/var/log/syslog","/etc/secure"], answer:0, explanation:"Contains auth logs"},
 {q:"Command to disable root SSH login?", options:["PermitRootLogin no","AllowRootLogin yes","RootLogin off","DenyRoot yes"], answer:0, explanation:"Prevents direct root login"},
-{q:"Which command enforces file permission hardening by removing unnecessary permissions?", options:["chmod","umask","chown","setfacl"], answer:1"},
+{q:"Which configuration file controls system-wide umask?", options:["/etc/profile","/etc/passwd","/etc/shadow","/etc/umask"], answer:0, explanation:"Sets default permissions for all users"},
 {q:"Command to find SUID files?", options:["find / -perm -4000","ls","chmod","ps"], answer:0, explanation:"Find SUID"},
 {q:"Command to check open ports?", options:["ss -tuln","top","df","ps"], answer:0, explanation:"Open ports"},
 {q:"Which command sets SELinux to enforcing mode?", options:["setenforce 1","getenforce","sestatus","setenforce 0"], answer:0, explanation:"Enforcing mode"},
