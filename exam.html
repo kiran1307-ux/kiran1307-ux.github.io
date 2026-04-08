@@ -128,7 +128,6 @@ button.reset-btn:hover{background:#dc2626;}
 // --- 10 questions each ---
 const exams = {
     rhel8:[
-        {q:"Which file controls account lockout policies?", options:["/etc/pam.d/system-auth","/etc/login.defs","/etc/passwd","/etc/group"], answer:0, explanation:"PAM configuration controls account lockout policies."},
         {q:"Command to check open ports securely?", options:["ss -tuln","netstat -an","lsof -i","iptables -L"], answer:0, explanation:"ss is faster and preferred over netstat."},
         {q:"Which service provides time synchronization?", options:["chronyd","ntpd","timesyncd","systemd-time"], answer:0, explanation:"chronyd is default time sync service in RHEL 8."},
         {q:"Command to list SUID files?", options:["find / -perm -4000","ls -l","chmod 4000","find / -type f"], answer:0, explanation:"SUID files can be security risks and should be monitored."},
@@ -145,7 +144,6 @@ const exams = {
         {q:"Command to disable IP forwarding?", options:["sysctl -w net.ipv4.ip_forward=0","sysctl -w net.ipv4.conf.all.accept_redirects=0","echo 1 > /proc/sys/kernel/kptr_restrict","iptables -F"], answer:0, explanation:"Disables IP forwarding to prevent routing attacks."}
     ],
     rhel9:[
-        {q:"Which command manages authentication profiles?", options:["authselect","authconfig","passwd","useradd"], answer:0, explanation:"authselect is used in RHEL 9 for auth management."},
         {q:"Command to check active network connections?", options:["ss -s","netstat -r","ifconfig","route"], answer:0, explanation:"ss -s gives summary of connections."},
         {q:"Which file stores hashed passwords?", options:["/etc/shadow","/etc/passwd","/etc/group","/etc/login.defs"], answer:0, explanation:"/etc/shadow securely stores hashed passwords."},
         {q:"Command to list enabled services at boot?", options:["systemctl list-unit-files --type=service","chkconfig --list","service --status-all","ps aux"], answer:0, explanation:"Shows services enabled/disabled at boot."},
@@ -162,7 +160,6 @@ const exams = {
         {q:"Command to view active services?", options:["systemctl list-units --type=service","service --status-all","ps aux","systemctl status all"], answer:0, explanation:"Lists all active services."}
     ],
     mock:[
-        {q:"Command to check memory usage?", options:["free -m","df -h","du -sh","top"], answer:0, explanation:"free -m shows memory usage."},
         {q:"Command to display system uptime?", options:["uptime","who","top","ps"], answer:0, explanation:"uptime shows system load and uptime."},
         {q:"Command to find large files?", options:["find / -size +100M","du -sh *","ls -lh","df -h"], answer:0, explanation:"find helps locate large files consuming space."},
         {q:"Command to test connectivity?", options:["ping","ssh","scp","ftp"], answer:0, explanation:"ping checks network connectivity."},
