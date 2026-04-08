@@ -151,21 +151,22 @@ rhel8:[
 ],
 
 rhel9:[
-{q:"Default firewall?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"Firewall"},
-{q:"SELinux check?", options:["sestatus","getenforce","ls","ps"], answer:0, explanation:"SELinux"},
-{q:"Check logs?", options:["journalctl","cat","ls","ps"], answer:0, explanation:"Logs"},
-{q:"Disk check?", options:["df -h","ls","ps","top"], answer:0, explanation:"Disk"},
-{q:"Memory?", options:["free -m","df","ls","ps"], answer:0, explanation:"Memory"},
-{q:"Auth config?", options:["authselect","authconfig","passwd","useradd"], answer:0, explanation:"Auth"},
-{q:"Active services?", options:["systemctl","ls","ps","top"], answer:0, explanation:"Services"},
-{q:"Failed logins?", options:["lastb","last","who","id"], answer:0, explanation:"Logins"},
-{q:"Mounted FS?", options:["mount","df","lsblk","blkid"], answer:0, explanation:"FS"},
-{q:"Open connections?", options:["ss -s","netstat","ifconfig","route"], answer:0, explanation:"Connections"},
-{q:"Show uptime?", options:["uptime","who","id","pwd"], answer:0, explanation:"Uptime"},
-{q:"World writable?", options:["find / -perm -0002","chmod","ls","ps"], answer:0, explanation:"Writable"},
-{q:"Kernel logs?", options:["dmesg","ls","ps","cat"], answer:0, explanation:"Kernel"},
-{q:"Process tree?", options:["pstree","ps","top","htop"], answer:0, explanation:"Tree"},
-{q:"Check IP?", options:["ip a","ls","ps","df"], answer:0, explanation:"IP"}
+{q:"Which command is used to manage system-wide SELinux mode permanently in RHEL 9?", options:["/etc/selinux/config","setenforce","getenforce","sestatus"], answer:0, explanation:"Persistent SELinux configuration is set in config file"},
+{q:"Which command is used to enable firewalld service in RHEL 9?", options:["systemctl enable --now firewalld","service firewalld start","chkconfig firewalld on","firewall-cmd start"], answer:0, explanation:"Enables and starts firewall service"},
+{q:"Which command is used to apply security updates only?", options:["dnf update --security","yum update","dnf upgrade","rpm -U"], answer:0, explanation:"Applies only security-related patches"},
+{q:"Which tool is used for centralized logging in RHEL 9?", options:["journalctl","syslog","logwatch","auditctl"], answer:0, explanation:"systemd journal logging system"},
+{q:"Which command is used to persistently enable a SELinux boolean?", options:["setsebool -P","setenforce","getsebool","semanage"], answer:0, explanation:"-P makes it persistent"},
+{q:"Which configuration file controls password complexity in RHEL 9?", options:["/etc/security/pwquality.conf","/etc/login.defs","/etc/passwd","/etc/shadow"], answer:0, explanation:"Defines password policies"},
+{q:"Which command is used to audit system activity in RHEL 9?", options:["auditctl","ausearch","journalctl","dmesg"], answer:0, explanation:"Audit daemon configuration tool"},
+{q:"Which command shows active firewall rules?", options:["firewall-cmd --list-all","iptables -L","ss -tuln","netstat"], answer:0, explanation:"Displays firewalld rules"},
+{q:"Which command is used to permanently add a firewall rule?", options:["firewall-cmd --permanent","iptables -A","firewalld --add","ufw enable"], answer:0, explanation:"Adds persistent firewall rules"},
+{q:"Which file contains user account information?", options:["/etc/passwd","/etc/shadow","/etc/group","/etc/security"], answer:0, explanation:"Basic user account details"},
+{q:"Which file contains encrypted user passwords?", options:["/etc/shadow","/etc/passwd","/etc/group","/etc/login.defs"], answer:0, explanation:"Stores hashed passwords"},
+{q:"Which command is used to check system logs in real-time?", options:["journalctl -f","tail -f","dmesg","less"], answer:0, explanation:"Follows live logs"},
+{q:"Which command is used to check open ports in RHEL 9?", options:["ss -tulnp","netstat","lsof","ps"], answer:0, explanation:"Displays open sockets"},
+{q:"Which command is used to verify file integrity using RPM?", options:["rpm -V","rpm -i","rpm -q","rpm -e"], answer:0, explanation:"Verifies installed package files"},
+{q:"Which command is used to lock a user account in RHEL 9?", options:["usermod -L","passwd -u","useradd","chmod"], answer:0, explanation:"Locks the user account"},
+{q:"Which command is used to display system boot logs?", options:["journalctl -b","dmesg","ls","top"], answer:0, explanation:"Shows boot logs from journal"}
 ],
 
 mock:[
