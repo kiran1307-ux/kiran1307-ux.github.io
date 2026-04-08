@@ -145,9 +145,9 @@ rhel8:[
 {q:"Command to view users?", options:["cat /etc/passwd","ls","who","ps"], answer:0, explanation:"Users"},
 {q:"Command to lock user?", options:["usermod -L","passwd","chmod","ls"], answer:0, explanation:"Lock"},
 {q:"Command to unlock user?", options:["usermod -U","passwd","chmod","ls"], answer:0, explanation:"Unlock"},
-{q:"Command to show memory?", options:["free -m","df","ls","top"], answer:0, explanation:"Memory"},
+{q:"Which command lists all users with UID 0?", options:["awk -F: '$3==0 {print $1}' /etc/passwd","id","who","users"], answer:0, explanation:"UID 0 users are root level"},
 {q:"Command to check SELinux?", options:["sestatus","getenforce","ls","ps"], answer:0, explanation:"SELinux"},
-{q:"Command to check services?", options:["systemctl list-units","ls","ps","df"], answer:0, explanation:"Services"}
+{q:"Which file sets default user password aging policies?", options:["/etc/login.defs","/etc/passwd","/etc/shadow","/etc/security/pwquality.conf"], answer:0, explanation:"Defines password aging defaults"}
 ],
 
 rhel9:[
