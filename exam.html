@@ -133,27 +133,22 @@ button.reset-btn:hover{background:#dc2626;}
 <script>
 const exams = {
 rhel8:[
-{q:"Which file sets default user password aging policies?", options:["/etc/login.defs","/etc/passwd","/etc/shadow","/etc/security/pwquality.conf"], answer:0, explanation:"Defines password aging defaults"},
-{q:"Which command helps audit file permission changes?", options:["auditctl","chmod","ls","journalctl"], answer:0, explanation:"auditctl is used for auditing"},
-{q:"Which file is used for setting password complexity rules?", options:["/etc/security/pwquality.conf","/etc/passwd","/etc/login.defs","/etc/shadow"], answer:0, explanation:"Password complexity settings"},
-{q:"Which command lists all users with UID 0?", options:["awk -F: '$3==0 {print $1}' /etc/passwd","id","who","users"], answer:0, explanation:"UID 0 users are root level"},
-{q:"Which command disables unnecessary services?", options:["systemctl disable <service>","systemctl stop","service stop","chkconfig"], answer:0, explanation:"Disable services from startup"},
-{q:"Which file controls sudo privileges?", options:["/etc/sudoers","/etc/passwd","/etc/group","/etc/security/limits.conf"], answer:0, explanation:"Sudo configuration"},
-{q:"Which command checks file integrity?", options:["rpm -V","rpm -i","rpm -q","rpm -e"], answer:0, explanation:"Verifies package integrity"},
-{q:"Which tool is used for intrusion detection on file changes?", options:["AIDE","tripwire","auditd","snort"], answer:0, explanation:"AIDE monitors file changes"},
-{q:"Which command sets SELinux to enforcing mode?", options:["setenforce 1","getenforce","sestatus","setenforce 0"], answer:0, explanation:"Enforcing mode"},
-{q:"Which file configures firewall rules in RHEL 8?", options:["firewalld","iptables","/etc/firewalld/zones","/etc/services"], answer:0, explanation:"firewalld manages firewall"},
-{q:"Which command lists all open network sockets?", options:["ss -tulnp","netstat","ifconfig","ping"], answer:0, explanation:"Shows sockets"},
-{q:"Which command locks a user account?", options:["passwd -l","usermod -U","chmod","useradd"], answer:0, explanation:"Locks password"},
-{q:"Which file stores encrypted passwords?", options:["/etc/shadow","/etc/passwd","/etc/group","/etc/security/passwd"], answer:0, explanation:"Encrypted passwords"},
-{q:"Which command shows failed login attempts?", options:["journalctl -xe","lastb","last","who"], answer:1, explanation:"lastb shows failed logins"},
-{q:"Which command restricts SSH access to specific users?", options:["AllowUsers in sshd_config","PermitRootLogin","DenyUsers","ssh-keygen"], answer:0, explanation:"Restricts SSH access"},
-{q:"Which command checks file permissions recursively?", options:["ls -lR","chmod -R","find / -perm","stat"], answer:0, explanation:"Recursive listing"},
-{q:"Which command removes SUID from a file?", options:["chmod u-s <file>","chmod 777","setfacl","umask"], answer:0, explanation:"Removes SUID bit"},
-{q:"Which command is used to configure audit rules?", options:["auditctl","ausearch","journalctl","chkconfig"], answer:0, explanation:"Audit rules"},
-{q:"Which command helps monitor real-time logs?", options:["journalctl -f","tail -f","dmesg","less"], answer:0, explanation:"Real-time logs"},
-]
-};
+{q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"SSH configs are in sshd_config"},
+{q:"Command to disable root SSH login?", options:["PermitRootLogin no","AllowRootLogin yes","RootLogin off","DenyRoot yes"], answer:0, explanation:"Prevents direct root login"},
+{q:"Command to check logs?", options:["journalctl","dmesg","ps","ls"], answer:0, explanation:"System logs"},
+{q:"Command to find SUID files?", options:["find / -perm -4000","ls","chmod","ps"], answer:0, explanation:"Find SUID"},
+{q:"Command to check open ports?", options:["ss -tuln","top","df","ps"], answer:0, explanation:"Open ports"},
+{q:"Command to check kernel version?", options:["uname -r","hostname","df","ls"], answer:0, explanation:"Kernel info"},
+{q:"Command to check disk usage?", options:["df -h","du","lsblk","fdisk"], answer:0, explanation:"Disk usage"},
+{q:"Command to list processes?", options:["ps aux","ls","cat","rm"], answer:0, explanation:"Processes"},
+{q:"Command to restart service?", options:["systemctl restart","service","init","reload"], answer:0, explanation:"Restart"},
+{q:"Command to view users?", options:["cat /etc/passwd","ls","who","ps"], answer:0, explanation:"Users"},
+{q:"Command to lock user?", options:["usermod -L","passwd","chmod","ls"], answer:0, explanation:"Lock"},
+{q:"Command to unlock user?", options:["usermod -U","passwd","chmod","ls"], answer:0, explanation:"Unlock"},
+{q:"Command to show memory?", options:["free -m","df","ls","top"], answer:0, explanation:"Memory"},
+{q:"Command to check SELinux?", options:["sestatus","getenforce","ls","ps"], answer:0, explanation:"SELinux"},
+{q:"Command to check services?", options:["systemctl list-units","ls","ps","df"], answer:0, explanation:"Services"}
+],
 
 rhel9:[
 {q:"Default firewall?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"Firewall"},
