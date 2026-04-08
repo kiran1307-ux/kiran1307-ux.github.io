@@ -170,19 +170,19 @@ rhel9:[
 ],
 
 mock:[
-{q:"Unlock user?", options:["usermod -U","passwd","chmod","ls"], answer:0, explanation:"Unlock"},
-{q:"SELinux?", options:["sestatus","getenforce","top","ps"], answer:0, explanation:"SELinux"},
+{q:"Which command is used to check file inode information?", options:["stat","ls -i","df -i","du"], answer:0, explanation:"Displays inode details"},
+{q:"How to check SELinux status?", options:["sestatus","getenforce","top","ps"], answer:0, explanation:"SELinux"},
+{q:"Which command is used to safely edit sudoers file?", options:["visudo","nano","vi","sudoedit"], answer:0, explanation:"Ensures syntax check for sudoers"},
+{q:"Which command is used to check if a port is blocked by firewall?", options:["firewall-cmd --list-ports","ss -tuln","netstat -an","iptables -L"], answer:0, explanation:"Lists allowed ports in firewalld"},
+{q:"Which command is used to change the default boot target?", options:["systemctl set-default","systemctl isolate","init","runlevel"], answer:0, explanation:"Sets default target"},
+{q:"how to check Open files?", options:["lsof","ps","top","df"], answer:0, explanation:"Files"},
+{q:"Which command is used to reload systemd daemon after configuration changes?", options:["systemctl daemon-reload","systemctl restart","systemctl reload","init 6"], answer:0, explanation:"Reloads systemd configuration"},
+{q:"Which command is used to verify package source in RPM?", options:["rpm -qi","rpm -q","rpm -V","rpm -qa"], answer:0, explanation:"Displays detailed package info"},
 {q:"Failed login?", options:["lastb","last","who","id"], answer:0, explanation:"Login"},
-{q:"Hostname?", options:["hostname","uname","whoami","pwd"], answer:0, explanation:"Hostname"},
-{q:"Env vars?", options:["env","set","print","vars"], answer:0, explanation:"Env"},
-{q:"Open files?", options:["lsof","ps","top","df"], answer:0, explanation:"Files"},
-{q:"Unlock user?", options:["usermod -U","passwd","chmod","ls"], answer:0, explanation:"Unlock"},
-{q:"SELinux?", options:["sestatus","getenforce","top","ps"], answer:0, explanation:"SELinux"},
-{q:"Failed login?", options:["lastb","last","who","id"], answer:0, explanation:"Login"},
-{q:"Hostname?", options:["hostname","uname","whoami","pwd"], answer:0, explanation:"Hostname"},
-{q:"Env vars?", options:["env","set","print","vars"], answer:0, explanation:"Env"},
-{q:"Open files?", options:["lsof","ps","top","df"], answer:0, explanation:"Files"},
-{q:"Monitor?", options:["top","htop","ps","free"], answer:0, explanation:"Monitor"}
+{q:"Which command is used to display kernel ring buffer messages?", options:["dmesg","journalctl","syslog","cat"], answer:0, explanation:"Kernel messages buffer"},
+{q:"Identify Environment vars?", options:["env","set","print","vars"], answer:0, explanation:"Env"},
+{q:"Which command is used to update hostname persistently?", options:["hostnamectl set-hostname","hostname","sysctl","nmcli"], answer:0, explanation:"Sets persistent hostname"},
+{q:"Which command is used to check and repair filesystem?", options:["fsck","mkfs","mount","df"], answer:0, explanation:"Checks filesystem integrity"}
 ]
 };
 
