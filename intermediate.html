@@ -144,6 +144,137 @@ vi /etc/ssh/sshd_config
 </div>
 
 <div class="section">
+<h2>6. Systemd Deep Dive</h2>
+<p>Understand how services are managed internally using systemd.</p>
+<pre class="code">
+systemctl list-units --type=service
+systemctl cat nginx
+systemctl daemon-reexec
+</pre>
+<p><b>Scenario:</b> Service behaving oddly → Reload systemd or check unit dependencies.</p>
+</div>
+
+<div class="section">
+<h2>7. Troubleshooting Hung System (Load Issue)</h2>
+<p>Diagnose systems with high load or freezing issues.</p>
+<pre class="code">
+uptime
+top
+vmstat 1
+ps -eo pid,cmd,%mem,%cpu --sort=-%cpu | head
+</pre>
+<p><b>Scenario:</b> Server slow → Check load vs CPU cores → Identify bottleneck.</p>
+</div>
+
+<div class="section">
+<h2>8. File Descriptor Limits</h2>
+<p>Applications may fail due to too many open files.</p>
+<pre class="code">
+ulimit -n
+lsof | wc -l
+cat /proc/sys/fs/file-max
+</pre>
+<p><b>Scenario:</b> App crash → “Too many open files” error → Increase limits.</p>
+</div>
+
+<div class="section">
+<h2>9. Kernel Tuning (sysctl)</h2>
+<p>Optimize system performance via kernel parameters.</p>
+<pre class="code">
+sysctl -a
+sysctl -w net.ipv4.ip_forward=1
+vi /etc/sysctl.conf
+</pre>
+<p><b>Scenario:</b> Network performance issue → Tune kernel parameters.</p>
+</div>
+
+<div class="section">
+<h2>10. Network Bonding / Teaming</h2>
+<p>Combine multiple NICs for redundancy and performance.</p>
+<pre class="code">
+nmcli connection add type bond ifname bond0
+cat /proc/net/bonding/bond0
+</pre>
+<p><b>Scenario:</b> Network failure → Use bonding for failover.</p>
+</div>
+
+<div class="section">
+<h2>11. SELinux Troubleshooting</h2>
+<p>SELinux can silently block applications.</p>
+<pre class="code">
+getenforce
+setenforce 0
+ausearch -m avc
+semanage port -l
+</pre>
+<p><b>Scenario:</b> App not working despite open port → SELinux blocking.</p>
+</div>
+
+<div class="section">
+<h2>12. Core Dump Analysis</h2>
+<p>Analyze application crashes using core dumps.</p>
+<pre class="code">
+ulimit -c unlimited
+gdb /bin/app corefile
+</pre>
+<p><b>Scenario:</b> Application crash → Debug using core dump.</p>
+</div>
+
+<div class="section">
+<h2>13. Network Debugging (Advanced)</h2>
+<p>Deep network troubleshooting using packet capture.</p>
+<pre class="code">
+tcpdump -i eth0 port 80
+ss -s
+nmap server_ip
+</pre>
+<p><b>Scenario:</b> App not reachable → Capture packets to identify issue.</p>
+</div>
+
+<div class="section">
+<h2>14. Disk I/O Bottleneck Analysis</h2>
+<p>Identify slow disk performance issues.</p>
+<pre class="code">
+iostat -x 1
+iotop
+dstat
+</pre>
+<p><b>Scenario:</b> Slow application → High disk wait time.</p>
+</div>
+
+<div class="section">
+<h2>15. RAID Concepts & Troubleshooting</h2>
+<p>Understand RAID levels and disk redundancy.</p>
+<pre class="code">
+cat /proc/mdstat
+mdadm --detail /dev/md0
+</pre>
+<p><b>Scenario:</b> Disk failure → RAID rebuild required.</p>
+</div>
+
+<div class="section">
+<h2>16. Environment Variables & Application Debugging</h2>
+<p>Applications depend on environment variables.</p>
+<pre class="code">
+env
+printenv
+export APP_ENV=prod
+</pre>
+<p><b>Scenario:</b> App not working → Missing environment variable.</p>
+</div>
+
+<div class="section">
+<h2>17. Reverse Proxy (Nginx Use Case)</h2>
+<p>Nginx is used as reverse proxy for backend applications.</p>
+<pre class="code">
+location / {
+  proxy_pass http://localhost:3000;
+}
+</pre>
+<p><b>Scenario:</b> Backend app exposed securely via Nginx.</p>
+</div>
+
+<div class="section">
 <h2>18. Docker Deep Dive</h2>
 <p>Docker allows you to package applications with all dependencies into containers, ensuring consistency across environments.</p>
 
