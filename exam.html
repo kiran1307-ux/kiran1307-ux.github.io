@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Linux Hardening Exam</title>
-
 <style>
 body {
     margin:0;
@@ -25,189 +24,224 @@ body {
     padding:8px 15px;
     border-radius:6px;
     background: rgba(255,255,255,0.1);
+    transition:0.3s;
+    font-weight:bold;
+}
+.nav-btn:hover {
+    background: rgba(255,255,255,0.3);
 }
 .container{
     max-width:1000px;
     margin:auto;
     padding:40px 20px;
 }
-h1{text-align:center;color:#facc15;}
+h1{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:20px;
+    color:#facc15;
+}
 .tab-buttons{
     display:flex;
     justify-content:center;
     gap:15px;
-    margin-bottom:20px;
+    margin-bottom:30px;
 }
 .tab-btn{
-    padding:10px;
-    background:#38bdf8;
+    padding: 10px 20px;
     border:none;
     border-radius:8px;
     cursor:pointer;
+    background: rgba(255,255,255,0.1);
+    color:#fff;
+    font-weight:bold;
+    transition:0.3s;
 }
-.exam-section{display:none;}
+.tab-btn:hover, .tab-btn.active{
+    background: #38bdf8;
+    color:#111;
+}
+.exam-section{
+    display:none;
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 15px;
+    backdrop-filter: blur(8px);
+    margin-bottom:20px;
+}
 .exam-section.active{display:block;}
 .question{margin-bottom:20px;}
-.options label{display:block;}
-.correct + span {color:#22c55e;}
-.wrong + span {color:#ef4444;}
+.question h3{font-size:18px;margin-bottom:10px;}
+.options label{display:block;margin-bottom:5px;cursor:pointer;}
+.options input.correct + span { color: #22c55e; font-weight:bold; }
+.options input.wrong + span { color: #ef4444; font-weight:bold; }
+button.submit-btn, button.reset-btn{
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    color:#111;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+button.submit-btn{background:#22c55e;}
+button.submit-btn:hover{background:#16a34a;}
+button.reset-btn{background:#f87171;margin-left:10px;}
+button.reset-btn:hover{background:#dc2626;}
+.result{
+    margin-top:20px;
+    font-size:20px;
+    font-weight:bold;
+    color:#facc15;
+    text-align:center;
+}
+.explanation{
+    font-size:14px;
+    color:#a5f3fc;
+    margin-top:5px;
+}
 </style>
 </head>
-
 <body>
 
+<div class="navbar">
+<a href="index.html" class="nav-btn">Home</a>
+<a href="about.html" class="nav-btn">About</a>
+<a href="author.html" class="nav-btn">Author</a>
+<a href="exam.html" class="nav-btn">Exam</a>
+</div>
+
 <div class="container">
-<h1>Linux Hardening Exam</h1>
+<h1>📝 Linux Hardening Practice Exams</h1>
 
 <div class="tab-buttons">
-<button class="tab-btn active" data-tab="rhel8">RHEL8</button>
-<button class="tab-btn" data-tab="rhel9">RHEL9</button>
-<button class="tab-btn" data-tab="mock">MOCK</button>
+<button class="tab-btn active" data-tab="rhel8">RHEL 8 Quiz</button>
+<button class="tab-btn" data-tab="rhel9">RHEL 9 Quiz</button>
+<button class="tab-btn" data-tab="mock">Mock Test</button>
 </div>
 
 <div id="rhel8" class="exam-section active"></div>
 <div id="rhel9" class="exam-section"></div>
 <div id="mock" class="exam-section"></div>
 
-<button onclick="checkAnswers()">Submit</button>
-<button onclick="resetExam()">Reset</button>
+<button class="submit-btn" onclick="checkAnswers()">Submit</button>
+<button class="reset-btn" onclick="resetExam()">Reset</button>
 
-<h2 id="result"></h2>
-
+<div class="result" id="exam-result"></div>
 </div>
 
 <script>
 const exams = {
-
 rhel8:[
-{q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0},
-{q:"Which command verifies journal logs?", options:["journalctl","systemctl status","dmesg","cat /var/log/messages"], answer:0},
-{q:"Command to disable root SSH login?", options:["PermitRootLogin no","AllowRootLogin yes","RootLogin off","DenyRoot yes"], answer:0},
-{q:"File to configure password policies?", options:["/etc/security/pwquality.conf","/etc/login.defs","/etc/passwd","/etc/group"], answer:0},
-{q:"Command to restrict kernel pointers?", options:["echo 1 > /proc/sys/kernel/kptr_restrict","sysctl net.ipv4.ip_forward=0","chmod 600 /etc/shadow","chown root:root /etc/shadow"], answer:0},
-{q:"Which command checks failed login attempts?", options:["lastb","last","who","id"], answer:0},
-{q:"Which file logs authentication attempts?", options:["/var/log/secure","/var/log/messages","/var/log/syslog","/var/log/auth.log"], answer:0},
-{q:"Command to find SUID files?", options:["find / -perm -4000","ls -l","chmod","ps"], answer:0},
-{q:"Command to check open ports?", options:["ss -tuln","top","df -h","ps"], answer:0},
-{q:"Which command checks sudo permissions?", options:["sudo -l","sudo su","id","whoami"], answer:0},
-{q:"Command to reload systemd config?", options:["systemctl daemon-reload","systemctl restart","init 6","reboot"], answer:0},
-{q:"Which command checks kernel version?", options:["uname -r","hostnamectl","uptime","df -h"], answer:0},
-{q:"Command to view CPU info?", options:["lscpu","top","free -m","ps"], answer:0},
-{q:"Command to list block devices?", options:["lsblk","df -h","mount","du"], answer:0},
-{q:"Command to show process tree?", options:["pstree","ps aux","top","htop"], answer:0}
+{q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"SSH configs are in sshd_config"},
+{q:"Command to disable root SSH login?", options:["PermitRootLogin no","AllowRootLogin yes","RootLogin off","DenyRoot yes"], answer:0, explanation:"Prevents direct root login"},
+{q:"Command to check logs?", options:["journalctl","dmesg","ps","ls"], answer:0, explanation:"System logs"},
+{q:"Command to find SUID files?", options:["find / -perm -4000","ls","chmod","ps"], answer:0, explanation:"Find SUID"},
+{q:"Command to check open ports?", options:["ss -tuln","top","df","ps"], answer:0, explanation:"Open ports"},
+{q:"Command to check kernel version?", options:["uname -r","hostname","df","ls"], answer:0, explanation:"Kernel info"},
+{q:"Command to check disk usage?", options:["df -h","du","lsblk","fdisk"], answer:0, explanation:"Disk usage"},
+{q:"Command to list processes?", options:["ps aux","ls","cat","rm"], answer:0, explanation:"Processes"},
+{q:"Command to restart service?", options:["systemctl restart","service","init","reload"], answer:0, explanation:"Restart"},
+{q:"Command to view users?", options:["cat /etc/passwd","ls","who","ps"], answer:0, explanation:"Users"},
+{q:"Command to lock user?", options:["usermod -L","passwd","chmod","ls"], answer:0, explanation:"Lock"},
+{q:"Command to unlock user?", options:["usermod -U","passwd","chmod","ls"], answer:0, explanation:"Unlock"},
+{q:"Command to show memory?", options:["free -m","df","ls","top"], answer:0, explanation:"Memory"},
+{q:"Command to check SELinux?", options:["sestatus","getenforce","ls","ps"], answer:0, explanation:"SELinux"},
+{q:"Command to check services?", options:["systemctl list-units","ls","ps","df"], answer:0, explanation:"Services"}
 ],
 
 rhel9:[
-{q:"Default firewall in RHEL 9?", options:["firewalld","iptables","ufw","nftables"], answer:0},
-{q:"Command to verify SELinux status?", options:["sestatus","getenforce","setenforce 1","selinux-config"], answer:0},
-{q:"Command to check failed SSH logins?", options:["journalctl -u sshd","lastb","ausearch","cat /var/log/secure"], answer:0},
-{q:"File to configure password aging?", options:["/etc/login.defs","/etc/security/pwquality.conf","/etc/shadow","/etc/passwd"], answer:0},
-{q:"Command to check disk usage?", options:["df -h","du -sh","lsblk","fdisk -l"], answer:0},
-{q:"Which command manages authentication profiles?", options:["authselect","authconfig","passwd","useradd"], answer:0},
-{q:"Command to check active connections?", options:["ss -s","netstat","ifconfig","route"], answer:0},
-{q:"Which file stores hashed passwords?", options:["/etc/shadow","/etc/passwd","/etc/group","/etc/hosts"], answer:0},
-{q:"Command to list enabled services?", options:["systemctl list-unit-files","chkconfig","ps","top"], answer:0},
-{q:"Command to monitor logs live?", options:["journalctl -f","tail -f","dmesg","logwatch"], answer:0},
-{q:"Command to check memory usage?", options:["free -m","df -h","ls","pwd"], answer:0},
-{q:"Command to display uptime?", options:["uptime","who","id","pwd"], answer:0},
-{q:"Command to list mounted filesystems?", options:["mount","df -h","lsblk","blkid"], answer:0},
-{q:"Command to find world writable files?", options:["find / -perm -0002","chmod","ls","pwd"], answer:0},
-{q:"Command to check SELinux denials?", options:["ausearch -m avc","getenforce","sestatus","auditctl"], answer:0}
+{q:"Default firewall?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"Firewall"},
+{q:"SELinux check?", options:["sestatus","getenforce","ls","ps"], answer:0, explanation:"SELinux"},
+{q:"Check logs?", options:["journalctl","cat","ls","ps"], answer:0, explanation:"Logs"},
+{q:"Disk check?", options:["df -h","ls","ps","top"], answer:0, explanation:"Disk"},
+{q:"Memory?", options:["free -m","df","ls","ps"], answer:0, explanation:"Memory"},
+{q:"Auth config?", options:["authselect","authconfig","passwd","useradd"], answer:0, explanation:"Auth"},
+{q:"Active services?", options:["systemctl","ls","ps","top"], answer:0, explanation:"Services"},
+{q:"Failed logins?", options:["lastb","last","who","id"], answer:0, explanation:"Logins"},
+{q:"Mounted FS?", options:["mount","df","lsblk","blkid"], answer:0, explanation:"FS"},
+{q:"Open connections?", options:["ss -s","netstat","ifconfig","route"], answer:0, explanation:"Connections"},
+{q:"Show uptime?", options:["uptime","who","id","pwd"], answer:0, explanation:"Uptime"},
+{q:"World writable?", options:["find / -perm -0002","chmod","ls","ps"], answer:0, explanation:"Writable"},
+{q:"Kernel logs?", options:["dmesg","ls","ps","cat"], answer:0, explanation:"Kernel"},
+{q:"Process tree?", options:["pstree","ps","top","htop"], answer:0, explanation:"Tree"},
+{q:"Check IP?", options:["ip a","ls","ps","df"], answer:0, explanation:"IP"}
 ],
 
 mock:[
-{q:"Which command changes file ownership?", options:["chown","chmod","ls","passwd"], answer:0},
-{q:"Which command sets file permissions?", options:["chmod","chown","ls","passwd"], answer:0},
-{q:"Command to view running processes?", options:["ps aux","top","htop","jobs"], answer:0},
-{q:"Command to check disk space?", options:["df -h","du","lsblk","fdisk"], answer:0},
-{q:"Command to check listening ports?", options:["ss -tuln","netstat","lsof","iptables"], answer:0},
-{q:"Command to view logs?", options:["journalctl","dmesg","cat log","tail"], answer:0},
-{q:"Command to restart service?", options:["systemctl restart","service restart","init","reload"], answer:0},
-{q:"Command to lock user?", options:["usermod -L","passwd -l","chage","pwconv"], answer:0},
-{q:"Command to unlock user?", options:["usermod -U","passwd -u","chage","pwconv"], answer:0},
-{q:"Command to check SELinux?", options:["sestatus","getenforce","top","ps"], answer:0},
-{q:"Command to check failed logins?", options:["lastb","last","who","id"], answer:0},
-{q:"Command to display hostname?", options:["hostname","uname","whoami","pwd"], answer:0},
-{q:"Command to show environment variables?", options:["env","set","print","vars"], answer:0},
-{q:"Command to check open files?", options:["lsof","ps","top","df"], answer:0},
-{q:"Command to monitor system?", options:["top","htop","ps","free"], answer:0}
+{q:"Change owner?", options:["chown","chmod","ls","pwd"], answer:0, explanation:"Ownership"},
+{q:"Permissions?", options:["chmod","chown","ls","pwd"], answer:0, explanation:"Permissions"},
+{q:"Processes?", options:["ps","ls","cat","rm"], answer:0, explanation:"Processes"},
+{q:"Disk?", options:["df -h","ls","ps","pwd"], answer:0, explanation:"Disk"},
+{q:"Ports?", options:["ss","top","df","ls"], answer:0, explanation:"Ports"},
+{q:"Logs?", options:["journalctl","cat","ls","ps"], answer:0, explanation:"Logs"},
+{q:"Restart?", options:["systemctl","service","init","reload"], answer:0, explanation:"Restart"},
+{q:"Lock user?", options:["usermod -L","passwd","chmod","ls"], answer:0, explanation:"Lock"},
+{q:"Unlock user?", options:["usermod -U","passwd","chmod","ls"], answer:0, explanation:"Unlock"},
+{q:"SELinux?", options:["sestatus","getenforce","top","ps"], answer:0, explanation:"SELinux"},
+{q:"Failed login?", options:["lastb","last","who","id"], answer:0, explanation:"Login"},
+{q:"Hostname?", options:["hostname","uname","whoami","pwd"], answer:0, explanation:"Hostname"},
+{q:"Env vars?", options:["env","set","print","vars"], answer:0, explanation:"Env"},
+{q:"Open files?", options:["lsof","ps","top","df"], answer:0, explanation:"Files"},
+{q:"Monitor?", options:["top","htop","ps","free"], answer:0, explanation:"Monitor"}
 ]
-
 };
 
-// render
-function render(tab){
-let html="";
-exams[tab].forEach((q,i)=>{
-html+=`
-<div class="question">
-<h3>${i+1}. ${q.q}</h3>
-${q.options.map((opt,j)=>`
-<label>
-<input type="radio" name="${tab}-${i}" value="${j}">
-<span>${opt}</span>
-</label>`).join("")}
-</div>`;
-});
-document.getElementById(tab).innerHTML=html;
+function renderExam(tab){
+ const container=document.getElementById(tab);
+ container.innerHTML="";
+ exams[tab].forEach((item,index)=>{
+  const qDiv=document.createElement("div");
+  qDiv.className="question";
+  qDiv.innerHTML=`<h3>${index+1}. ${item.q}</h3>
+  <div class="options">
+  ${item.options.map((opt,i)=>`<label><input type="radio" name="${tab}-${index}" value="${i}"><span>${opt}</span></label>`).join("")}
+  </div>
+  <div class="explanation" style="display:none;">${item.explanation}</div>`;
+  container.appendChild(qDiv);
+ });
 }
 
-["rhel8","rhel9","mock"].forEach(render);
+['rhel8','rhel9','mock'].forEach(renderExam);
 
-// tabs
-document.querySelectorAll(".tab-btn").forEach(btn=>{
-btn.onclick=()=>{
-document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
-btn.classList.add("active");
-document.querySelectorAll(".exam-section").forEach(s=>s.classList.remove("active"));
-document.getElementById(btn.dataset.tab).classList.add("active");
-};
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+ btn.addEventListener('click',()=>{
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.exam-section').forEach(sec=>sec.classList.remove('active'));
+  document.getElementById(btn.dataset.tab).classList.add('active');
+ });
 });
 
-// check
-function checkAnswers() {
-    let totalCorrect = 0;
-
-    ['rhel8','rhel9','mock'].forEach(tab => {
-
-        exams[tab].forEach((q, idx) => {
-
-            const selected = document.querySelector(`input[name="${tab}-${idx}"]:checked`);
-            const options = document.querySelectorAll(`input[name="${tab}-${idx}"]`);
-
-            // remove old classes
-            options.forEach(opt => {
-                opt.classList.remove('correct','wrong');
-            });
-
-            if (selected) {
-                if (parseInt(selected.value) === q.answer) {
-                    selected.classList.add('correct');
-                    totalCorrect++;
-                } else {
-                    selected.classList.add('wrong');
-                    options[q.answer].classList.add('correct');
-                }
-
-                // show explanation
-                selected.closest('.question')
-                    .querySelector('.explanation').style.display = 'block';
-            }
-
-        });
-
-    });
-
-    document.getElementById('exam-result').innerText =
-        `You got ${totalCorrect} correct answers!`;
-}
-});
-document.getElementById("result").innerText="Score: "+score;
+function checkAnswers(){
+ let total=0;
+ ['rhel8','rhel9','mock'].forEach(tab=>{
+  exams[tab].forEach((q,idx)=>{
+   const selected=document.querySelector(`input[name="${tab}-${idx}"]:checked`);
+   const options=document.querySelectorAll(`input[name="${tab}-${idx}"]`);
+   options.forEach(o=>o.classList.remove('correct','wrong'));
+   if(selected){
+    if(parseInt(selected.value)===q.answer){
+     selected.classList.add('correct');
+     total++;
+    }else{
+     selected.classList.add('wrong');
+     options[q.answer].classList.add('correct');
+    }
+    selected.closest('.question').querySelector('.explanation').style.display='block';
+   }
+  });
+ });
+ document.getElementById('exam-result').innerText=`You got ${total} correct answers!`;
 }
 
-// reset
 function resetExam(){
-location.reload();
+ document.querySelectorAll('input[type=radio]').forEach(i=>{
+  i.checked=false;
+  i.classList.remove('correct','wrong');
+ });
+ document.querySelectorAll('.explanation').forEach(e=>e.style.display='none');
+ document.getElementById('exam-result').innerText='';
 }
 </script>
 
