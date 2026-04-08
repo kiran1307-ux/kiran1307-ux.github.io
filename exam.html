@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Linux Hardening Exam</title>
+
 <style>
 body {
     margin:0;
@@ -24,226 +25,162 @@ body {
     padding:8px 15px;
     border-radius:6px;
     background: rgba(255,255,255,0.1);
-    transition:0.3s;
-    font-weight:bold;
-}
-.nav-btn:hover {
-    background: rgba(255,255,255,0.3);
 }
 .container{
     max-width:1000px;
     margin:auto;
     padding:40px 20px;
 }
-h1{text-align:center;font-size:42px;margin-bottom:20px;color:#facc15;}
+h1{text-align:center;color:#facc15;}
 .tab-buttons{
     display:flex;
     justify-content:center;
     gap:15px;
-    margin-bottom:30px;
-}
-.tab-btn{
-    padding: 10px 20px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    background: rgba(255,255,255,0.1);
-    color:#fff;
-    font-weight:bold;
-    transition:0.3s;
-}
-.tab-btn:hover, .tab-btn.active{
-    background: #38bdf8;
-    color:#111;
-}
-.exam-section{
-    display:none;
-    background: rgba(255,255,255,0.05);
-    padding: 25px;
-    border-radius: 15px;
-    backdrop-filter: blur(8px);
     margin-bottom:20px;
 }
-.exam-section.active{display:block;}
-.question{margin-bottom:20px;}
-.question h3{font-size:18px;margin-bottom:10px;}
-.options label{display:block;margin-bottom:5px;cursor:pointer;}
-.options input.correct + span { color: #22c55e; font-weight:bold; }
-.options input.wrong + span { color: #ef4444; font-weight:bold; }
-button.submit-btn, button.reset-btn{
-    padding:10px 20px;
+.tab-btn{
+    padding:10px;
+    background:#38bdf8;
     border:none;
     border-radius:8px;
-    color:#111;
-    font-weight:bold;
     cursor:pointer;
-    transition:0.3s;
 }
-button.submit-btn{background:#22c55e;}
-button.submit-btn:hover{background:#16a34a;}
-button.reset-btn{background:#f87171;margin-left:10px;}
-button.reset-btn:hover{background:#dc2626;}
-.result{
-    margin-top:20px;
-    font-size:20px;
-    font-weight:bold;
-    color:#facc15;
-    text-align:center;
-}
-.explanation{
-    font-size:14px;
-    color:#a5f3fc;
-    margin-top:5px;
-}
+.exam-section{display:none;}
+.exam-section.active{display:block;}
+.question{margin-bottom:20px;}
+.options label{display:block;}
+.correct + span {color:#22c55e;}
+.wrong + span {color:#ef4444;}
 </style>
 </head>
+
 <body>
 
-<div class="navbar">
-    <a href="index.html" class="nav-btn">Home</a>
-    <a href="about.html" class="nav-btn">About</a>
-    <a href="author.html" class="nav-btn">Author</a>
-    <a href="exam.html" class="nav-btn">Exam</a>
+<div class="container">
+<h1>Linux Hardening Exam</h1>
+
+<div class="tab-buttons">
+<button class="tab-btn active" data-tab="rhel8">RHEL8</button>
+<button class="tab-btn" data-tab="rhel9">RHEL9</button>
+<button class="tab-btn" data-tab="mock">MOCK</button>
 </div>
 
-<div class="container">
-    <h1>📝 Linux Hardening Practice Exams</h1>
-    
-    <div class="tab-buttons">
-        <button class="tab-btn active" data-tab="rhel8">RHEL 8 Quiz</button>
-        <button class="tab-btn" data-tab="rhel9">RHEL 9 Quiz</button>
-        <button class="tab-btn" data-tab="mock">Mock Test</button>
-    </div>
+<div id="rhel8" class="exam-section active"></div>
+<div id="rhel9" class="exam-section"></div>
+<div id="mock" class="exam-section"></div>
 
-    <div id="rhel8" class="exam-section active"></div>
-    <div id="rhel9" class="exam-section"></div>
-    <div id="mock" class="exam-section"></div>
+<button onclick="checkAnswers()">Submit</button>
+<button onclick="resetExam()">Reset</button>
 
-    <button class="submit-btn" onclick="checkAnswers()">Submit</button>
-    <button class="reset-btn" onclick="resetExam()">Reset</button>
-    <div class="result" id="exam-result"></div>
+<h2 id="result"></h2>
+
 </div>
 
 <script>
-// --- 10 questions each ---
 const exams = {
-    rhel8:[
-        {q:"Command to check open ports securely?", options:["ss -tuln","netstat -an","lsof -i","iptables -L"], answer:0, explanation:"ss is faster and preferred over netstat."},
-        {q:"Which service provides time synchronization?", options:["chronyd","ntpd","timesyncd","systemd-time"], answer:0, explanation:"chronyd is default time sync service in RHEL 8."},
-        {q:"Command to list SUID files?", options:["find / -perm -4000","ls -l","chmod 4000","find / -type f"], answer:0, explanation:"SUID files can be security risks and should be monitored."},
-        {q:"Which command checks SELinux denials?", options:["ausearch -m avc","getenforce","sestatus","auditctl"], answer:0, explanation:"ausearch helps identify SELinux blocking actions."}
-        {q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0, explanation:"SSH configurations are controlled via /etc/ssh/sshd_config."},
-        {q:"Which command verifies journal logs?", options:["journalctl","systemctl status","dmesg","cat /var/log/messages"], answer:0, explanation:"journalctl ensures integrity of system logs."},
-        {q:"Command to disable root SSH login?", options:["PermitRootLogin no","AllowRootLogin yes","RootLogin off","DenyRoot yes"], answer:0, explanation:"Disabling root SSH login prevents direct root access remotely."},
-        {q:"File to configure password policies?", options:["/etc/security/pwquality.conf","/etc/login.defs","/etc/passwd","/etc/group"], answer:0, explanation:"/etc/security/pwquality.conf enforces password complexity."},
-        {q:"Command to restrict kernel pointers?", options:["echo 1 > /proc/sys/kernel/kptr_restrict","sysctl net.ipv4.ip_forward=0","chmod 600 /etc/shadow","chown root:root /etc/shadow"], answer:0, explanation:"Restricting kernel pointers prevents sensitive info exposure."},
-        {q:"Command to change ownership of /etc/shadow?", options:["chown root:root /etc/shadow","chmod 600 /etc/shadow","ls -l /etc/shadow","passwd"], answer:0, explanation:"Ensures only root owns /etc/shadow."},
-        {q:"Command to set shadow file permissions?", options:["chmod 600 /etc/shadow","chmod 644 /etc/shadow","chmod 777 /etc/shadow","chmod 700 /etc/shadow"], answer:0, explanation:"Restricts access to shadow file to root only."},
-        {q:"Command to enforce SHA-512 password hashing?", options:["authconfig --passalgo=sha512 --update","authconfig --passalgo=md5 --update","passwd --sha512","pwconv"], answer:0, explanation:"SHA-512 is a strong hashing algorithm for passwords."},
-        {q:"Command to disable unused kernel modules?", options:["echo 'install usb-storage /bin/true' > /etc/modprobe.d/disable-usb.conf","modprobe -r usb-storage","sysctl -w net.ipv4.ip_forward=0","chmod 600 /etc/shadow"], answer:0, explanation:"Prevents loading unused modules, reducing attack surface."},
-        {q:"Command to disable IP forwarding?", options:["sysctl -w net.ipv4.ip_forward=0","sysctl -w net.ipv4.conf.all.accept_redirects=0","echo 1 > /proc/sys/kernel/kptr_restrict","iptables -F"], answer:0, explanation:"Disables IP forwarding to prevent routing attacks."}
-    ],
-    rhel9:[
-        {q:"Command to check active network connections?", options:["ss -s","netstat -r","ifconfig","route"], answer:0, explanation:"ss -s gives summary of connections."},
-        {q:"Which file stores hashed passwords?", options:["/etc/shadow","/etc/passwd","/etc/group","/etc/login.defs"], answer:0, explanation:"/etc/shadow securely stores hashed passwords."},
-        {q:"Command to list enabled services at boot?", options:["systemctl list-unit-files --type=service","chkconfig --list","service --status-all","ps aux"], answer:0, explanation:"Shows services enabled/disabled at boot."},
-        {q:"Command to monitor real-time logs?", options:["journalctl -f","tail -f /var/log/messages","dmesg -w","logwatch"], answer:0, explanation:"journalctl -f streams logs live."}
-        {q:"Default firewall in RHEL 9?", options:["firewalld","iptables","ufw","nftables"], answer:0, explanation:"firewalld is default in RHEL 9."},
-        {q:"Command to verify SELinux status?", options:["sestatus","getenforce","setenforce 1","selinux-config"], answer:0, explanation:"sestatus shows current SELinux mode."},
-        {q:"Command to check failed SSH logins?", options:["journalctl -u sshd","lastb","ausearch -m USER_LOGIN","cat /var/log/secure"], answer:0, explanation:"Audit failed SSH logins to detect attacks."},
-        {q:"File to configure password aging?", options:["/etc/login.defs","/etc/security/pwquality.conf","/etc/shadow","/etc/passwd"], answer:0, explanation:"/etc/login.defs sets aging policies."},
-        {q:"Command to check disk usage?", options:["df -h","du -sh /","lsblk","fdisk -l"], answer:0, explanation:"df -h shows disk space usage."},
-        {q:"Command to audit package changes?", options:["rpm -Va","yum history","dnf check","rpm -q"], answer:0, explanation:"Ensures package integrity and detects tampering."},
-        {q:"Command to disable root login for SSH?", options:["PermitRootLogin no","AllowRootLogin yes","RootLogin off","DenyRoot yes"], answer:0, explanation:"Prevents remote root login."},
-        {q:"Command to disable empty passwords?", options:["PermitEmptyPasswords no","PermitEmptyPasswords yes","PasswordEmpty off","DenyEmpty yes"], answer:0, explanation:"Prevents accounts with empty passwords."},
-        {q:"Command to enforce SHA-512 password hashing?", options:["authselect select sssd --force","authconfig --passalgo=sha512 --update","passwd --sha512","pwconv"], answer:1, explanation:"SHA-512 is strong and used in RHEL 9."},
-        {q:"Command to view active services?", options:["systemctl list-units --type=service","service --status-all","ps aux","systemctl status all"], answer:0, explanation:"Lists all active services."}
-    ],
-    mock:[
-        {q:"Command to display system uptime?", options:["uptime","who","top","ps"], answer:0, explanation:"uptime shows system load and uptime."},
-        {q:"Command to find large files?", options:["find / -size +100M","du -sh *","ls -lh","df -h"], answer:0, explanation:"find helps locate large files consuming space."},
-        {q:"Command to test connectivity?", options:["ping","ssh","scp","ftp"], answer:0, explanation:"ping checks network connectivity."},
-        {q:"Command to display environment variables?", options:["env","set","export","print"], answer:0, explanation:"env lists all environment variables."}
-        {q:"Which command changes file ownership?", options:["chown","chmod","ls","passwd"], answer:0, explanation:"chown changes owner/group of files."},
-        {q:"Which command sets file permissions?", options:["chmod","chown","ls","passwd"], answer:0, explanation:"chmod sets file access permissions."},
-        {q:"Command to view running processes?", options:["ps aux","top","htop","jobs"], answer:0, explanation:"ps aux lists all running processes."},
-        {q:"Command to check disk space?", options:["df -h","du -sh /","lsblk","fdisk -l"], answer:0, explanation:"df -h shows used/available space."},
-        {q:"Command to check listening ports?", options:["ss -tuln","netstat -an","lsof -i","iptables -L"], answer:0, explanation:"ss shows all listening ports."},
-        {q:"Command to view logs?", options:["journalctl","cat /var/log/messages","dmesg","tail -f /var/log/messages"], answer:0, explanation:"journalctl views system logs."},
-        {q:"Command to restart a service?", options:["systemctl restart service","service restart service","/etc/init.d/service restart","systemctl reload service"], answer:0, explanation:"systemctl restart reloads the service."},
-        {q:"Command to lock user account?", options:["usermod -L username","passwd -l username","chage -E 0 username","pwconv"], answer:0, explanation:"Locks user account."},
-        {q:"Command to unlock user account?", options:["usermod -U username","passwd -u username","chage -E -1 username","pwconv"], answer:0, explanation:"Unlocks user account."},
-        {q:"Command to check SELinux mode?", options:["sestatus","getenforce","setenforce 1","selinux-config"], answer:0, explanation:"Displays current SELinux mode."}
-    ]
+
+rhel8:[
+{q:"Which file controls SSH configurations in RHEL 8?", options:["/etc/ssh/sshd_config","/etc/ssh/config","/etc/passwd","/etc/security/limits.conf"], answer:0},
+{q:"Which command verifies journal logs?", options:["journalctl","systemctl status","dmesg","cat /var/log/messages"], answer:0},
+{q:"Command to disable root SSH login?", options:["PermitRootLogin no","AllowRootLogin yes","RootLogin off","DenyRoot yes"], answer:0},
+{q:"File to configure password policies?", options:["/etc/security/pwquality.conf","/etc/login.defs","/etc/passwd","/etc/group"], answer:0},
+{q:"Command to restrict kernel pointers?", options:["echo 1 > /proc/sys/kernel/kptr_restrict","sysctl net.ipv4.ip_forward=0","chmod 600 /etc/shadow","chown root:root /etc/shadow"], answer:0},
+{q:"Which command checks failed login attempts?", options:["lastb","last","who","id"], answer:0},
+{q:"Which file logs authentication attempts?", options:["/var/log/secure","/var/log/messages","/var/log/syslog","/var/log/auth.log"], answer:0},
+{q:"Command to find SUID files?", options:["find / -perm -4000","ls -l","chmod","ps"], answer:0},
+{q:"Command to check open ports?", options:["ss -tuln","top","df -h","ps"], answer:0},
+{q:"Which command checks sudo permissions?", options:["sudo -l","sudo su","id","whoami"], answer:0},
+{q:"Command to reload systemd config?", options:["systemctl daemon-reload","systemctl restart","init 6","reboot"], answer:0},
+{q:"Which command checks kernel version?", options:["uname -r","hostnamectl","uptime","df -h"], answer:0},
+{q:"Command to view CPU info?", options:["lscpu","top","free -m","ps"], answer:0},
+{q:"Command to list block devices?", options:["lsblk","df -h","mount","du"], answer:0},
+{q:"Command to show process tree?", options:["pstree","ps aux","top","htop"], answer:0}
+],
+
+rhel9:[
+{q:"Default firewall in RHEL 9?", options:["firewalld","iptables","ufw","nftables"], answer:0},
+{q:"Command to verify SELinux status?", options:["sestatus","getenforce","setenforce 1","selinux-config"], answer:0},
+{q:"Command to check failed SSH logins?", options:["journalctl -u sshd","lastb","ausearch","cat /var/log/secure"], answer:0},
+{q:"File to configure password aging?", options:["/etc/login.defs","/etc/security/pwquality.conf","/etc/shadow","/etc/passwd"], answer:0},
+{q:"Command to check disk usage?", options:["df -h","du -sh","lsblk","fdisk -l"], answer:0},
+{q:"Which command manages authentication profiles?", options:["authselect","authconfig","passwd","useradd"], answer:0},
+{q:"Command to check active connections?", options:["ss -s","netstat","ifconfig","route"], answer:0},
+{q:"Which file stores hashed passwords?", options:["/etc/shadow","/etc/passwd","/etc/group","/etc/hosts"], answer:0},
+{q:"Command to list enabled services?", options:["systemctl list-unit-files","chkconfig","ps","top"], answer:0},
+{q:"Command to monitor logs live?", options:["journalctl -f","tail -f","dmesg","logwatch"], answer:0},
+{q:"Command to check memory usage?", options:["free -m","df -h","ls","pwd"], answer:0},
+{q:"Command to display uptime?", options:["uptime","who","id","pwd"], answer:0},
+{q:"Command to list mounted filesystems?", options:["mount","df -h","lsblk","blkid"], answer:0},
+{q:"Command to find world writable files?", options:["find / -perm -0002","chmod","ls","pwd"], answer:0},
+{q:"Command to check SELinux denials?", options:["ausearch -m avc","getenforce","sestatus","auditctl"], answer:0}
+],
+
+mock:[
+{q:"Which command changes file ownership?", options:["chown","chmod","ls","passwd"], answer:0},
+{q:"Which command sets file permissions?", options:["chmod","chown","ls","passwd"], answer:0},
+{q:"Command to view running processes?", options:["ps aux","top","htop","jobs"], answer:0},
+{q:"Command to check disk space?", options:["df -h","du","lsblk","fdisk"], answer:0},
+{q:"Command to check listening ports?", options:["ss -tuln","netstat","lsof","iptables"], answer:0},
+{q:"Command to view logs?", options:["journalctl","dmesg","cat log","tail"], answer:0},
+{q:"Command to restart service?", options:["systemctl restart","service restart","init","reload"], answer:0},
+{q:"Command to lock user?", options:["usermod -L","passwd -l","chage","pwconv"], answer:0},
+{q:"Command to unlock user?", options:["usermod -U","passwd -u","chage","pwconv"], answer:0},
+{q:"Command to check SELinux?", options:["sestatus","getenforce","top","ps"], answer:0},
+{q:"Command to check failed logins?", options:["lastb","last","who","id"], answer:0},
+{q:"Command to display hostname?", options:["hostname","uname","whoami","pwd"], answer:0},
+{q:"Command to show environment variables?", options:["env","set","print","vars"], answer:0},
+{q:"Command to check open files?", options:["lsof","ps","top","df"], answer:0},
+{q:"Command to monitor system?", options:["top","htop","ps","free"], answer:0}
+]
+
 };
 
-// Render questions
-function renderExam(tab) {
-    const container = document.getElementById(tab);
-    container.innerHTML = '';
-    exams[tab].forEach((item, index) => {
-        const qDiv = document.createElement('div');
-        qDiv.className = 'question';
-        qDiv.innerHTML = `<h3>${index + 1}. ${item.q}</h3>
-            <div class="options">
-                ${item.options.map((opt,i)=>`<label><input type="radio" name="${tab}-${index}" value="${i}"> <span>${opt}</span></label>`).join('')}
-            </div>
-            <div class="explanation" style="display:none;">${item.explanation}</div>`;
-        container.appendChild(qDiv);
-    });
+// render
+function render(tab){
+let html="";
+exams[tab].forEach((q,i)=>{
+html+=`
+<div class="question">
+<h3>${i+1}. ${q.q}</h3>
+${q.options.map((opt,j)=>`
+<label>
+<input type="radio" name="${tab}-${i}" value="${j}">
+<span>${opt}</span>
+</label>`).join("")}
+</div>`;
+});
+document.getElementById(tab).innerHTML=html;
 }
 
-// Tab switching
-document.querySelectorAll('.tab-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.exam-section').forEach(sec=>sec.classList.remove('active'));
-        document.getElementById(btn.dataset.tab).classList.add('active');
-    });
+["rhel8","rhel9","mock"].forEach(render);
+
+// tabs
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+btn.onclick=()=>{
+document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+btn.classList.add("active");
+document.querySelectorAll(".exam-section").forEach(s=>s.classList.remove("active"));
+document.getElementById(btn.dataset.tab).classList.add("active");
+};
 });
 
-// Initial render
-['rhel8','rhel9','mock'].forEach(tab=>renderExam(tab));
-
-// Check answers
-function checkAnswers() {
-    let totalCorrect=0;
-    ['rhel8','rhel9','mock'].forEach(tab=>{
-        exams[tab].forEach((q, idx)=>{
-            const selected = document.querySelector(`input[name="${tab}-${idx}"]:checked`);
-            const options = document.querySelectorAll(`input[name="${tab}-${idx}"]`);
-            options.forEach(opt=>{
-                opt.classList.remove('correct','wrong');
-            });
-            if(selected){
-                if(parseInt(selected.value)===q.answer){
-                    selected.classList.add('correct');
-                    totalCorrect++;
-                } else {
-                    selected.classList.add('wrong');
-                    options[q.answer].classList.add('correct');
-                }
-                selected.closest('.question').querySelector('.explanation').style.display='block';
-            }
-        });
-    });
-    document.getElementById('exam-result').innerText=`You got ${totalCorrect} correct answers!`;
+// check
+function checkAnswers(){
+let score=0;
+Object.keys(exams).forEach(tab=>{
+exams[tab].forEach((q,i)=>{
+let sel=document.querySelector(`input[name="${tab}-${i}"]:checked`);
+if(sel && parseInt(sel.value)===q.answer){
+score++;
+}
+});
+});
+document.getElementById("result").innerText="Score: "+score;
 }
 
-// Reset exam
-function resetExam() {
-    ['rhel8','rhel9','mock'].forEach(tab=>{
-        exams[tab].forEach((q, idx)=>{
-            const options = document.querySelectorAll(`input[name="${tab}-${idx}"]`);
-            options.forEach(opt=>{
-                opt.checked=false;
-                opt.classList.remove('correct','wrong');
-            });
-            document.querySelector(`div#${tab} .question:nth-child(${idx+1}) .explanation`).style.display='none';
-        });
-    });
-    document.getElementById('exam-result').innerText='';
+// reset
+function resetExam(){
+location.reload();
 }
 </script>
 
